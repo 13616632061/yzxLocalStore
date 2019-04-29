@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android['compileSdkVersion']
+
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android['minSdkVersion']
+        targetSdkVersion rootProject.ext.android['targetSdkVersion']
+        versionCode rootProject.ext.android['versionCode']
+        versionName rootProject.ext.android['versionName']
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //避免项目中存在相同的jar包，导致运行失败
+    dexOptions {
+        preDexLibraries = false
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api rootProject.ext.dependencies["appcompat-v7"]
+    //    api rootProject.ext.dependencies["design"]
+    api rootProject.ext.dependencies["constraint-layout"]
+    api rootProject.ext.dependencies["recyclerview"]
+    debugCompile rootProject.ext.dependencies["debugCompile-leakcanary"]
+    releaseCompile rootProject.ext.dependencies["releaseCompile-leakcanary"]
+    api rootProject.ext.dependencies["YCCountDownViewLib"]
+    //    api rootProject.ext.dependencies["multidex"]
+    api rootProject.ext.dependencies["butterknife"]
+    api rootProject.ext.dependencies["utilcode"]
+    api rootProject.ext.dependencies["onvenientBanner"]
+    api rootProject.ext.dependencies["rxandroid"]
+    api rootProject.ext.dependencies["logutils"]
+    api rootProject.ext.dependencies["arouter"]
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+    api rootProject.ext.dependencies["glide"]
+    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    api rootProject.ext.dependencies["FlycoTabLayout"]
+}
