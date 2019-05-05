@@ -9,4 +9,7 @@
     <color name="transparent">#00000000</color>
     <!--白色-->
     <color name="whilte">#ffffff</color>
+    <!--黑色-->
+    <color name="black">#000000</color>
+
 </resources>
