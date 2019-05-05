@@ -1,12 +1,10 @@
-package com.yzx.yzxlocalstore.ui.LoginActivity.presenter;
+package com.yzx.yzxlocalstore.ui.Activity.LoginActivity.presenter;
 
 import android.text.TextUtils;
-import android.widget.Toast;
 
-import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.entity.User;
-import com.yzx.yzxlocalstore.ui.LoginActivity.model.LoginModel;
-import com.yzx.yzxlocalstore.ui.LoginActivity.view.LoginActivity;
+import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.model.LoginModel;
+import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view.LoginActivity;
 
 import java.util.List;
 

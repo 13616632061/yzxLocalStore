@@ -1,4 +1,4 @@
-package com.yzx.yzxlocalstore.ui.LoginActivity.model;
+package com.yzx.yzxlocalstore.ui.Activity.LoginActivity.model;
 
 import android.content.Context;
 

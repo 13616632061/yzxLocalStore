@@ -1,7 +1,6 @@
-package com.yzx.yzxlocalstore.ui.LoginActivity.view;
+package com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view;
 
 import android.Manifest;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
@@ -10,12 +9,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
-import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.constant.RouteMap;
-import com.yzx.yzxlocalstore.greendao.DaoSession;
-import com.yzx.yzxlocalstore.ui.LoginActivity.presenter.LoginPresenter;
+import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.presenter.LoginPresenter;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import kr.co.namee.permissiongen.PermissionFail;

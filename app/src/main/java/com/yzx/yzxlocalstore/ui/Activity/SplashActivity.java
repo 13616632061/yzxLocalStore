@@ -1,22 +1,13 @@
-package com.yzx.yzxlocalstore.ui;
+package com.yzx.yzxlocalstore.ui.Activity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
-import com.yzx.yzxlocalstore.ui.LoginActivity.view.LoginActivity;
-import com.yzx.yzxlocalstore.ui.MainActivity.view.MainActivity;
-
-import kr.co.namee.permissiongen.PermissionFail;
-import kr.co.namee.permissiongen.PermissionGen;
-import kr.co.namee.permissiongen.PermissionSuccess;
+import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view.LoginActivity;
 
 @Route(path = RouteMap.ROUTE_SPLASH_ACTIVITY)
 public class SplashActivity extends BaseActivity {

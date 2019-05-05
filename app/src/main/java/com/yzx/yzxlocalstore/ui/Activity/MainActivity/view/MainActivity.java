@@ -1,4 +1,4 @@
-package com.yzx.yzxlocalstore.ui.MainActivity.view;
+package com.yzx.yzxlocalstore.ui.Activity.MainActivity.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

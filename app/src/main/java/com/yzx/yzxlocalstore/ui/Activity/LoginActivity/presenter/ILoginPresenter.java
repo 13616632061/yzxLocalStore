@@ -1,4 +1,4 @@
-package com.yzx.yzxlocalstore.ui.LoginActivity.presenter;
+package com.yzx.yzxlocalstore.ui.Activity.LoginActivity.presenter;
 
 /**
  * Created by lyf on 2019/5/1.

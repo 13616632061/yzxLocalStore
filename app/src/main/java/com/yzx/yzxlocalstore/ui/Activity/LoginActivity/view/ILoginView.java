@@ -1,4 +1,4 @@
-package com.yzx.yzxlocalstore.ui.LoginActivity.view;
+package com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view;
 
 /**
  * Created by lyf on 2019/5/1.

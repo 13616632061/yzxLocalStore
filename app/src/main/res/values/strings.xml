@@ -9,6 +9,7 @@
     <string name="error_name_pwd">账号或密码有误，请重新输入！</string>
     <string name="permissions_fail">拒绝权限，可能会导致部分功能无法正常使用，请重新打开权限</string>
     <string name="more">更多</string>
+    <string name="cash_register">收银</string>
 
 
 
