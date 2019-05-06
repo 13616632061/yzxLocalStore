@@ -82,6 +82,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mCurrentActivity = this;
+        hideStatusBar();
     }
 
     @Override

@@ -39,7 +39,7 @@
             android:name=".ui.Activity.LoginActivity.view.LoginActivity"
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.Activity.ManageActivity.view.ManageActivity"></activity>
     </application>
 

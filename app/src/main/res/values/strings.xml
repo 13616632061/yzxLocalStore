@@ -10,6 +10,10 @@
     <string name="permissions_fail">拒绝权限，可能会导致部分功能无法正常使用，请重新打开权限</string>
     <string name="more">更多</string>
     <string name="cash_register">收银</string>
+    <string name="user_login">用户登录</string>
+    <string name="business">商家</string>
+    <string name="assistant">店员</string>
+
 
 
 

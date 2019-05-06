@@ -6,31 +6,36 @@
     android:layout_height="match_parent"
     tools:context="com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view.LoginActivity">
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_marginTop="20dp"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_login"
-        android:textColor="@color/colorAccent"
-        android:textSize="35sp"
-        app:layout_constraintTop_toBottomOf="@+id/layout_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 
     <LinearLayout
         android:id="@+id/layout_content"
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_login"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:text="@string/user_login"
+            android:textColor="@color/color_707070"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -38,23 +43,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_name"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textColor="@color/color_707070"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/et_name"
-                android:layout_width="250dp"
+                android:layout_width="284dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:background="@drawable/bg_login_edit"
                 android:hint="@string/tv_hint_name"
+                android:padding="10dp"
                 android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textColorHint="@color/color_bebbbb"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -62,17 +73,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_pwd"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textColor="@color/color_707070"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/et_pwd"
-                android:layout_width="250dp"
+                android:layout_width="284dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:background="@drawable/bg_login_edit"
                 android:hint="@string/tv_hint_pwd"
+                android:padding="10dp"
                 android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textColorHint="@color/color_bebbbb"
+                android:textSize="18sp" />
         </LinearLayout>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ed_password"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_merchant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/business" />
+
+            <RadioButton
+                android:id="@+id/rb_clerk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/assistant" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/tv_change"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_login_btn"
+            android:paddingBottom="3dp"
+            android:text="@string/tv_login"
+            android:textColor="@color/whilte"
+            android:textSize="18sp" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
