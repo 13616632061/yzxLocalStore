@@ -13,16 +13,21 @@ import org.greenrobot.greendao.annotation.Unique;
 public class User {
     @Id(autoincrement = true)
     private Long id;//用户id
+    private long number;//工号
+    private String name;//姓名
     private int level;//用户等级
     @Unique
-    private String name;//用户名
+    private String account;//用户名
     private String pwd;//用户密码
 
-    @Generated(hash = 1302448903)
-    public User(Long id, int level, String name, String pwd) {
+    @Generated(hash = 588465990)
+    public User(Long id, long number, String name, int level, String account,
+            String pwd) {
         this.id = id;
-        this.level = level;
+        this.number = number;
         this.name = name;
+        this.level = level;
+        this.account = account;
         this.pwd = pwd;
     }
 
@@ -60,5 +65,21 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public long getNumber() {
+        return this.number;
+    }
+
+    public void setNumber(long number) {
+        this.number = number;
+    }
+
+    public String getAccount() {
+        return this.account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }

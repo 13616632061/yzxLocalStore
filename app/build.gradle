@@ -31,6 +31,15 @@ android {
 //        generateTests false //设置为true以自动生成单元测试。
 //        targetGenDirTests 'src.main.java' //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
     }
+    sourceSets{
+        main{
+            res.srcDirs=[
+                    'src/main/res',
+                    'src/main/res/common',
+                    'src/main/res/layout',
+            ]
+        }
+    }
 }
 
 dependencies {
