@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
@@ -29,7 +30,7 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_more:
-
+                ARouter.getInstance().build(RouteMap.ROUTE_MANAGE_ACTIVITY).navigation();
                 break;
         }
     }

@@ -36,6 +36,8 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     protected void initView() {
+        loginPresenter = new LoginPresenter(this);
+
         initPermission();
 
     }
@@ -96,7 +98,6 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     }
     @PermissionSuccess(requestCode =100)
     public void  requestPermissionsSuccess(){
-        loginPresenter = new LoginPresenter(this);
     }
 
 
