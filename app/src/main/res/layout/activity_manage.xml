@@ -18,18 +18,20 @@
             android:id="@+id/tv_cash_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableTop="@drawable/icon_cash_register"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:drawableTop="@drawable/icon_cash_register"
             android:text="@string/cash_register"
             android:textSize="18sp" />
 
         <com.nshmura.recyclertablayout.RecyclerTabLayout
-            android:layout_gravity="center_vertical"
             android:id="@+id/tab_layout"
+            rtl_tabIndicatorColor="@null"
+            rtl_tabMinWidth="72dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.nshmura.recyclertablayout.RecyclerTabLayout>
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"></com.nshmura.recyclertablayout.RecyclerTabLayout>
     </LinearLayout>
 
     <android.support.v4.view.ViewPager
