@@ -25,19 +25,21 @@
             android:text="@string/cash_register"
             android:textSize="18sp" />
 
-        <com.nshmura.recyclertablayout.RecyclerTabLayout
-            android:id="@+id/tab_layout"
-            rtl_tabIndicatorColor="@null"
-            rtl_tabMinWidth="72dp"
+        <com.yzx.lib.weight.BottomBarLayout
+            android:id="@+id/bar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"></com.nshmura.recyclertablayout.RecyclerTabLayout>
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        </com.yzx.lib.weight.BottomBarLayout>
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.yzx.lib.weight.NoScrollViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/layouttab"
-        app:layout_constraintVertical_weight="1"></android.support.v4.view.ViewPager>
+        app:layout_constraintVertical_weight="1"></com.yzx.lib.weight.NoScrollViewPager>
 </android.support.constraint.ConstraintLayout>

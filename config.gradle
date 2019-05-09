@@ -53,6 +53,8 @@ ext {
             //用于显示加载中、网络异常，空布局、内容布局
             "skeleton"                 : "com.ethanhua:skeleton:1.1.2",
             "shimmerlayout"            : "io.supercharge:shimmerlayout:2.1.0",
+            //底部导航
+            "BottomBarLayout"          : "com.github.chaychan:BottomBarLayout:1.2.0",
 
 
     ]

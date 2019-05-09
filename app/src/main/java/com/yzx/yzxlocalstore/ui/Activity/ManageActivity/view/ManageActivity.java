@@ -1,15 +1,14 @@
 package com.yzx.yzxlocalstore.ui.Activity.ManageActivity.view;
 
 
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.nshmura.recyclertablayout.RecyclerTabLayout;
+import com.chaychan.library.BottomBarItem;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.lib.base.BaseFragment;
+import com.yzx.lib.weight.BottomBarLayout;
+import com.yzx.lib.weight.NoScrollViewPager;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.ManageType;
@@ -19,7 +18,6 @@ import com.yzx.yzxlocalstore.ui.Activity.ManageActivity.presenter.ManageActivity
 
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 @Route(path = RouteMap.ROUTE_MANAGE_ACTIVITY)
@@ -28,10 +26,11 @@ public class ManageActivity extends BaseActivity implements IManageView {
 
     @InjectView(R.id.tv_cash_register)
     TextView tvCashRegister;
-    @InjectView(R.id.tab_layout)
-    RecyclerTabLayout tabLayout;
+
     @InjectView(R.id.view_pager)
-    ViewPager viewPager;
+    NoScrollViewPager viewPager;
+    @InjectView(R.id.bar_layout)
+    BottomBarLayout barLayout;
 
     private ManageTypeAdapter mManageTypeAdapter;
     private ManageFragmentAdapter mManageFragmentAdapter;
@@ -53,9 +52,14 @@ public class ManageActivity extends BaseActivity implements IManageView {
      */
     @Override
     public void initManageType(List<ManageType> manageTypeList, List<BaseFragment> fragmentList) {
+        for (ManageType manageType : manageTypeList) {
+            BottomBarItem barItem = mManageActivityPresenter.createTopBarItem(manageType);
+            barLayout.addNoWeightItem(barItem);
+        }
         mManageFragmentAdapter = new ManageFragmentAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(mManageFragmentAdapter);
-        mManageTypeAdapter = new ManageTypeAdapter(this, viewPager, manageTypeList);
-        tabLayout.setUpWithAdapter(mManageTypeAdapter);
+        barLayout.setViewPager(viewPager);
     }
+
+
 }
