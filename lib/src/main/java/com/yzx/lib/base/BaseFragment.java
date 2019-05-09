@@ -77,5 +77,6 @@ public abstract class BaseFragment extends LazyLoadFragment {
     public void onDestroy() {
         super.onDestroy();
         mActivity = null;
+        ButterKnife.reset(this);
     }
 }

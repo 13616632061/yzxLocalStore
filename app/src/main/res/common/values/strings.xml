@@ -13,8 +13,7 @@
     <string name="user_login">用户登录</string>
     <string name="business">商家</string>
     <string name="assistant">店员</string>
-
-
+    <string name="staffer">员工</string>
 
 
 </resources>

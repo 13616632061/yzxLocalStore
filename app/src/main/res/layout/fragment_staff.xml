@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="员工管理" />
+    <LinearLayout
+        android:id="@+id/layout_left"
+        android:layout_width="137dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:gravity="center"
+            android:text="@string/staffer"
+            android:textColor="@color/color_707070"
+            android:textSize="15sp" />
+
+        <com.nshmura.recyclertablayout.RecyclerTabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></com.nshmura.recyclertablayout.RecyclerTabLayout>
+
+    </LinearLayout>
+
+    <com.yzx.lib.weight.NoScrollViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toRightOf="@+id/layout_left"
+        app:layout_constraintVertical_weight="1"></com.yzx.lib.weight.NoScrollViewPager>
 
 </android.support.constraint.ConstraintLayout>

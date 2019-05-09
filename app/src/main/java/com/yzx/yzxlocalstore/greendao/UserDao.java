@@ -28,8 +28,13 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Number = new Property(1, String.class, "number", false, "NUMBER");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
         public final static Property Level = new Property(3, int.class, "level", false, "LEVEL");
-        public final static Property Account = new Property(4, String.class, "account", false, "ACCOUNT");
-        public final static Property Pwd = new Property(5, String.class, "pwd", false, "PWD");
+        public final static Property Enable = new Property(4, boolean.class, "enable", false, "ENABLE");
+        public final static Property SalesCommission = new Property(5, double.class, "salesCommission", false, "SALES_COMMISSION");
+        public final static Property IsShowBuyingPrice = new Property(6, boolean.class, "isShowBuyingPrice", false, "IS_SHOW_BUYING_PRICE");
+        public final static Property IsShowBuyingProfit = new Property(7, boolean.class, "isShowBuyingProfit", false, "IS_SHOW_BUYING_PROFIT");
+        public final static Property IsShowBuyingStore = new Property(8, boolean.class, "isShowBuyingStore", false, "IS_SHOW_BUYING_STORE");
+        public final static Property Account = new Property(9, String.class, "account", false, "ACCOUNT");
+        public final static Property Pwd = new Property(10, String.class, "pwd", false, "PWD");
     }
 
 
@@ -49,8 +54,13 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"NUMBER\" TEXT," + // 1: number
                 "\"NAME\" TEXT," + // 2: name
                 "\"LEVEL\" INTEGER NOT NULL ," + // 3: level
-                "\"ACCOUNT\" TEXT UNIQUE ," + // 4: account
-                "\"PWD\" TEXT);"); // 5: pwd
+                "\"ENABLE\" INTEGER NOT NULL ," + // 4: enable
+                "\"SALES_COMMISSION\" REAL NOT NULL ," + // 5: salesCommission
+                "\"IS_SHOW_BUYING_PRICE\" INTEGER NOT NULL ," + // 6: isShowBuyingPrice
+                "\"IS_SHOW_BUYING_PROFIT\" INTEGER NOT NULL ," + // 7: isShowBuyingProfit
+                "\"IS_SHOW_BUYING_STORE\" INTEGER NOT NULL ," + // 8: isShowBuyingStore
+                "\"ACCOUNT\" TEXT UNIQUE ," + // 9: account
+                "\"PWD\" TEXT);"); // 10: pwd
     }
 
     /** Drops the underlying database table. */
@@ -78,15 +88,20 @@ public class UserDao extends AbstractDao<User, Long> {
             stmt.bindString(3, name);
         }
         stmt.bindLong(4, entity.getLevel());
+        stmt.bindLong(5, entity.getEnable() ? 1L: 0L);
+        stmt.bindDouble(6, entity.getSalesCommission());
+        stmt.bindLong(7, entity.getIsShowBuyingPrice() ? 1L: 0L);
+        stmt.bindLong(8, entity.getIsShowBuyingProfit() ? 1L: 0L);
+        stmt.bindLong(9, entity.getIsShowBuyingStore() ? 1L: 0L);
  
         String account = entity.getAccount();
         if (account != null) {
-            stmt.bindString(5, account);
+            stmt.bindString(10, account);
         }
  
         String pwd = entity.getPwd();
         if (pwd != null) {
-            stmt.bindString(6, pwd);
+            stmt.bindString(11, pwd);
         }
     }
 
@@ -109,15 +124,20 @@ public class UserDao extends AbstractDao<User, Long> {
             stmt.bindString(3, name);
         }
         stmt.bindLong(4, entity.getLevel());
+        stmt.bindLong(5, entity.getEnable() ? 1L: 0L);
+        stmt.bindDouble(6, entity.getSalesCommission());
+        stmt.bindLong(7, entity.getIsShowBuyingPrice() ? 1L: 0L);
+        stmt.bindLong(8, entity.getIsShowBuyingProfit() ? 1L: 0L);
+        stmt.bindLong(9, entity.getIsShowBuyingStore() ? 1L: 0L);
  
         String account = entity.getAccount();
         if (account != null) {
-            stmt.bindString(5, account);
+            stmt.bindString(10, account);
         }
  
         String pwd = entity.getPwd();
         if (pwd != null) {
-            stmt.bindString(6, pwd);
+            stmt.bindString(11, pwd);
         }
     }
 
@@ -133,8 +153,13 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // number
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
             cursor.getInt(offset + 3), // level
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // account
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // pwd
+            cursor.getShort(offset + 4) != 0, // enable
+            cursor.getDouble(offset + 5), // salesCommission
+            cursor.getShort(offset + 6) != 0, // isShowBuyingPrice
+            cursor.getShort(offset + 7) != 0, // isShowBuyingProfit
+            cursor.getShort(offset + 8) != 0, // isShowBuyingStore
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // account
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // pwd
         );
         return entity;
     }
@@ -145,8 +170,13 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setNumber(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setLevel(cursor.getInt(offset + 3));
-        entity.setAccount(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setPwd(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setEnable(cursor.getShort(offset + 4) != 0);
+        entity.setSalesCommission(cursor.getDouble(offset + 5));
+        entity.setIsShowBuyingPrice(cursor.getShort(offset + 6) != 0);
+        entity.setIsShowBuyingProfit(cursor.getShort(offset + 7) != 0);
+        entity.setIsShowBuyingStore(cursor.getShort(offset + 8) != 0);
+        entity.setAccount(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setPwd(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }
     
     @Override

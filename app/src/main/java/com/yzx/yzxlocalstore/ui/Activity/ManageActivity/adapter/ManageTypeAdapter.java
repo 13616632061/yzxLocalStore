@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -32,8 +33,9 @@ public class ManageTypeAdapter extends RecyclerTabLayout.Adapter<ManageTypeAdapt
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = View.inflate(context, R.layout.item_manege_type, null);
+//        View view = LayoutInflater.from(context).inflate(R.layout.item_manege_type, parent, false);
         return new ViewHolder(view);
     }
 
@@ -65,6 +67,12 @@ public class ManageTypeAdapter extends RecyclerTabLayout.Adapter<ManageTypeAdapt
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_manage_type = itemView.findViewById(R.id.tv_manage_type);
+            tv_manage_type.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getViewPager().setCurrentItem(getAdapterPosition());
+                }
+            });
         }
     }
 }

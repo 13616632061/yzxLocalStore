@@ -6,5 +6,7 @@ package com.yzx.yzxlocalstore.constant;
 
 public class Constants {
     //管理分类
-    public static String[] MANAGE_TYPE=new String[]{"报表", "商品", "出入库", "盘点", "员工", "会员", "设置", "关于"};
+    public static String[] MANAGE_TYPE = new String[]{"报表", "商品", "出入库", "盘点", "员工", "会员", "设置", "关于"};
+    //员工管理分类
+    public static String[] STAFFER_MANAGE_TYPE = new String[]{"员工管理", "敏感操作记录"};
 }

@@ -39,7 +39,8 @@ public class ManageActivityPresenter implements IManageActivityPresenter {
     @Override
     public BottomBarItem createTopBarItem(ManageType manageType) {
         BottomBarItem item = new BottomBarItem.Builder(mManageActivity)
-                .titleTextSize(8)
+                .titleTextSize(15)
+                .iconWidth(150)
                 .titleNormalColor(R.color.color_707070)
                 .titleSelectedColor(R.color.color_f5260b)
                 //还有很多属性，详情请查看Builder里面的方法

@@ -17,10 +17,12 @@ import java.util.List;
 public class ManageFragmentAdapter extends FragmentPagerAdapter {
 
     private List<BaseFragment> fragmentList;
+    private int type;//不同FragmentPager
 
-    public ManageFragmentAdapter(FragmentManager fm,List<BaseFragment> fragmentList) {
+    public ManageFragmentAdapter(FragmentManager fm, List<BaseFragment> fragmentList, int type) {
         super(fm);
-        this.fragmentList=fragmentList;
+        this.fragmentList = fragmentList;
+        this.type = type;
     }
 
     @Override
@@ -36,6 +38,13 @@ public class ManageFragmentAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return Constants.MANAGE_TYPE[position];
+        if (type == 0) {//管理类别（总）
+            return Constants.MANAGE_TYPE[position];
+        } else if (type == 1) {//员工管理类别
+            return Constants.STAFFER_MANAGE_TYPE[position];
+        } else {
+            return null;
+        }
+
     }
 }
