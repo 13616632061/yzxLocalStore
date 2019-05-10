@@ -64,6 +64,7 @@ dependencies {
     api rootProject.ext.dependencies["skeleton"]
     api rootProject.ext.dependencies["shimmerlayout"]
     api rootProject.ext.dependencies["BottomBarLayout"]
+    api rootProject.ext.dependencies["VerticalTabLayout"]
 
 
 }

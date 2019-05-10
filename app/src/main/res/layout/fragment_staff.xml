@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_F5F5F5">
 
     <LinearLayout
         android:id="@+id/layout_left"
@@ -19,19 +20,21 @@
             android:textColor="@color/color_707070"
             android:textSize="15sp" />
 
-        <com.nshmura.recyclertablayout.RecyclerTabLayout
+        <q.rorbin.verticaltablayout.VerticalTabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"></com.nshmura.recyclertablayout.RecyclerTabLayout>
-
+            app:indicator_color="@color/color_f5260b"
+            app:indicator_gravity="right"
+            app:indicator_width="2dp"
+            app:tab_height="50dp"
+            app:tab_margin="5dp"
+            app:tab_mode="scrollable"></q.rorbin.verticaltablayout.VerticalTabLayout>
     </LinearLayout>
 
     <com.yzx.lib.weight.NoScrollViewPager
         android:id="@+id/view_pager"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        app:layout_constraintLeft_toRightOf="@+id/layout_left"
-        app:layout_constraintVertical_weight="1"></com.yzx.lib.weight.NoScrollViewPager>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.yzx.lib.weight.NoScrollViewPager>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

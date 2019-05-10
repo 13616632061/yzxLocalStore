@@ -55,6 +55,8 @@ ext {
             "shimmerlayout"            : "io.supercharge:shimmerlayout:2.1.0",
             //底部导航
             "BottomBarLayout"          : "com.github.chaychan:BottomBarLayout:1.2.0",
+            //垂直方向导航
+            "VerticalTabLayout"          : "q.rorbin:VerticalTabLayout:1.2.9",
 
 
     ]
