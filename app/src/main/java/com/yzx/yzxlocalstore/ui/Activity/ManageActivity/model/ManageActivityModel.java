@@ -1,5 +1,7 @@
 package com.yzx.yzxlocalstore.ui.Activity.ManageActivity.model;
 
+import android.support.v4.app.Fragment;
+
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.Constants;
@@ -42,8 +44,8 @@ public class ManageActivityModel implements IManageActivityModel {
     }
 
     @Override
-    public List<BaseFragment> initManageFragment() {
-        List<BaseFragment> fragmentList = new ArrayList<>();
+    public List<Fragment> initManageFragment() {
+        List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new ReportFormFragment());
         fragmentList.add(new GoodsManageFragment());
         fragmentList.add(new OutGoStoreFragment());

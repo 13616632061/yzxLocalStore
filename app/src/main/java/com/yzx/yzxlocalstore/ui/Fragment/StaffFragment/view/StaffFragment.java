@@ -1,16 +1,15 @@
 package com.yzx.yzxlocalstore.ui.Fragment.StaffFragment.view;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.lib.weight.NoScrollViewPager;
 import com.yzx.yzxlocalstore.R;
-import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.ui.Activity.ManageActivity.adapter.ManageFragmentAdapter;
 import com.yzx.yzxlocalstore.ui.Adapter.FragmentTabAdapter;
 import com.yzx.yzxlocalstore.ui.Fragment.StaffFragment.presenter.StaffFragmentPresenter;
@@ -33,11 +32,14 @@ public class StaffFragment extends BaseFragment implements IStaffFragmentView {
 
     @InjectView(R.id.tab_layout)
     VerticalTabLayout tabLayout;
+    //    @InjectView(R.id.fragment_content)
+//    FrameLayout fragmentContent;
     @InjectView(R.id.view_pager)
     NoScrollViewPager viewPager;
 
     private StaffFragmentPresenter staffFragmentPresenter;
     private ManageFragmentAdapter adapter;
+    private FragmentTabAdapter tabAdapter;
 
     @Override
     protected int setContentViewId() {
@@ -58,10 +60,11 @@ public class StaffFragment extends BaseFragment implements IStaffFragmentView {
 
 
     @Override
-    public void initStaffManageType(List<BaseFragment> fragmentList) {
+    public void initStaffManageType(List<Fragment> fragmentList) {
         adapter = new ManageFragmentAdapter(getChildFragmentManager(), fragmentList, 1);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
 

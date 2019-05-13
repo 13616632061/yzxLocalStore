@@ -1,5 +1,6 @@
 package com.yzx.yzxlocalstore.ui.Activity.ManageActivity.presenter;
 
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 
@@ -31,7 +32,7 @@ public class ManageActivityPresenter implements IManageActivityPresenter {
     @Override
     public void initManageType() {
         List<ManageType> manageTypeList = mManageActivityModel.initManageType();
-        List<BaseFragment> fragmentList = mManageActivityModel.initManageFragment();
+        List<Fragment> fragmentList = mManageActivityModel.initManageFragment();
 
         mManageActivity.initManageType(manageTypeList, fragmentList);
     }

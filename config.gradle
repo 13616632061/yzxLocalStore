@@ -55,7 +55,7 @@ ext {
             "shimmerlayout"            : "io.supercharge:shimmerlayout:2.1.0",
             //底部导航
             "BottomBarLayout"          : "com.github.chaychan:BottomBarLayout:1.2.0",
-            //垂直方向导航
+            //垂直方向导航 setTextColor 颜色值必须是0xFFf5260b这种格式的 否则无效
             "VerticalTabLayout"          : "q.rorbin:VerticalTabLayout:1.2.9",
 
 

@@ -1,5 +1,7 @@
 package com.yzx.yzxlocalstore.ui.Fragment.StaffFragment.presenter;
 
+import android.support.v4.app.Fragment;
+
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.ui.Fragment.StaffFragment.model.StaffFragmentModel;
 import com.yzx.yzxlocalstore.ui.Fragment.StaffFragment.view.StaffFragment;
@@ -22,7 +24,7 @@ public class StaffFragmentPresenter implements IStaffFragmentPresenter {
 
     @Override
     public void initStaffManageType() {
-        List<BaseFragment> fragmentList = staffFragmentModel.initStaffManageType();
+        List<Fragment> fragmentList = staffFragmentModel.initStaffManageType();
         staffFragment.initStaffManageType(fragmentList);
 
     }

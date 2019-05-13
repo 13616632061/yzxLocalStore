@@ -1,5 +1,7 @@
 package com.yzx.yzxlocalstore.ui.Activity.ManageActivity.model;
 
+import android.support.v4.app.Fragment;
+
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.entity.ManageType;
 
@@ -21,5 +23,5 @@ public interface IManageActivityModel {
      * 初始化Fragment
      * @return
      */
-    List<BaseFragment> initManageFragment();
+    List<Fragment> initManageFragment();
 }

@@ -1,5 +1,7 @@
 package com.yzx.yzxlocalstore.ui.Activity.ManageActivity.view;
 
+import android.support.v4.app.Fragment;
+
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.entity.ManageType;
 import com.yzx.yzxlocalstore.ui.Activity.ManageActivity.adapter.ManageTypeAdapter;
@@ -14,6 +16,6 @@ public interface IManageView {
     /**
      * 初始化管理分类
      */
-    void initManageType(List<ManageType> manageTypeList,List<BaseFragment> fragmentList);
+    void initManageType(List<ManageType> manageTypeList,List<Fragment> fragmentList);
 
 }

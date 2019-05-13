@@ -1,6 +1,7 @@
 package com.yzx.yzxlocalstore.ui.Activity.ManageActivity.view;
 
 
+import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -51,7 +52,7 @@ public class ManageActivity extends BaseActivity implements IManageView {
      * 初始化管理分类
      */
     @Override
-    public void initManageType(List<ManageType> manageTypeList, List<BaseFragment> fragmentList) {
+    public void initManageType(List<ManageType> manageTypeList, List<Fragment> fragmentList) {
         for (ManageType manageType : manageTypeList) {
             BottomBarItem barItem = mManageActivityPresenter.createTopBarItem(manageType);
             barLayout.addNoWeightItem(barItem);

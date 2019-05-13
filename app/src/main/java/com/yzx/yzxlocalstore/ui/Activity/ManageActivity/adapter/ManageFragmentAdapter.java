@@ -22,10 +22,10 @@ import q.rorbin.verticaltablayout.widget.QTabView;
 
 public class ManageFragmentAdapter extends FragmentPagerAdapter implements TabAdapter {
 
-    private List<BaseFragment> fragmentList;
+    private List<Fragment> fragmentList;
     private int type;//不同FragmentPager
 
-    public ManageFragmentAdapter(FragmentManager fm, List<BaseFragment> fragmentList, int type) {
+    public ManageFragmentAdapter(FragmentManager fm, List<Fragment> fragmentList, int type) {
         super(fm);
         this.fragmentList = fragmentList;
         this.type = type;
@@ -62,7 +62,7 @@ public class ManageFragmentAdapter extends FragmentPagerAdapter implements TabAd
                 tabView.setContent(Constants.STAFFER_MANAGE_TYPE[position]);
                 break;
         }
-        return tabView.setTextColor(R.color.color_f5260b, R.color.color_f5260b)
+        return tabView.setTextColor(0xFFf5260b, 0xFF757575)
                 .setTextSize(15)
                 .build();
     }
