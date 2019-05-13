@@ -32,14 +32,11 @@ public class StaffFragment extends BaseFragment implements IStaffFragmentView {
 
     @InjectView(R.id.tab_layout)
     VerticalTabLayout tabLayout;
-    //    @InjectView(R.id.fragment_content)
-//    FrameLayout fragmentContent;
     @InjectView(R.id.view_pager)
     NoScrollViewPager viewPager;
 
     private StaffFragmentPresenter staffFragmentPresenter;
     private ManageFragmentAdapter adapter;
-    private FragmentTabAdapter tabAdapter;
 
     @Override
     protected int setContentViewId() {

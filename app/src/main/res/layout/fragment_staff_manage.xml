@@ -1,11 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:background="#f1f1f1">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:paddingLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:paddingRight="10dp"
+            android:drawableRight="@drawable/search"
+            android:gravity="center_vertical"
+            android:hint="@string/number_name_telephone"
+            android:background="@drawable/bg_edit_gray"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:textSize="12sp"
+            android:textColorHint="@color/color_bebbbb" />
+
+        <TextView
+            android:id="@+id/tv_all_roles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_toLeftOf="@+id/et_search"
+            android:background="@drawable/bg_tv_black"
+            android:drawableRight="@drawable/drop_down"
+            android:drawablePadding="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="12sp"
+            android:paddingTop="5dp"
+            android:text="@string/all_roles" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_toLeftOf="@+id/tv_all_roles"
+            android:background="@drawable/bg_tv_black"
+            android:drawableRight="@drawable/drop_down"
+            android:drawablePadding="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:textSize="12sp"
+            android:text="@string/all_states" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="员工管理" />
+        android:orientation="horizontal">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:text="@string/serial_number" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:text="@string/tv_number" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:text="@string/name" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:text="@string/phone_number" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:text="@string/roles" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:text="@string/sales_commission" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="12sp"
+            android:text="@string/states" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f4f4f4" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_f1f1f1">
+
+        <Button
+            android:id="@+id/btn_role_manage"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/staff_roles_manage" />
+
+        <Button
+            android:id="@+id/btn_add_staff"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textColor="@color/whilte"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:background="@drawable/bg_btn_red"
+            android:text="@string/add_staff" />
+    </RelativeLayout>
+
+
+</LinearLayout>

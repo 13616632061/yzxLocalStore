@@ -14,6 +14,24 @@
     <string name="business">商家</string>
     <string name="assistant">店员</string>
     <string name="staffer">员工</string>
+    <string name="number_name_telephone">工号/姓名/电话</string>
+    <string name="all_roles">全部角色</string>
+    <string name="all_states">全部状态</string>
+    <string name="serial_number">序号</string>
+    <string name="tv_number">编号</string>
+    <string name="name">姓名</string>
+    <string name="phone_number">手机号码</string>
+    <string name="roles">角色</string>
+    <string name="sales_commission">销售提成</string>
+    <string name="states">状态</string>
+    <string name="staff_roles_manage">员工角色管理</string>
+    <string name="add_staff">新增员工</string>
+
+
+
+
+
+
 
 
 </resources>
