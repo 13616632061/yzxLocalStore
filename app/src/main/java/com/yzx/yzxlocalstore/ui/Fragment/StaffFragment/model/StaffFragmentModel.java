@@ -2,10 +2,8 @@ package com.yzx.yzxlocalstore.ui.Fragment.StaffFragment.model;
 
 import android.support.v4.app.Fragment;
 
-import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.ui.Fragment.SensitiveOperationalRecordFragment.SensitiveOperationalRecordFragment;
-import com.yzx.yzxlocalstore.ui.Fragment.StaffFragment.view.IStaffFragmentView;
-import com.yzx.yzxlocalstore.ui.Fragment.StaffManageFragment.StaffManageFragment;
+import com.yzx.yzxlocalstore.ui.Fragment.StaffManageFragment.view.StaffManageFragment;
 
 import java.util.ArrayList;
 import java.util.List;

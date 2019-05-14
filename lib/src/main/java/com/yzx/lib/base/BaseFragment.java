@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends LazyLoadFragment {
 
     private View rootView;
-    private Activity mActivity;
+    public Activity mActivity;
 
     @Nullable
     @Override
