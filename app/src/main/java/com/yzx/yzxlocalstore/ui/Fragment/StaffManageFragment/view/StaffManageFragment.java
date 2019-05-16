@@ -10,8 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.R;
+import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Adapter.StaffManageFragmentAdapter;
 import com.yzx.yzxlocalstore.ui.Fragment.StaffManageFragment.presenter.StaffManageFragmentPresenter;
@@ -20,6 +23,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by lyf on 2019/5/9.
@@ -63,11 +67,27 @@ public class StaffManageFragment extends BaseFragment implements IStaffManageFra
 
     @Override
     public void getStaffData(List<User> userList) {
-
-        adapter=new StaffManageFragmentAdapter(R.layout.item_staff_manage_fragment,userList);
+        adapter = new StaffManageFragmentAdapter(R.layout.item_staff_manage_fragment, userList);
         list.setAdapter(adapter);
         list.setLayoutManager(new LinearLayoutManager(mActivity));
 
+    }
+
+    /**
+     * 新增员工
+     */
+    @Override
+    public void routeAddStaffActivity() {
+        ARouter.getInstance().build(RouteMap.ROUTE_ADDSTAFF_ACTIVITY).navigation();
+    }
+
+    @OnClick({R.id.btn_add_staff})
+    void OnClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_add_staff://新增员工
+                staffManageFragmentPresenter.routeAddStaffActivity();
+                break;
+        }
     }
 
 }

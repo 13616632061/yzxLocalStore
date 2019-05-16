@@ -9,5 +9,7 @@ public class RouteMap {
     public static final String ROUTE_LOGIN_ACTIVITY = "/app/LoginActivity";
     public static final String ROUTE_MAIN_ACTIVITY = "/app/MainActivity";
     public static final String ROUTE_MANAGE_ACTIVITY = "/app/ManageActivity";
+    public static final String ROUTE_ADDSTAFF_ACTIVITY = "/app/AddStaffActivity";//新增员工
+
 
 }

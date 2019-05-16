@@ -40,7 +40,8 @@
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.Activity.ManageActivity.view.ManageActivity"></activity>
+        <activity android:name=".ui.Activity.ManageActivity.view.ManageActivity" />
+        <activity android:name=".ui.Activity.AddStaffActivity.AddStaffActivity"></activity>
     </application>
 
 </manifest>

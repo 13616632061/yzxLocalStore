@@ -25,15 +25,15 @@ android {
         }
     }
     greendao {
-        schemaVersion 3//数据库版本号
+        schemaVersion 4//数据库版本号
         daoPackage 'com.yzx.yzxlocalstore.greendao'//设置DaoMaster、DaoSession、Dao包名
         targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
 //        generateTests false //设置为true以自动生成单元测试。
 //        targetGenDirTests 'src.main.java' //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
     }
-    sourceSets{
-        main{
-            res.srcDirs=[
+    sourceSets {
+        main {
+            res.srcDirs = [
                     'src/main/res',
                     'src/main/res/common',
                     'src/main/res/layout',

@@ -8,4 +8,6 @@ public interface IStaffManageFragmentPresenter {
 
     //获取员工数据
     void getStaffData();
+    //新增员工
+    void routeAddStaffActivity();
 }

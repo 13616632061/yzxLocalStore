@@ -34,6 +34,9 @@ public class LoginModel implements ILoginModel {
         if (userList.size()<=0){
             User user=new User();
             user.setLevel(0);
+            user.setName("--");
+            user.setPhone("--");
+            user.setStatus(true);
             user.setAccount(adminName);
             user.setPwd(adminPwd);
             daoSession.insert(user);

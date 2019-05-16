@@ -1,5 +1,7 @@
 package com.yzx.yzxlocalstore.entity;
 
+import com.yzx.yzxlocalstore.constant.Constants;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -15,7 +17,9 @@ public class User {
     private Long id;//用户id
     private String number;//工号
     private String name;//姓名
+    private String phone;//手机号码
     private int level;//用户等级
+    private boolean status;//账号状态
     private boolean enable;//是否启用
     private double salesCommission;//销售提成
     private boolean isShowBuyingPrice;//是否显示进货价
@@ -26,15 +30,17 @@ public class User {
     private String account;//用户名
     private String pwd;//用户密码
 
-    @Generated(hash = 995623743)
-    public User(Long id, String number, String name, int level, boolean enable,
-            double salesCommission, boolean isShowBuyingPrice,
+    @Generated(hash = 57019867)
+    public User(Long id, String number, String name, String phone, int level, boolean status,
+            boolean enable, double salesCommission, boolean isShowBuyingPrice,
             boolean isShowBuyingProfit, boolean isShowBuyingStore, String account,
             String pwd) {
         this.id = id;
         this.number = number;
         this.name = name;
+        this.phone = phone;
         this.level = level;
+        this.status = status;
         this.enable = enable;
         this.salesCommission = salesCommission;
         this.isShowBuyingPrice = isShowBuyingPrice;
@@ -162,5 +168,47 @@ public class User {
 
     public void setIsShowBuyingStore(boolean isShowBuyingStore) {
         this.isShowBuyingStore = isShowBuyingStore;
+    }
+
+    /**
+     * 角色名称
+     *
+     * @return
+     */
+    public String getRoles() {
+        if (level == 0) {
+            return Constants.STAFFER_ROLES[0];
+        } else {
+            return Constants.STAFFER_ROLES[1];
+        }
+    }
+
+    /**
+     * 状态名称
+     *
+     * @return
+     */
+    public String getStatusName() {
+        if (status) {
+            return Constants.STAFFER_STATUS[0];
+        } else {
+            return Constants.STAFFER_STATUS[1];
+        }
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public boolean getStatus() {
+        return this.status;
     }
 }
