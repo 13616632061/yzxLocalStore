@@ -40,8 +40,18 @@
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.Activity.ManageActivity.view.ManageActivity" />
-        <activity android:name=".ui.Activity.AddStaffActivity.AddStaffActivity"></activity>
+        <!--管理页面-->
+        <activity
+            android:name=".ui.Activity.ManageActivity.view.ManageActivity"
+            android:configChanges="keyboardHidden"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" />
+        <!--新增员工-->
+        <activity
+            android:name=".ui.Activity.AddStaffActivity.AddStaffActivity"
+            android:configChanges="keyboardHidden"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

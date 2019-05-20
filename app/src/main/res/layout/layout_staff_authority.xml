@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_edit_gray"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_margin="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cash_authority"
+        android:textColor="@color/color_000000"
+        android:textSize="14sp" />
+
+    <com.yzx.lib.weight.WarpLinearLayout
+        android:id="@+id/layout_cash_authority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"></com.yzx.lib.weight.WarpLinearLayout>
+
+    <TextView
+        android:layout_margin="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/more_authority"
+        android:textColor="@color/color_000000"
+        android:textSize="14sp" />
+
+    <com.yzx.lib.weight.WarpLinearLayout
+        android:id="@+id/layout_more_authority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"></com.yzx.lib.weight.WarpLinearLayout>
+</LinearLayout>

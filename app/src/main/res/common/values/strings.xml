@@ -21,12 +21,26 @@
     <string name="tv_number">编号</string>
     <string name="name">姓名</string>
     <string name="phone_number">手机号码</string>
-    <string name="roles">角色</string>
+    <string name="roles">角色</string>@
     <string name="sales_commission">销售提成</string>
     <string name="states">状态</string>
     <string name="staff_roles_manage">员工角色管理</string>
     <string name="add_staff">新增员工</string>
     <string name="edit">编辑</string>
+    <string name="enabled">是否启用</string>
+    <string name="number_required">编号（必填）</string>
+    <string name="name_required">姓名（必填）</string>
+    <string name="pwd_required">密码（必填）</string>
+    <string name="pwd_sure">确定密码</string>
+    <string name="phone_required">手机号（必填）</string>
+    <string name="click_input_commission">点击输入提成</string>
+    <string name="sure">保存</string>
+    <string name="back">返回</string>
+    <string name="cash_authority">收银权限</string>
+    <string name="more_authority">更多权限</string>
+
+
+
 
 
 
