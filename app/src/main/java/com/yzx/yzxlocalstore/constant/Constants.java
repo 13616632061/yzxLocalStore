@@ -10,7 +10,10 @@ public class Constants {
     //员工管理分类
     public static String[] STAFFER_MANAGE_TYPE = new String[]{"员工管理", "敏感操作记录"};
     //员工角色
-    public static String[] STAFFER_ROLES=new String[]{"商家","员工"};
+    public static String[] STAFFER_ROLES = new String[]{"商家", "员工"};
     //员工状态
-    public static String[] STAFFER_STATUS=new String[]{"开启","禁用"};
+    public static String[] STAFFER_STATUS = new String[]{"开启", "禁用"};
+    //收银权限
+    public static String[] STAFFER_CASH_AUTHORITY = new String[]{"显示进货价", "显示利润", "显示库存"};
+
 }

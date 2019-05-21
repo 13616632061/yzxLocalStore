@@ -37,17 +37,14 @@
     <string name="sure">保存</string>
     <string name="back">返回</string>
     <string name="cash_authority">收银权限</string>
+    <string name="empty_staff_number">员工编号不能为空！</string>
     <string name="more_authority">更多权限</string>
-
-
-
-
-
-
-
-
-
-
+    <string name="empty_staff_name">员工名字不能为空！</string>
+    <string name="empty_staff_pwd">密码不能为空！</string>
+    <string name="empty_staff_sure">确定密码不能为空！</string>
+    <string name="empty_staff_phone">员工手机号码不能为空！</string>
+    <string name="empty_staff_salescommission">员工销售提成不能为空！</string>
+    <string name="pwd_equal_surepwd">两次密码不一致，请重新输入密码</string>
 
 
 </resources>

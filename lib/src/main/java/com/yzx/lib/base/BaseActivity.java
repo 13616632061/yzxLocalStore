@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private static Activity mCurrentActivity;
+    public static Activity mCurrentActivity;
 
     private static List<Activity> mActivities = new LinkedList<>();
 
