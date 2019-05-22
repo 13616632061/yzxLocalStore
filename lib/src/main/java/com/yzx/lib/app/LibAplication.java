@@ -26,6 +26,7 @@ public class LibAplication extends Application {
         ARouter.openDebug();
         ARouter.openDebug();
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
+
     }
 
     @Override

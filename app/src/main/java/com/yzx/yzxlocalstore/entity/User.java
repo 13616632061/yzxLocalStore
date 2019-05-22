@@ -18,7 +18,7 @@ public class User {
     private String number;//工号
     private String name;//姓名
     private String phone;//手机号码
-    private int level;//用户等级
+    private int level;//用户等级 0表示商户 1表示员工
     private boolean status;//账号状态
     private boolean enable;//是否启用
     private double salesCommission;//销售提成

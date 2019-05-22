@@ -45,6 +45,9 @@
     <string name="empty_staff_phone">员工手机号码不能为空！</string>
     <string name="empty_staff_salescommission">员工销售提成不能为空！</string>
     <string name="pwd_equal_surepwd">两次密码不一致，请重新输入密码</string>
+    <string name="add_success">新增成功</string>
+    <string name="staff_is_exite">员工编号已存在，请重新输入！</string>
+
 
 
 </resources>

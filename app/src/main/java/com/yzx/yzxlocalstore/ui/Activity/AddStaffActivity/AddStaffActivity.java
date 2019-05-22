@@ -21,12 +21,13 @@ import com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.view.IAddStaffActivity
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * 新增员工
  */
 @Route(path = RouteMap.ROUTE_ADDSTAFF_ACTIVITY)
-public class AddStaffActivity extends BaseActivity implements IAddStaffActivityView{
+public class AddStaffActivity extends BaseActivity implements IAddStaffActivityView {
 
 
     @InjectView(R.id.tv_back)
@@ -92,7 +93,7 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
         swStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isCheckedable[0] =isChecked;
+                isCheckedable[0] = isChecked;
             }
         });
         return isCheckedable[0];
@@ -130,17 +131,52 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
 
     @Override
     public void addStaffSuccess() {
-
+        showToast(getResources().getString(R.string.add_success));
+        finish();
     }
 
     @Override
     public void addStaffFail(int type) {
-        switch (type){
+        switch (type) {
             case 0:
                 showToast(getResources().getString(R.string.empty_staff_number));
                 break;
+            case 1:
+                showToast(getResources().getString(R.string.empty_staff_name));
+                break;
+            case 2:
+                showToast(getResources().getString(R.string.empty_staff_pwd));
+                break;
+            case 3:
+                showToast(getResources().getString(R.string.empty_staff_sure));
+                break;
+            case 4:
+                showToast(getResources().getString(R.string.empty_staff_phone));
+                break;
+            case 5:
+                showToast(getResources().getString(R.string.empty_staff_salescommission));
+                break;
+            case 6:
+                showToast(getResources().getString(R.string.pwd_equal_surepwd));
+                break;
+            case 7:
+                showToast(getResources().getString(R.string.staff_is_exite));
+                break;
         }
+
     }
 
+    @OnClick({R.id.btn_save})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_save:
+                addStaffActivityPresenter.submitStaffInfo();
+                break;
+            case R.id.tv_back:
+                finish();
+                break;
+
+        }
+    }
 
 }

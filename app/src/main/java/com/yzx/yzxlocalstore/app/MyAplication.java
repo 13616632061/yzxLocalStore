@@ -29,8 +29,8 @@ public class MyAplication extends LibAplication {
         daoSession = daoMaster.newSession();
     }
 
-    private DaoSession daoSession;
-    public DaoSession getDaoSession() {
+    private static DaoSession daoSession;
+    public static DaoSession getDaoSession() {
         return daoSession;
     }
 }
