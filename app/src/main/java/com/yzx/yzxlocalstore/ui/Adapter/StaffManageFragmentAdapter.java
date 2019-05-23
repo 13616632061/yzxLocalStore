@@ -27,7 +27,7 @@ public class StaffManageFragmentAdapter extends BaseQuickAdapter<User, BaseViewH
                 .setText(R.id.tv_name, item.getName())
                 .setText(R.id.tv_phone, item.getPhone())
                 .setText(R.id.tv_role, item.getRoles())
-                .setText(R.id.tv_sales_commission, item.getSalesCommission()+"")
+                .setText(R.id.tv_sales_commission, item.getSalesCommission()+"%")
                 .setText(R.id.tv_state, item.getStatusName());
     }
 }

@@ -66,6 +66,8 @@ dependencies {
     api rootProject.ext.dependencies["BottomBarLayout"]
     api rootProject.ext.dependencies["VerticalTabLayout"]
     api rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
+    api rootProject.ext.dependencies["eventbus"]
+
 
 
 

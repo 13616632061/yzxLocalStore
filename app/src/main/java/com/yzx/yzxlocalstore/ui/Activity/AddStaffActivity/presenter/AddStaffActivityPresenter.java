@@ -2,9 +2,13 @@ package com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.presenter;
 
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.yzx.lib.entity.MessageEvent;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.AddStaffActivity;
 import com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.model.AddStaffActivityModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by lyf on 2019/5/21.
@@ -66,11 +70,12 @@ public class AddStaffActivityPresenter implements IAddStaffActivityPresenter {
         user.setName(addStaffActivity.getName());
         user.setPwd(addStaffActivity.getPwd());
         user.setPhone(addStaffActivity.getPhone());
+        user.setSalesCommission(Double.parseDouble(addStaffActivity.getSalesCommission()));
         user.setLevel(1);
         user.setAccount(addStaffActivity.getNumber());
 
         addStaffActivityModel.addStaffInfo(user);
         addStaffActivity.addStaffSuccess();
-
+        EventBus.getDefault().post(new MessageEvent("addStaffSuccess", ""));
     }
 }

@@ -19,6 +19,11 @@ import com.blankj.utilcode.util.KeyboardUtils;
 import com.squareup.leakcanary.RefWatcher;
 import com.yzx.lib.R;
 import com.yzx.lib.app.LibAplication;
+import com.yzx.lib.entity.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -49,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         initView();
+        initListener();
 
     }
 
@@ -78,6 +84,14 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected abstract void initView();
 
+    /**
+     * 初始化监听
+     */
+    protected void initListener() {
+    }
+
+    ;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -106,6 +120,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         KeyboardUtils.hideSoftInput(this);
 
     }
+
 
     public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -156,4 +171,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return false;
     }
+
+
 }

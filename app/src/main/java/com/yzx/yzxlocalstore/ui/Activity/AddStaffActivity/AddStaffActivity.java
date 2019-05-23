@@ -10,6 +10,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.blankj.utilcode.util.LogUtils;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.lib.weight.WarpLinearLayout;
 import com.yzx.yzxlocalstore.R;
@@ -57,6 +58,7 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
     @InjectView(R.id.et_number)
     EditText etNumber;
 
+    private boolean isChecked;
     private AddStaffActivityPresenter addStaffActivityPresenter;
 
     @Override
@@ -68,6 +70,17 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
     protected void initView() {
         addStaffActivityPresenter = new AddStaffActivityPresenter(this);
         addStaffActivityPresenter.initCashAuthority();
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        swStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isCheckedable) {
+                isChecked = isCheckedable;
+            }
+        });
     }
 
     @Override
@@ -89,14 +102,7 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
 
     @Override
     public boolean isEnable() {
-        final boolean[] isCheckedable = new boolean[1];
-        swStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isCheckedable[0] = isChecked;
-            }
-        });
-        return isCheckedable[0];
+        return isChecked;
     }
 
     @Override
@@ -166,7 +172,7 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
 
     }
 
-    @OnClick({R.id.btn_save})
+    @OnClick({R.id.btn_save, R.id.tv_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_save:

@@ -1,27 +1,27 @@
 package com.yzx.yzxlocalstore.ui.Fragment.StaffManageFragment.view;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
+import com.yzx.lib.entity.MessageEvent;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Adapter.StaffManageFragmentAdapter;
 import com.yzx.yzxlocalstore.ui.Fragment.StaffManageFragment.presenter.StaffManageFragmentPresenter;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -56,6 +56,7 @@ public class StaffManageFragment extends BaseFragment implements IStaffManageFra
     @Override
     public void initView(View rootView) {
         super.initView(rootView);
+        EventBus.getDefault().register(this);
         staffManageFragmentPresenter = new StaffManageFragmentPresenter(this);
         staffManageFragmentPresenter.getStaffData();
     }
@@ -90,4 +91,17 @@ public class StaffManageFragment extends BaseFragment implements IStaffManageFra
         }
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(MessageEvent msg) {
+        if (msg.getKey().equals("addStaffSuccess")) {
+            staffManageFragmentPresenter.getStaffData();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

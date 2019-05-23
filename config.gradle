@@ -59,6 +59,8 @@ ext {
             "VerticalTabLayout"            : "q.rorbin:VerticalTabLayout:1.2.9",
             //RecyclerView适配器
             "BaseRecyclerViewAdapterHelper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34",
+            //eventbus
+            "eventbus"                     : "org.greenrobot:eventbus:3.0.0",
 
 
     ]
