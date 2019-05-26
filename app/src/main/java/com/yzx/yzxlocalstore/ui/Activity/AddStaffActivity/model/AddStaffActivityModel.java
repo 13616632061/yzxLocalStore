@@ -19,6 +19,11 @@ public class AddStaffActivityModel implements IAddStaffActivityModel {
     }
 
     @Override
+    public void updateStaffInfo(User user) {
+        MyAplication.getDaoSession().getUserDao().update(user);
+    }
+
+    @Override
     public boolean isExiteStaff(String number) {
         boolean isExite = false;
         QueryBuilder<User> userQueryBuilder = MyAplication.getDaoSession().queryBuilder(User.class);
@@ -27,5 +32,12 @@ public class AddStaffActivityModel implements IAddStaffActivityModel {
             isExite = true;
         }
         return isExite;
+    }
+
+    @Override
+    public List<User> getStaffInfo(long id) {
+        QueryBuilder<User> userQueryBuilder = MyAplication.getDaoSession().queryBuilder(User.class);
+        List<User> userList = userQueryBuilder.where(UserDao.Properties.Id.eq(id)).list();
+        return userList;
     }
 }

@@ -31,6 +31,7 @@ public abstract class BaseFragment extends LazyLoadFragment {
             ButterKnife.inject(this, rootView);
 
             initView(rootView);
+            initLisntener();
         } else {
             ViewGroup parent = (ViewGroup) rootView.getParent();
             if (parent != null) {
@@ -74,6 +75,11 @@ public abstract class BaseFragment extends LazyLoadFragment {
      */
     public void initView(View rootView) {
     }
+
+    /**
+     * 初始化监听
+     */
+    protected void initLisntener(){};
 
     @Override
     public void onDestroy() {

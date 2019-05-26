@@ -2,13 +2,16 @@ package com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.presenter;
 
 import android.text.TextUtils;
 
-import com.blankj.utilcode.util.LogUtils;
+import com.apkfuns.logutils.LogUtils;
 import com.yzx.lib.entity.MessageEvent;
+import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.entity.User;
-import com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.AddStaffActivity;
+import com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.view.AddStaffActivity;
 import com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.model.AddStaffActivityModel;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 /**
  * Created by lyf on 2019/5/21.
@@ -18,6 +21,8 @@ public class AddStaffActivityPresenter implements IAddStaffActivityPresenter {
 
     private AddStaffActivity addStaffActivity;
     private AddStaffActivityModel addStaffActivityModel;
+    private int level = 1;
+    private long id;
 
     public AddStaffActivityPresenter(AddStaffActivity addStaffActivity) {
         this.addStaffActivity = addStaffActivity;
@@ -30,7 +35,7 @@ public class AddStaffActivityPresenter implements IAddStaffActivityPresenter {
     }
 
     @Override
-    public void submitStaffInfo() {
+    public void submitStaffInfo(int type) {
 
         if (TextUtils.isEmpty(addStaffActivity.getNumber())) {//编号
             addStaffActivity.addStaffFail(0);
@@ -60,7 +65,7 @@ public class AddStaffActivityPresenter implements IAddStaffActivityPresenter {
             addStaffActivity.addStaffFail(6);//密码与确认密码是否一致
             return;
         }
-        if (addStaffActivityModel.isExiteStaff(addStaffActivity.getNumber())) {
+        if (type == 0 && addStaffActivityModel.isExiteStaff(addStaffActivity.getNumber())) {
             addStaffActivity.addStaffFail(7);//员工是否存在
             return;
         }
@@ -71,11 +76,36 @@ public class AddStaffActivityPresenter implements IAddStaffActivityPresenter {
         user.setPwd(addStaffActivity.getPwd());
         user.setPhone(addStaffActivity.getPhone());
         user.setSalesCommission(Double.parseDouble(addStaffActivity.getSalesCommission()));
-        user.setLevel(1);
-        user.setAccount(addStaffActivity.getNumber());
+        user.setLevel(level);
+        if (type == 0) {//新增
+            addStaffActivityModel.addStaffInfo(user);
+        } else if (type == 1) {
+            user.setId(id);
+            LogUtils.e(user);
+            addStaffActivityModel.updateStaffInfo(user);
+        }
 
-        addStaffActivityModel.addStaffInfo(user);
-        addStaffActivity.addStaffSuccess();
+        addStaffActivity.addStaffSuccess(type);
         EventBus.getDefault().post(new MessageEvent("addStaffSuccess", ""));
+    }
+
+    @Override
+    public void getStaffInfo(long id, int type) {
+        addStaffActivity.initTitle(type);
+        if (id == -1) {
+            addStaffActivity.setRoles(Constants.STAFFER_ROLES[1]);
+            return;
+        }
+        List<User> users = addStaffActivityModel.getStaffInfo(id);
+        addStaffActivity.setEnable(users.get(0).getStatus());
+        addStaffActivity.setNumber(users.get(0).getNumber());
+        addStaffActivity.setName(users.get(0).getName());
+        addStaffActivity.setPwd(users.get(0).getPwd());
+        addStaffActivity.setSurePwd(users.get(0).getPwd());
+        addStaffActivity.setPhone(users.get(0).getPhone());
+        addStaffActivity.setRoles(users.get(0).getRoles());
+        addStaffActivity.setSalesCommission(users.get(0).getSalesCommission() + "");
+        level = users.get(0).getLevel();
+        id=users.get(0).getId();
     }
 }

@@ -13,5 +13,7 @@ public interface IAddStaffActivityPresenter {
      */
     void initCashAuthority();
 
-    void submitStaffInfo();
+    void submitStaffInfo(int type);
+
+    void getStaffInfo(long id,int type);
 }

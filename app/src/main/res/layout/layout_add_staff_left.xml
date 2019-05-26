@@ -68,7 +68,7 @@
                 android:hint="@string/number_required"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/black"
+                android:textColor="@color/color_bebbbb"
                 android:textColorHint="@color/color_bebbbb"
                 android:textSize="14sp" />
 
@@ -105,7 +105,7 @@
                 android:hint="@string/name_required"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/black"
+                android:textColor="@color/color_bebbbb"
                 android:textColorHint="@color/color_bebbbb"
                 android:textSize="14sp" />
 
@@ -142,7 +142,7 @@
                 android:hint="@string/pwd_required"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/black"
+                android:textColor="@color/color_bebbbb"
                 android:textColorHint="@color/color_bebbbb"
                 android:textSize="14sp" />
 
@@ -178,7 +178,7 @@
                 android:hint="@string/pwd_required"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/black"
+                android:textColor="@color/color_bebbbb"
                 android:textColorHint="@color/color_bebbbb"
                 android:textSize="14sp" />
 
@@ -214,7 +214,7 @@
                 android:hint="@string/phone_required"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/black"
+                android:textColor="@color/color_bebbbb"
                 android:textColorHint="@color/color_bebbbb"
                 android:textSize="14sp" />
 
@@ -228,7 +228,6 @@
             android:layout_height="40dp">
 
             <TextView
-                android:id="@+id/tv_roles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -237,13 +236,14 @@
                 android:textColor="@color/color_000000"
                 android:textSize="14sp" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <TextView
+                android:id="@+id/tv_roles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:padding="10dp" />
+                android:layout_marginRight="15dp"
+                android:textColor="@color/color_bebbbb" />
 
         </RelativeLayout>
 
@@ -277,7 +277,7 @@
                 android:hint="@string/click_input_commission"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textColor="@color/black"
+                android:textColor="@color/color_bebbbb"
                 android:textColorHint="@color/color_bebbbb"
                 android:textSize="14sp" />
 
@@ -292,6 +292,7 @@
                 android:textSize="16sp" />
 
         </RelativeLayout>
+
         <include layout="@layout/layout_line_f4"></include>
 
     </LinearLayout>

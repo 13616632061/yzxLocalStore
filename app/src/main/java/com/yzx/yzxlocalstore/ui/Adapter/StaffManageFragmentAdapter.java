@@ -23,11 +23,13 @@ public class StaffManageFragmentAdapter extends BaseQuickAdapter<User, BaseViewH
     @Override
     protected void convert(BaseViewHolder helper, User item) {
         helper.setText(R.id.tv_serial_number, item.getId() + "")
-                .setText(R.id.tv_number, item.getAccount())
+                .setText(R.id.tv_number, item.getNumber())
                 .setText(R.id.tv_name, item.getName())
                 .setText(R.id.tv_phone, item.getPhone())
                 .setText(R.id.tv_role, item.getRoles())
                 .setText(R.id.tv_sales_commission, item.getSalesCommission()+"%")
                 .setText(R.id.tv_state, item.getStatusName());
+
+        helper.addOnClickListener(R.id.btn_edit);
     }
 }

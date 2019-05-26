@@ -48,7 +48,7 @@
             android:windowSoftInputMode="adjustPan" />
         <!--新增员工-->
         <activity
-            android:name=".ui.Activity.AddStaffActivity.AddStaffActivity"
+            android:name=".ui.Activity.AddStaffActivity.view.AddStaffActivity"
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"></activity>

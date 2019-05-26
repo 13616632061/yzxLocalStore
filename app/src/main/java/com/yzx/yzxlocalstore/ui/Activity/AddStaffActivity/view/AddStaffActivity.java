@@ -1,6 +1,6 @@
-package com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity;
+package com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.view;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -10,7 +10,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.blankj.utilcode.util.LogUtils;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.lib.weight.WarpLinearLayout;
 import com.yzx.yzxlocalstore.R;
@@ -18,9 +18,7 @@ import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.presenter.AddStaffActivityPresenter;
-import com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.view.IAddStaffActivityView;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -58,8 +56,11 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
     @InjectView(R.id.et_number)
     EditText etNumber;
 
+
     private boolean isChecked;
     private AddStaffActivityPresenter addStaffActivityPresenter;
+    private int type;
+    private long id;
 
     @Override
     public int getContentView() {
@@ -68,7 +69,13 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
 
     @Override
     protected void initView() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            type = intent.getIntExtra("type", 0);
+            id = intent.getLongExtra("id", -1);
+        }
         addStaffActivityPresenter = new AddStaffActivityPresenter(this);
+        addStaffActivityPresenter.getStaffInfo(id, type);
         addStaffActivityPresenter.initCashAuthority();
     }
 
@@ -101,9 +108,27 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
     }
 
     @Override
+    public void initTitle(int type) {
+        switch (type) {
+            case 0:
+                tvTitle.setText(R.string.add_staff);
+                break;
+            case 1:
+                tvTitle.setText(R.string.edit_staff);
+                break;
+        }
+    }
+
+    @Override
     public boolean isEnable() {
         return isChecked;
     }
+
+    @Override
+    public void setEnable(boolean enable) {
+        swStart.setChecked(enable);
+    }
+
 
     @Override
     public String getNumber() {
@@ -111,9 +136,21 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
     }
 
     @Override
+    public void setNumber(String number) {
+        etNumber.setText(number);
+    }
+
+
+    @Override
     public String getName() {
         return etName.getText().toString().trim();
     }
+
+    @Override
+    public void setName(String name) {
+        etName.setText(name);
+    }
+
 
     @Override
     public String getPwd() {
@@ -121,13 +158,35 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
     }
 
     @Override
+    public void setPwd(String pwd) {
+        etPwd.setText(pwd);
+    }
+
+
+    @Override
     public String getSurePwd() {
         return etSurePwd.getText().toString().trim();
     }
 
     @Override
+    public void setSurePwd(String surePwd) {
+        etSurePwd.setText(surePwd);
+    }
+
+    @Override
+    public void setRoles(String roles) {
+        tvRoles.setText(roles);
+    }
+
+
+    @Override
     public String getPhone() {
         return etPhone.getText().toString().trim();
+    }
+
+    @Override
+    public void setPhone(String phone) {
+        etPhone.setText(phone);
     }
 
     @Override
@@ -136,8 +195,22 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
     }
 
     @Override
-    public void addStaffSuccess() {
-        showToast(getResources().getString(R.string.add_success));
+    public void setSalesCommission(String salesCommission) {
+        etSalesCommission.setText(salesCommission);
+    }
+
+
+    @Override
+    public void addStaffSuccess(int type) {
+        switch (type) {
+            case 0:
+                showToast(getResources().getString(R.string.add_success));
+                break;
+            case 1:
+                showToast(getResources().getString(R.string.edit_success));
+                break;
+        }
+
         finish();
     }
 
@@ -176,7 +249,7 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_save:
-                addStaffActivityPresenter.submitStaffInfo();
+                addStaffActivityPresenter.submitStaffInfo(type);
                 break;
             case R.id.tv_back:
                 finish();

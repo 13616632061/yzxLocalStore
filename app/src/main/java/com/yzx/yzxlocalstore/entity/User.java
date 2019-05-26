@@ -15,38 +15,32 @@ import org.greenrobot.greendao.annotation.Unique;
 public class User {
     @Id(autoincrement = true)
     private Long id;//用户id
+    @Unique
     private String number;//工号
     private String name;//姓名
     private String phone;//手机号码
     private int level;//用户等级 0表示商户 1表示员工
     private boolean status;//账号状态
-    private boolean enable;//是否启用
     private double salesCommission;//销售提成
     private boolean isShowBuyingPrice;//是否显示进货价
     private boolean isShowBuyingProfit;//是否显示利润
     private boolean isShowBuyingStore;//是否显示库存
-
-    @Unique
-    private String account;//用户名
     private String pwd;//用户密码
 
-    @Generated(hash = 57019867)
+    @Generated(hash = 1560097334)
     public User(Long id, String number, String name, String phone, int level, boolean status,
-            boolean enable, double salesCommission, boolean isShowBuyingPrice,
-            boolean isShowBuyingProfit, boolean isShowBuyingStore, String account,
-            String pwd) {
+            double salesCommission, boolean isShowBuyingPrice, boolean isShowBuyingProfit,
+            boolean isShowBuyingStore, String pwd) {
         this.id = id;
         this.number = number;
         this.name = name;
         this.phone = phone;
         this.level = level;
         this.status = status;
-        this.enable = enable;
         this.salesCommission = salesCommission;
         this.isShowBuyingPrice = isShowBuyingPrice;
         this.isShowBuyingProfit = isShowBuyingProfit;
         this.isShowBuyingStore = isShowBuyingStore;
-        this.account = account;
         this.pwd = pwd;
     }
 
@@ -54,13 +48,6 @@ public class User {
     public User() {
     }
 
-    public boolean isEnable() {
-        return enable;
-    }
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
 
     public double getSalesCommission() {
         return salesCommission;
@@ -134,17 +121,7 @@ public class User {
         this.number = number;
     }
 
-    public String getAccount() {
-        return this.account;
-    }
 
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public boolean getEnable() {
-        return this.enable;
-    }
 
     public boolean getIsShowBuyingPrice() {
         return this.isShowBuyingPrice;

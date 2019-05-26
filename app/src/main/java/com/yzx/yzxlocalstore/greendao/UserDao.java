@@ -30,13 +30,11 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Phone = new Property(3, String.class, "phone", false, "PHONE");
         public final static Property Level = new Property(4, int.class, "level", false, "LEVEL");
         public final static Property Status = new Property(5, boolean.class, "status", false, "STATUS");
-        public final static Property Enable = new Property(6, boolean.class, "enable", false, "ENABLE");
-        public final static Property SalesCommission = new Property(7, double.class, "salesCommission", false, "SALES_COMMISSION");
-        public final static Property IsShowBuyingPrice = new Property(8, boolean.class, "isShowBuyingPrice", false, "IS_SHOW_BUYING_PRICE");
-        public final static Property IsShowBuyingProfit = new Property(9, boolean.class, "isShowBuyingProfit", false, "IS_SHOW_BUYING_PROFIT");
-        public final static Property IsShowBuyingStore = new Property(10, boolean.class, "isShowBuyingStore", false, "IS_SHOW_BUYING_STORE");
-        public final static Property Account = new Property(11, String.class, "account", false, "ACCOUNT");
-        public final static Property Pwd = new Property(12, String.class, "pwd", false, "PWD");
+        public final static Property SalesCommission = new Property(6, double.class, "salesCommission", false, "SALES_COMMISSION");
+        public final static Property IsShowBuyingPrice = new Property(7, boolean.class, "isShowBuyingPrice", false, "IS_SHOW_BUYING_PRICE");
+        public final static Property IsShowBuyingProfit = new Property(8, boolean.class, "isShowBuyingProfit", false, "IS_SHOW_BUYING_PROFIT");
+        public final static Property IsShowBuyingStore = new Property(9, boolean.class, "isShowBuyingStore", false, "IS_SHOW_BUYING_STORE");
+        public final static Property Pwd = new Property(10, String.class, "pwd", false, "PWD");
     }
 
 
@@ -53,18 +51,16 @@ public class UserDao extends AbstractDao<User, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"NUMBER\" TEXT," + // 1: number
+                "\"NUMBER\" TEXT UNIQUE ," + // 1: number
                 "\"NAME\" TEXT," + // 2: name
                 "\"PHONE\" TEXT," + // 3: phone
                 "\"LEVEL\" INTEGER NOT NULL ," + // 4: level
                 "\"STATUS\" INTEGER NOT NULL ," + // 5: status
-                "\"ENABLE\" INTEGER NOT NULL ," + // 6: enable
-                "\"SALES_COMMISSION\" REAL NOT NULL ," + // 7: salesCommission
-                "\"IS_SHOW_BUYING_PRICE\" INTEGER NOT NULL ," + // 8: isShowBuyingPrice
-                "\"IS_SHOW_BUYING_PROFIT\" INTEGER NOT NULL ," + // 9: isShowBuyingProfit
-                "\"IS_SHOW_BUYING_STORE\" INTEGER NOT NULL ," + // 10: isShowBuyingStore
-                "\"ACCOUNT\" TEXT UNIQUE ," + // 11: account
-                "\"PWD\" TEXT);"); // 12: pwd
+                "\"SALES_COMMISSION\" REAL NOT NULL ," + // 6: salesCommission
+                "\"IS_SHOW_BUYING_PRICE\" INTEGER NOT NULL ," + // 7: isShowBuyingPrice
+                "\"IS_SHOW_BUYING_PROFIT\" INTEGER NOT NULL ," + // 8: isShowBuyingProfit
+                "\"IS_SHOW_BUYING_STORE\" INTEGER NOT NULL ," + // 9: isShowBuyingStore
+                "\"PWD\" TEXT);"); // 10: pwd
     }
 
     /** Drops the underlying database table. */
@@ -98,20 +94,14 @@ public class UserDao extends AbstractDao<User, Long> {
         }
         stmt.bindLong(5, entity.getLevel());
         stmt.bindLong(6, entity.getStatus() ? 1L: 0L);
-        stmt.bindLong(7, entity.getEnable() ? 1L: 0L);
-        stmt.bindDouble(8, entity.getSalesCommission());
-        stmt.bindLong(9, entity.getIsShowBuyingPrice() ? 1L: 0L);
-        stmt.bindLong(10, entity.getIsShowBuyingProfit() ? 1L: 0L);
-        stmt.bindLong(11, entity.getIsShowBuyingStore() ? 1L: 0L);
- 
-        String account = entity.getAccount();
-        if (account != null) {
-            stmt.bindString(12, account);
-        }
+        stmt.bindDouble(7, entity.getSalesCommission());
+        stmt.bindLong(8, entity.getIsShowBuyingPrice() ? 1L: 0L);
+        stmt.bindLong(9, entity.getIsShowBuyingProfit() ? 1L: 0L);
+        stmt.bindLong(10, entity.getIsShowBuyingStore() ? 1L: 0L);
  
         String pwd = entity.getPwd();
         if (pwd != null) {
-            stmt.bindString(13, pwd);
+            stmt.bindString(11, pwd);
         }
     }
 
@@ -140,20 +130,14 @@ public class UserDao extends AbstractDao<User, Long> {
         }
         stmt.bindLong(5, entity.getLevel());
         stmt.bindLong(6, entity.getStatus() ? 1L: 0L);
-        stmt.bindLong(7, entity.getEnable() ? 1L: 0L);
-        stmt.bindDouble(8, entity.getSalesCommission());
-        stmt.bindLong(9, entity.getIsShowBuyingPrice() ? 1L: 0L);
-        stmt.bindLong(10, entity.getIsShowBuyingProfit() ? 1L: 0L);
-        stmt.bindLong(11, entity.getIsShowBuyingStore() ? 1L: 0L);
- 
-        String account = entity.getAccount();
-        if (account != null) {
-            stmt.bindString(12, account);
-        }
+        stmt.bindDouble(7, entity.getSalesCommission());
+        stmt.bindLong(8, entity.getIsShowBuyingPrice() ? 1L: 0L);
+        stmt.bindLong(9, entity.getIsShowBuyingProfit() ? 1L: 0L);
+        stmt.bindLong(10, entity.getIsShowBuyingStore() ? 1L: 0L);
  
         String pwd = entity.getPwd();
         if (pwd != null) {
-            stmt.bindString(13, pwd);
+            stmt.bindString(11, pwd);
         }
     }
 
@@ -171,13 +155,11 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // phone
             cursor.getInt(offset + 4), // level
             cursor.getShort(offset + 5) != 0, // status
-            cursor.getShort(offset + 6) != 0, // enable
-            cursor.getDouble(offset + 7), // salesCommission
-            cursor.getShort(offset + 8) != 0, // isShowBuyingPrice
-            cursor.getShort(offset + 9) != 0, // isShowBuyingProfit
-            cursor.getShort(offset + 10) != 0, // isShowBuyingStore
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // account
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // pwd
+            cursor.getDouble(offset + 6), // salesCommission
+            cursor.getShort(offset + 7) != 0, // isShowBuyingPrice
+            cursor.getShort(offset + 8) != 0, // isShowBuyingProfit
+            cursor.getShort(offset + 9) != 0, // isShowBuyingStore
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // pwd
         );
         return entity;
     }
@@ -190,13 +172,11 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setPhone(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setLevel(cursor.getInt(offset + 4));
         entity.setStatus(cursor.getShort(offset + 5) != 0);
-        entity.setEnable(cursor.getShort(offset + 6) != 0);
-        entity.setSalesCommission(cursor.getDouble(offset + 7));
-        entity.setIsShowBuyingPrice(cursor.getShort(offset + 8) != 0);
-        entity.setIsShowBuyingProfit(cursor.getShort(offset + 9) != 0);
-        entity.setIsShowBuyingStore(cursor.getShort(offset + 10) != 0);
-        entity.setAccount(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setPwd(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setSalesCommission(cursor.getDouble(offset + 6));
+        entity.setIsShowBuyingPrice(cursor.getShort(offset + 7) != 0);
+        entity.setIsShowBuyingProfit(cursor.getShort(offset + 8) != 0);
+        entity.setIsShowBuyingStore(cursor.getShort(offset + 9) != 0);
+        entity.setPwd(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }
     
     @Override

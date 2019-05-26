@@ -8,8 +8,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.R;
+import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.lib.entity.MessageEvent;
 import com.yzx.yzxlocalstore.entity.User;
@@ -62,25 +64,40 @@ public class StaffManageFragment extends BaseFragment implements IStaffManageFra
     }
 
     @Override
+    protected void initLisntener() {
+        super.initLisntener();
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.btn_edit:
+                        staffManageFragmentPresenter.routeEditStaffActivity(position);
+                        break;
+                }
+            }
+        });
+
+    }
+
+    @Override
     protected void loadData() {
 
     }
 
+
     @Override
     public void getStaffData(List<User> userList) {
-        adapter = new StaffManageFragmentAdapter(R.layout.item_staff_manage_fragment, userList);
-        list.setAdapter(adapter);
-        list.setLayoutManager(new LinearLayoutManager(mActivity));
+        if (adapter == null) {
+            adapter = new StaffManageFragmentAdapter(R.layout.item_staff_manage_fragment, userList);
+            list.setAdapter(adapter);
+            list.setLayoutManager(new LinearLayoutManager(mActivity));
+        } else {
+            adapter.notifyDataSetChanged();
+        }
+
 
     }
 
-    /**
-     * 新增员工
-     */
-    @Override
-    public void routeAddStaffActivity() {
-        ARouter.getInstance().build(RouteMap.ROUTE_ADDSTAFF_ACTIVITY).navigation();
-    }
 
     @OnClick({R.id.btn_add_staff})
     void OnClick(View view) {

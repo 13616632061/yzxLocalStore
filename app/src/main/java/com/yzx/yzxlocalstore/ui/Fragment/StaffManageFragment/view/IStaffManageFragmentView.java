@@ -12,6 +12,4 @@ public interface IStaffManageFragmentView {
 
     void getStaffData(List<User> userList);
 
-    //新增员工
-    void routeAddStaffActivity();
 }
