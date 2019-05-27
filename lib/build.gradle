@@ -18,7 +18,8 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
-
+//         64k
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -67,6 +68,7 @@ dependencies {
     api rootProject.ext.dependencies["VerticalTabLayout"]
     api rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
     api rootProject.ext.dependencies["eventbus"]
+    api rootProject.ext.dependencies["multidex"]
 
 
 

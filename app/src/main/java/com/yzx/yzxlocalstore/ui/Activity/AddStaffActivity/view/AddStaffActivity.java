@@ -59,8 +59,8 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
 
     private boolean isChecked;
     private AddStaffActivityPresenter addStaffActivityPresenter;
-    private int type;
-    private long id;
+    private int type = 0;
+    private long id = -1;
 
     @Override
     public int getContentView() {

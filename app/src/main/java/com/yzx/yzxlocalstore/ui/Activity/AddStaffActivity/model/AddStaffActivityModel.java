@@ -1,7 +1,10 @@
 package com.yzx.yzxlocalstore.ui.Activity.AddStaffActivity.model;
 
+import android.content.Context;
+
 import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.entity.User;
+import com.yzx.yzxlocalstore.greendao.DaoSession;
 import com.yzx.yzxlocalstore.greendao.UserDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -13,9 +16,18 @@ import java.util.List;
  */
 
 public class AddStaffActivityModel implements IAddStaffActivityModel {
+//    private Context context;
+//    private DaoSession daoSession;
+//
+//    public AddStaffActivityModel(Context context) {
+//        this.context = context;
+//        daoSession = ((MyAplication) context.getApplicationContext()).getDaoSession();
+//    }
+
     @Override
     public void addStaffInfo(User user) {
         MyAplication.getDaoSession().getUserDao().insert(user);
+
     }
 
     @Override

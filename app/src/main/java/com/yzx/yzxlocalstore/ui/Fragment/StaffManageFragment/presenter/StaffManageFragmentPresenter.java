@@ -21,7 +21,6 @@ public class StaffManageFragmentPresenter implements IStaffManageFragmentPresent
     private Activity mActivity;
     private StaffManageFragmentModel staffManageFragmentModel;
     private StaffManageFragment staffManageFragment;
-    private List<User> userList;
 
     public StaffManageFragmentPresenter(StaffManageFragment staffManageFragment) {
         this.staffManageFragment = staffManageFragment;
@@ -30,7 +29,7 @@ public class StaffManageFragmentPresenter implements IStaffManageFragmentPresent
 
     @Override
     public void getStaffData() {
-        userList = staffManageFragmentModel.getStaffData(staffManageFragment.getContext());
+        List<User> userList = staffManageFragmentModel.getStaffData(staffManageFragment.getContext());
         staffManageFragment.getStaffData(userList);
 
     }
@@ -43,10 +42,10 @@ public class StaffManageFragmentPresenter implements IStaffManageFragmentPresent
     }
 
     @Override
-    public void routeEditStaffActivity(int position) {
+    public void routeEditStaffActivity(long id) {
         ARouter.getInstance().build(RouteMap.ROUTE_ADDSTAFF_ACTIVITY)
                 .withInt("type",1)
-                .withLong("id",userList.get(position).getId())
+                .withLong("id",id)
                 .navigation();
     }
 }

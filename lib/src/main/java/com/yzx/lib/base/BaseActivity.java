@@ -102,7 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mCurrentActivity = null;
+//        mCurrentActivity = null;
     }
 
     @Override
@@ -123,7 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     /**

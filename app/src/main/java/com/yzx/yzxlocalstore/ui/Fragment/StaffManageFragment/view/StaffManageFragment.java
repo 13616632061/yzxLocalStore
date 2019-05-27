@@ -22,6 +22,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -49,6 +50,7 @@ public class StaffManageFragment extends BaseFragment implements IStaffManageFra
     Button btnAddStaff;
     private StaffManageFragmentPresenter staffManageFragmentPresenter;
     private StaffManageFragmentAdapter adapter;
+    private List<User> mUserList = new ArrayList<>();
 
     @Override
     protected int setContentViewId() {
@@ -71,7 +73,7 @@ public class StaffManageFragment extends BaseFragment implements IStaffManageFra
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.btn_edit:
-                        staffManageFragmentPresenter.routeEditStaffActivity(position);
+                        staffManageFragmentPresenter.routeEditStaffActivity(mUserList.get(position).getId());
                         break;
                 }
             }
@@ -87,8 +89,10 @@ public class StaffManageFragment extends BaseFragment implements IStaffManageFra
 
     @Override
     public void getStaffData(List<User> userList) {
+        mUserList.clear();
+        mUserList.addAll(userList);
         if (adapter == null) {
-            adapter = new StaffManageFragmentAdapter(R.layout.item_staff_manage_fragment, userList);
+            adapter = new StaffManageFragmentAdapter(R.layout.item_staff_manage_fragment, mUserList);
             list.setAdapter(adapter);
             list.setLayoutManager(new LinearLayoutManager(mActivity));
         } else {

@@ -21,8 +21,7 @@ public class AddStaffActivityPresenter implements IAddStaffActivityPresenter {
 
     private AddStaffActivity addStaffActivity;
     private AddStaffActivityModel addStaffActivityModel;
-    private int level = 1;
-    private long id;
+    private List<User> users;
 
     public AddStaffActivityPresenter(AddStaffActivity addStaffActivity) {
         this.addStaffActivity = addStaffActivity;
@@ -69,24 +68,34 @@ public class AddStaffActivityPresenter implements IAddStaffActivityPresenter {
             addStaffActivity.addStaffFail(7);//员工是否存在
             return;
         }
-        User user = new User();
-        user.setStatus(addStaffActivity.isEnable());
-        user.setNumber(addStaffActivity.getNumber());
-        user.setName(addStaffActivity.getName());
-        user.setPwd(addStaffActivity.getPwd());
-        user.setPhone(addStaffActivity.getPhone());
-        user.setSalesCommission(Double.parseDouble(addStaffActivity.getSalesCommission()));
-        user.setLevel(level);
+
         if (type == 0) {//新增
+            User user = new User();
+            user.setStatus(addStaffActivity.isEnable());
+            user.setNumber(addStaffActivity.getNumber());
+            user.setName(addStaffActivity.getName());
+            user.setPwd(addStaffActivity.getPwd());
+            user.setPhone(addStaffActivity.getPhone());
+            user.setSalesCommission(Double.parseDouble(addStaffActivity.getSalesCommission()));
+            user.setLevel(1);
             addStaffActivityModel.addStaffInfo(user);
-        } else if (type == 1) {
-            user.setId(id);
-            LogUtils.e(user);
-            addStaffActivityModel.updateStaffInfo(user);
+        } else if (type == 1) {//编辑
+            LogUtils.e(users);
+            users.get(0).setStatus(addStaffActivity.isEnable());
+            users.get(0).setStatus(addStaffActivity.isEnable());
+            users.get(0).setNumber(addStaffActivity.getNumber());
+            users.get(0).setName(addStaffActivity.getName());
+            users.get(0).setPwd(addStaffActivity.getPwd());
+            users.get(0).setPhone(addStaffActivity.getPhone());
+            users.get(0).setSalesCommission(Double.parseDouble(addStaffActivity.getSalesCommission()));
+            addStaffActivityModel.updateStaffInfo(users.get(0));
         }
 
-        addStaffActivity.addStaffSuccess(type);
-        EventBus.getDefault().post(new MessageEvent("addStaffSuccess", ""));
+        if (addStaffActivityModel.isExiteStaff(addStaffActivity.getNumber())) {
+            addStaffActivity.addStaffSuccess(type);
+            EventBus.getDefault().post(new MessageEvent("addStaffSuccess", ""));
+        }
+
     }
 
     @Override
@@ -96,16 +105,16 @@ public class AddStaffActivityPresenter implements IAddStaffActivityPresenter {
             addStaffActivity.setRoles(Constants.STAFFER_ROLES[1]);
             return;
         }
-        List<User> users = addStaffActivityModel.getStaffInfo(id);
-        addStaffActivity.setEnable(users.get(0).getStatus());
-        addStaffActivity.setNumber(users.get(0).getNumber());
-        addStaffActivity.setName(users.get(0).getName());
-        addStaffActivity.setPwd(users.get(0).getPwd());
-        addStaffActivity.setSurePwd(users.get(0).getPwd());
-        addStaffActivity.setPhone(users.get(0).getPhone());
-        addStaffActivity.setRoles(users.get(0).getRoles());
-        addStaffActivity.setSalesCommission(users.get(0).getSalesCommission() + "");
-        level = users.get(0).getLevel();
-        id=users.get(0).getId();
+        users = addStaffActivityModel.getStaffInfo(id);
+        if (users.size() > 0) {
+            addStaffActivity.setEnable(users.get(0).getStatus());
+            addStaffActivity.setNumber(users.get(0).getNumber());
+            addStaffActivity.setName(users.get(0).getName());
+            addStaffActivity.setPwd(users.get(0).getPwd());
+            addStaffActivity.setSurePwd(users.get(0).getPwd());
+            addStaffActivity.setPhone(users.get(0).getPhone());
+            addStaffActivity.setRoles(users.get(0).getRoles());
+            addStaffActivity.setSalesCommission(users.get(0).getSalesCommission() + "");
+        }
     }
 }

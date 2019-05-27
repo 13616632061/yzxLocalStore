@@ -17,5 +17,5 @@ public interface IStaffManageFragmentPresenter {
     void routeAddStaffActivity();
 
     //编辑员工
-    void routeEditStaffActivity(int position);
+    void routeEditStaffActivity(long id);
 }

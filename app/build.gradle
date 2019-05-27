@@ -17,6 +17,8 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+        //         64k
+        multiDexEnabled true
     }
     buildTypes {
         release {
