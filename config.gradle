@@ -61,6 +61,8 @@ ext {
             "BaseRecyclerViewAdapterHelper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34",
             //eventbus
             "eventbus"                     : "org.greenrobot:eventbus:3.0.0",
+            //拖动排序
+            "ChannelView"                  : "com.github.chengzhicao:ChannelView:v1.0.7",
 
 
     ]

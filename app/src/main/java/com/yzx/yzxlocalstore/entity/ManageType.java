@@ -9,10 +9,18 @@ import android.graphics.drawable.Drawable;
 
 public class ManageType {
     private String name;
+    private String channelTag;
     private int  selectIcon;
     private int  unSelectIcon;
     private boolean isShow;
 
+    public String getChannelTag() {
+        return channelTag;
+    }
+
+    public void setChannelTag(String channelTag) {
+        this.channelTag = channelTag;
+    }
 
     public String getName() {
         return name;

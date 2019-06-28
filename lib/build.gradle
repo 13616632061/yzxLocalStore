@@ -69,6 +69,7 @@ dependencies {
     api rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
     api rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["multidex"]
+    api rootProject.ext.dependencies["ChannelView"]
 
 
 
