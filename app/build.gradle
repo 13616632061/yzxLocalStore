@@ -53,5 +53,5 @@ dependencies {
     api rootProject.ext.dependencies["arouter"]
     annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
     implementation project(':lib')
-
+    implementation project(':channelview')
 }
