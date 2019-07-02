@@ -33,7 +33,7 @@ public class LoginModel implements ILoginModel {
         DaoSession daoSession = ((MyAplication) context.getApplicationContext()).getDaoSession();
         QueryBuilder<User> userQueryBuilder=daoSession.queryBuilder(User.class);
         List<User> userList=userQueryBuilder.where(UserDao.Properties.Number.eq(adminName)).list();
-        LogUtils.e(userList);
+//        LogUtils.e(userList);
         if (userList.size()<=0){
             User user=new User();
             user.setLevel(0);

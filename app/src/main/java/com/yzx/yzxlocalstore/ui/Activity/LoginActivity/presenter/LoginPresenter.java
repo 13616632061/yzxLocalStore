@@ -2,6 +2,7 @@ package com.yzx.yzxlocalstore.ui.Activity.LoginActivity.presenter;
 
 import android.text.TextUtils;
 
+import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.model.LoginModel;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view.LoginActivity;
@@ -36,6 +37,7 @@ public class LoginPresenter implements ILoginPresenter {
 
         if (users.size() > 0) {
             loginActivity.LoginSuccess();
+            Constants.loginUserInfo = users.get(0);
         } else {
             loginActivity.LoginFail(2);
         }

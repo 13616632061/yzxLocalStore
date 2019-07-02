@@ -35,7 +35,7 @@
     <string name="pwd_sure">确定密码</string>
     <string name="phone_required">手机号（必填）</string>
     <string name="click_input_commission">点击输入提成</string>
-    <string name="sure">保存</string>
+    <string name="save">保存</string>
     <string name="back">返回</string>
     <string name="cash_authority">收银权限</string>
     <string name="empty_staff_number">员工编号不能为空！</string>
@@ -48,8 +48,16 @@
     <string name="pwd_equal_surepwd">两次密码不一致，请重新输入密码</string>
     <string name="add_success">新增成功</string>
     <string name="edit_success">编辑成功</string>
-
     <string name="staff_is_exite">员工编号已存在，请重新输入！</string>
+    <string name="goods_manage">商品管理</string>
+    <string name="goods_type">商品分类</string>
+    <string name="type_name">分类名</string>
+    <string name="sort">排序</string>
+    <string name="add">新增</string>
+    <string name="delete">删除</string>
+    <string name="add_goods_type">添加商品分类</string>
+    <string name="cancel">取消</string>
+    <string name="sure">确定</string>
 
 
 </resources>

@@ -12,5 +12,7 @@
     <!--黑色-->
     <color name="black">#000000</color>
 
+    <color name="color_FF4500">#FF4500</color>
+
 
 </resources>

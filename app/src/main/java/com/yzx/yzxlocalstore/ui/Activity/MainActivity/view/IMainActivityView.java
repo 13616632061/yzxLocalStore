@@ -1,4 +1,4 @@
-package com.yzx.yzxlocalstore.ui.Activity.MainActivity.view.view;
+package com.yzx.yzxlocalstore.ui.Activity.MainActivity.view;
 
 /**
  * Created by Administrator on 2019/6/28.

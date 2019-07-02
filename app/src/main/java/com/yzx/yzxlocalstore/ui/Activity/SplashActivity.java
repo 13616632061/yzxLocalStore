@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
+import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view.LoginActivity;
 
@@ -33,8 +35,12 @@ public class SplashActivity extends BaseActivity {
             finish();
             return;
         }
-        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(intent);
+        if (Constants.loginUserInfo == null) {
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(intent);
+        } else {
+            ARouter.getInstance().build(RouteMap.ROUTE_MAIN_ACTIVITY).navigation();
+        }
         finish();
     }
 

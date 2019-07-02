@@ -29,7 +29,7 @@
         </activity>
         <!-- 收银主页面 -->
         <activity
-            android:name=".ui.Activity.MainActivity.view.view.MainActivity"
+            android:name=".ui.Activity.MainActivity.view.MainActivity"
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -40,18 +40,19 @@
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
-        <!--管理页面-->
+        <!-- 管理页面 -->
         <activity
             android:name=".ui.Activity.ManageActivity.view.ManageActivity"
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
-        <!--新增员工-->
+        <!-- 新增员工 -->
         <activity
             android:name=".ui.Activity.AddStaffActivity.view.AddStaffActivity"
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ui.Activity.GoodsManage.GoodsInfoManageActivity.view.GoodsInfoManageActivity"></activity>
     </application>
 
 </manifest>

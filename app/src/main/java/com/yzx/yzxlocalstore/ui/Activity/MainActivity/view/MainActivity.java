@@ -1,16 +1,13 @@
-package com.yzx.yzxlocalstore.ui.Activity.MainActivity.view.view;
+package com.yzx.yzxlocalstore.ui.Activity.MainActivity.view;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
-import com.yzx.yzxlocalstore.ui.Activity.MainActivity.view.presenter.MainActivityPresenter;
+import com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter.MainActivityPresenter;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow;
 
 import butterknife.OnClick;
@@ -28,6 +25,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     @Override
     protected void initView() {
         mPresenter = new MainActivityPresenter(this);
+        mPresenter.getTypeChannel();
     }
 
     @OnClick({R.id.btn_more})
@@ -43,7 +41,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     //显示更多分类信息
     @Override
     public void showMoreTypeChannel() {
-        MainMenuPopWindow menuPopWindow = new MainMenuPopWindow(this);
+        MainMenuPopWindow menuPopWindow = new MainMenuPopWindow(this,mPresenter);
         menuPopWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.NO_GRAVITY, 0, 0);
 
     }

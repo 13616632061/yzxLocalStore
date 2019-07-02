@@ -61,6 +61,9 @@ public class ManageFragmentAdapter extends FragmentPagerAdapter implements TabAd
             case 1:
                 tabView.setContent(Constants.STAFFER_MANAGE_TYPE[position]);
                 break;
+            case 2:
+                tabView.setContent(Constants.GOODS_MANAGE_TYPE[position]);
+                break;
         }
         return tabView.setTextColor(0xFFf5260b, 0xFF757575)
                 .setTextSize(15)
@@ -83,6 +86,9 @@ public class ManageFragmentAdapter extends FragmentPagerAdapter implements TabAd
                 break;
             case 1://员工管理类别
                 title = Constants.STAFFER_MANAGE_TYPE[position];
+                break;
+            case 2://商品管理分类
+                title = Constants.GOODS_MANAGE_TYPE[position];
                 break;
         }
         return title;
