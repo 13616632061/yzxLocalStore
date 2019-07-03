@@ -1,5 +1,7 @@
 package com.yzx.yzxlocalstore.entity;
 
+import android.support.annotation.NonNull;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
@@ -9,13 +11,13 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 
 @Entity
-public class GoodsType {
+public class GoodsType implements Comparable<GoodsType>{
 
     @Id(autoincrement = true)
     private Long id;
     private String typeName;
     private int sort;
-    private boolean status;
+    private boolean status=true;
     private boolean isSelect;
     @Generated(hash = 1029656508)
     public GoodsType(Long id, String typeName, int sort, boolean status,
@@ -61,4 +63,8 @@ public class GoodsType {
     }
 
 
+    @Override
+    public int compareTo(@NonNull GoodsType goodsType) {
+        return this.sort-goodsType.getSort();
+    }
 }

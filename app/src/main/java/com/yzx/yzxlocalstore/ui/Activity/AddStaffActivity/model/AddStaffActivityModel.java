@@ -16,13 +16,7 @@ import java.util.List;
  */
 
 public class AddStaffActivityModel implements IAddStaffActivityModel {
-//    private Context context;
-//    private DaoSession daoSession;
-//
-//    public AddStaffActivityModel(Context context) {
-//        this.context = context;
-//        daoSession = ((MyAplication) context.getApplicationContext()).getDaoSession();
-//    }
+
 
     @Override
     public void addStaffInfo(User user) {

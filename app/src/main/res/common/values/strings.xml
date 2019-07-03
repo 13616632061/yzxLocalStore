@@ -56,8 +56,17 @@
     <string name="add">新增</string>
     <string name="delete">删除</string>
     <string name="add_goods_type">添加商品分类</string>
+    <string name="edit_goods_type">编辑商品分类</string>
     <string name="cancel">取消</string>
     <string name="sure">确定</string>
+    <string name="input_goods_type_name">请输入分类名</string>
+    <string name="input_goods_type_sort">请输入排序</string>
+    <string name="goods_type_name_exist">分类名已存在，请重新输入！</string>
+    <string name="all">共</string>
+    <string name="strip">条</string>
+    <string name="status">状态</string>
+    <string name="enable">启用</string>
+    <string name="forbidden">禁用</string>
 
 
 </resources>

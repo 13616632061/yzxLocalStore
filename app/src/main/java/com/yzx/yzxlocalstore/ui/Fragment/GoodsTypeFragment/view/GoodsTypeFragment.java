@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.entity.GoodsType;
@@ -40,6 +41,7 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
     private List<GoodsType> datas = new ArrayList<>();
     private Context mContext;
     private GoodsTypeFragmentPresenter mPresenter;
+    private boolean isAllSelect = false;//是否全选
 
     @Override
     protected int setContentViewId() {
@@ -56,16 +58,17 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
 
     @Override
     protected void loadData() {
-
+        mPresenter.getGoodsTypeInfo();
     }
 
     @OnClick({R.id.iv_all_select, R.id.btn_add, R.id.btn_delete})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_all_select:
+                mPresenter.editGoodsTypeSelectStatus(0, 0);
                 break;
             case R.id.btn_add:
-                mPresenter.addGoodsType();
+                mPresenter.showGoodsTypePopWindow(1, null);
                 break;
             case R.id.btn_delete:
                 break;
@@ -78,12 +81,41 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
         mAdapter = new GoodsTypeFragmentAdapter(R.layout.layout_goods_type_header, datas);
         list.setAdapter(mAdapter);
         list.setLayoutManager(new LinearLayoutManager(mContext));
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.iv_all_select:
+                        mPresenter.editGoodsTypeSelectStatus(1, position);
+                        break;
+                    case R.id.tv_edit:
+                        mPresenter.showGoodsTypePopWindow(1, datas.get(position));
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public GoodsTypeFragmentAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    @Override
+    public List<GoodsType> getGoodsTypeDatas() {
+        return datas;
+    }
+
+    //商品分类数量
+    @Override
+    public void setGoodsTypeNum(int num) {
+        tvGoodsTypeNum.setText(getResources().getString(R.string.all) + num + getResources().getString(R.string.strip));
     }
 
     //新增分类
     @Override
     public void addGoodsType() {
-        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(mContext, getResources().getString(R.string.add_goods_type));
+        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(mContext, getResources().getString(R.string.add_goods_type), null,1, mPresenter);
         goodsTypePopWindow.showAsDropDown(layoutGoodsType, Gravity.NO_GRAVITY, 0, 0);
     }
 
@@ -95,8 +127,30 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
 
     //编辑分类
     @Override
-    public void editGoodsType() {
+    public void editGoodsType(GoodsType goodsType) {
+        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(mContext, getResources().getString(R.string.edit_goods_type), goodsType,2, mPresenter);
+        goodsTypePopWindow.showAsDropDown(layoutGoodsType, Gravity.NO_GRAVITY, 0, 0);
+    }
 
+    //是否全选
+    @Override
+    public void setAllSelect(boolean isAllSelect) {
+        this.isAllSelect = isAllSelect;
+    }
+
+    @Override
+    public boolean isAllSelect() {
+        return isAllSelect;
+    }
+
+    //全选
+    @Override
+    public void allSelect() {
+        if (isAllSelect) {
+            ivAllSelect.setImageResource(R.drawable.select);
+        } else {
+            ivAllSelect.setImageResource(R.drawable.unselect);
+        }
     }
 
 
