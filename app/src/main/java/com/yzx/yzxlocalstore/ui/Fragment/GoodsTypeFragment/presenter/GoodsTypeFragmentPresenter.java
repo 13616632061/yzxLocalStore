@@ -39,13 +39,16 @@ public class GoodsTypeFragmentPresenter implements IGoodsTypeFragmentPresenterIm
     }
 
     @Override
-    public void showGoodsTypePopWindow(int type,GoodsType goodsType) {
+    public void showGoodsTypePopWindow(int type, GoodsType goodsType) {
         switch (type) {
             case 1://添加
                 mView.addGoodsType();
                 break;
             case 2://编辑
                 mView.editGoodsType(goodsType);
+                break;
+            case 3://删除
+                mView.deleteGoodsType();
                 break;
         }
     }
@@ -76,36 +79,43 @@ public class GoodsTypeFragmentPresenter implements IGoodsTypeFragmentPresenterIm
 
     @Override
     public void editGoodsTypeSelectStatus(int type, int position) {
-        if (type == 1) {//单个选中
-            if (mView.getGoodsTypeDatas().get(position).getIsSelect()) {
-                mView.getGoodsTypeDatas().get(position).setIsSelect(false);
-            } else {
-                mView.getGoodsTypeDatas().get(position).setIsSelect(true);
-            }
-            //判断是否全部选中
-            boolean isAllSelect = true;
-            for (int i = 0; i < mView.getGoodsTypeDatas().size(); i++) {
-                if (!mView.getGoodsTypeDatas().get(i).getIsSelect()) {
-                    isAllSelect = false;
-                    break;
+        switch (type) {
+            case 0://全选
+                if (mView.isAllSelect()) {
+                    mView.setAllSelect(false);
+                    for (int i = 0; i < mView.getGoodsTypeDatas().size(); i++) {
+                        mView.getGoodsTypeDatas().get(i).setIsSelect(false);
+                    }
+                } else {
+                    mView.setAllSelect(true);
+                    for (int i = 0; i < mView.getGoodsTypeDatas().size(); i++) {
+                        mView.getGoodsTypeDatas().get(i).setIsSelect(true);
+                    }
                 }
-            }
-            mView.setAllSelect(isAllSelect);
-        } else {//全选
-            if (mView.isAllSelect()) {
-                mView.setAllSelect(false);
+                mView.allSelect();
+                mView.getAdapter().notifyDataSetChanged();
+                break;
+            case 1://单个选中
+                if (mView.getGoodsTypeDatas().get(position).getIsSelect()) {
+                    mView.getGoodsTypeDatas().get(position).setIsSelect(false);
+                } else {
+                    mView.getGoodsTypeDatas().get(position).setIsSelect(true);
+                }
+                //判断是否全部选中
+                boolean isAllSelect = true;
                 for (int i = 0; i < mView.getGoodsTypeDatas().size(); i++) {
-                    mView.getGoodsTypeDatas().get(i).setIsSelect(false);
+                    if (!mView.getGoodsTypeDatas().get(i).getIsSelect()) {
+                        isAllSelect = false;
+                        break;
+                    }
                 }
-            } else {
-                mView.setAllSelect(true);
-                for (int i = 0; i < mView.getGoodsTypeDatas().size(); i++) {
-                    mView.getGoodsTypeDatas().get(i).setIsSelect(true);
-                }
-            }
+                mView.setAllSelect(isAllSelect);
+                mView.allSelect();
+                mView.getAdapter().notifyDataSetChanged();
+                break;
+
         }
-        mView.allSelect();
-        mView.getAdapter().notifyDataSetChanged();
+
     }
 
     //商品分类启用状态

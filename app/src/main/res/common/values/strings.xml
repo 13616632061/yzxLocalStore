@@ -67,6 +67,10 @@
     <string name="status">状态</string>
     <string name="enable">启用</string>
     <string name="forbidden">禁用</string>
+    <string name="eight_char">(8个字符以内)</string>
+    <string name="smaller_value_more_advanced">值越小越靠前</string>
+    <string name="reminder">温馨提示</string>
+    <string name="sure_delete_item">确定删除选中项？</string>
 
 
 </resources>

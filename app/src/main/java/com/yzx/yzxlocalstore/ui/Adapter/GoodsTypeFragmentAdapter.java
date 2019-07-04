@@ -28,9 +28,9 @@ public class GoodsTypeFragmentAdapter extends BaseQuickAdapter<GoodsType, BaseVi
         helper.setText(R.id.tv_sort, item.getSort() + "");
         //是否选中
         if (item.getIsSelect()) {
-            helper.setImageResource(R.id.iv_all_select, R.drawable.select);
+            helper.setImageResource(R.id.iv_select, R.drawable.select);
         } else {
-            helper.setImageResource(R.id.iv_all_select, R.drawable.unselect);
+            helper.setImageResource(R.id.iv_select, R.drawable.unselect);
         }
         //状态
         if (item.getStatus()) {
@@ -38,7 +38,7 @@ public class GoodsTypeFragmentAdapter extends BaseQuickAdapter<GoodsType, BaseVi
         } else {
             helper.setText(R.id.tv_status, mContext.getResources().getString(R.string.forbidden));
         }
-        helper.addOnClickListener(R.id.iv_all_select);
+        helper.addOnClickListener(R.id.iv_select);
         helper.addOnClickListener(R.id.tv_edit);
     }
 }

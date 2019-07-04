@@ -16,6 +16,7 @@ import com.yzx.yzxlocalstore.entity.GoodsType;
 import com.yzx.yzxlocalstore.ui.Adapter.GoodsTypeFragmentAdapter;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsTypeFragment.presenter.GoodsTypeFragmentPresenter;
 import com.yzx.yzxlocalstore.ui.PopWindow.GoodsTypePopWindow;
+import com.yzx.yzxlocalstore.ui.PopWindow.TipsPopWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,7 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
                 mPresenter.showGoodsTypePopWindow(1, null);
                 break;
             case R.id.btn_delete:
+                mPresenter.showGoodsTypePopWindow(3,null);
                 break;
         }
     }
@@ -78,18 +80,18 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
     //初始化适配器
     @Override
     public void initAdapter() {
-        mAdapter = new GoodsTypeFragmentAdapter(R.layout.layout_goods_type_header, datas);
+        mAdapter = new GoodsTypeFragmentAdapter(R.layout.item_goods_type, datas);
         list.setAdapter(mAdapter);
         list.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
-                    case R.id.iv_all_select:
+                    case R.id.iv_select:
                         mPresenter.editGoodsTypeSelectStatus(1, position);
                         break;
                     case R.id.tv_edit:
-                        mPresenter.showGoodsTypePopWindow(1, datas.get(position));
+                        mPresenter.showGoodsTypePopWindow(2, datas.get(position));
                         break;
                 }
             }
@@ -109,26 +111,27 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
     //商品分类数量
     @Override
     public void setGoodsTypeNum(int num) {
-        tvGoodsTypeNum.setText(getResources().getString(R.string.all) + num + getResources().getString(R.string.strip));
+        tvGoodsTypeNum.setText("(" + getResources().getString(R.string.all) + num + getResources().getString(R.string.strip) + ")");
     }
 
     //新增分类
     @Override
     public void addGoodsType() {
-        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(mContext, getResources().getString(R.string.add_goods_type), null,1, mPresenter);
+        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(mContext, getResources().getString(R.string.add_goods_type), null, 1, mPresenter);
         goodsTypePopWindow.showAsDropDown(layoutGoodsType, Gravity.NO_GRAVITY, 0, 0);
     }
 
     //删除分类
     @Override
     public void deleteGoodsType() {
-
+        TipsPopWindow tipsPopWindow=new TipsPopWindow(mContext,getResources().getString(R.string.reminder),getResources().getString(R.string.sure_delete_item));
+        tipsPopWindow.showAsDropDown(layoutGoodsType, Gravity.NO_GRAVITY, 0, 0);
     }
 
     //编辑分类
     @Override
     public void editGoodsType(GoodsType goodsType) {
-        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(mContext, getResources().getString(R.string.edit_goods_type), goodsType,2, mPresenter);
+        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(mContext, getResources().getString(R.string.edit_goods_type), goodsType, 2, mPresenter);
         goodsTypePopWindow.showAsDropDown(layoutGoodsType, Gravity.NO_GRAVITY, 0, 0);
     }
 

@@ -42,14 +42,16 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/bg_edit_gray" />
+                android:background="@drawable/bg_edit_gray"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="(8个字符以内)"
+                android:text="@string/eight_char"
                 android:textColor="@color/color_1196EE"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -78,14 +80,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/bg_edit_gray"
-                android:inputType="number" />
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="值越小越靠前"
+                android:text="@string/smaller_value_more_advanced"
                 android:textColor="@color/color_1196EE"
                 android:textSize="12sp" />
         </LinearLayout>

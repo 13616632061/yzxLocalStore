@@ -20,7 +20,11 @@ import android.widget.Toast;
 import com.yzx.lib.util.ScreenUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.entity.GoodsType;
+import com.yzx.yzxlocalstore.ui.Adapter.SpinnerAdapter;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsTypeFragment.presenter.GoodsTypeFragmentPresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2019/7/2.
@@ -64,8 +68,11 @@ public class GoodsTypePopWindow extends PopupWindow implements View.OnClickListe
         layout_status = view.findViewById(R.id.layout_status);
 
         tv_title.setText(title);
-        String[] spinnerItems = {mContext.getResources().getString(R.string.enable), mContext.getResources().getString(R.string.forbidden)};
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(mContext, R.layout.item_select, spinnerItems);
+        List<String> spinnerItems = new ArrayList<>();
+        spinnerItems.add(mContext.getResources().getString(R.string.enable));
+        spinnerItems.add(mContext.getResources().getString(R.string.forbidden));
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(mContext, R.layout.item_select);
+        spinnerAdapter.setDatas(spinnerItems);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(this);
 
