@@ -29,10 +29,6 @@ import butterknife.OnClick;
 public class AddStaffActivity extends BaseActivity implements IAddStaffActivityView {
 
 
-    @InjectView(R.id.tv_back)
-    TextView tvBack;
-    @InjectView(R.id.tv_title)
-    TextView tvTitle;
     @InjectView(R.id.sw_start)
     Switch swStart;
     @InjectView(R.id.et_name)
@@ -111,10 +107,10 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
     public void initTitle(int type) {
         switch (type) {
             case 0:
-                tvTitle.setText(R.string.add_staff);
+                inintTitle(getResources().getString(R.string.add_staff));
                 break;
             case 1:
-                tvTitle.setText(R.string.edit_staff);
+                inintTitle(getResources().getString(R.string.edit_staff));
                 break;
         }
     }
@@ -245,14 +241,11 @@ public class AddStaffActivity extends BaseActivity implements IAddStaffActivityV
 
     }
 
-    @OnClick({R.id.btn_save, R.id.tv_back})
+    @OnClick({R.id.btn_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_save:
                 addStaffActivityPresenter.submitStaffInfo(type);
-                break;
-            case R.id.tv_back:
-                finish();
                 break;
 
         }

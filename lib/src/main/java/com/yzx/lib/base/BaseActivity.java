@@ -22,6 +22,7 @@ import com.squareup.leakcanary.RefWatcher;
 import com.yzx.lib.R;
 import com.yzx.lib.app.LibAplication;
 import com.yzx.lib.entity.MessageEvent;
+import com.yzx.lib.weight.TopBarLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -66,16 +67,15 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param title
      */
     public void inintTitle(String title) {
-        TextView tv_title = findViewById(R.id.tv_title);
-        if (!TextUtils.isEmpty(title)) {
-            tv_title.setText(title);
-        }
-        findViewById(R.id.tv_back).setOnClickListener(new View.OnClickListener() {
+        TopBarLayout topBarLayout = findViewById(R.id.top_bar_layout);
+        topBarLayout.setTitleText(title);
+        topBarLayout.setTopBarLayoutLeftOnClickListener(new TopBarLayout.TopBarLayoutLeftOnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void leftOnClick() {
                 finish();
             }
         });
+
     }
 
     private void hideStatusBar() {
