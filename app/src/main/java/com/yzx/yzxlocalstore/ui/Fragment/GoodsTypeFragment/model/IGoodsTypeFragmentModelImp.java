@@ -29,5 +29,5 @@ public interface IGoodsTypeFragmentModelImp {
     void editGoodsType(GoodsType goodsType);
 
     //删除分类
-    void deleteGoodsType(Context context);
+    void deleteGoodsType(GoodsType goodsType);
 }

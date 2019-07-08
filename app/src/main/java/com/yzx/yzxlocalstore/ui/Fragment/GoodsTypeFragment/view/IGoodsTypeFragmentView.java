@@ -38,4 +38,7 @@ public interface IGoodsTypeFragmentView {
 
     //全选
     void allSelect();
+
+    //操作提示信息
+    void showToastMsg(int type);
 }

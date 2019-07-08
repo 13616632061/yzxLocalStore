@@ -8,6 +8,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.yzx.yzxlocalstore.R;
+import com.yzx.yzxlocalstore.ui.Fragment.GoodsTypeFragment.presenter.GoodsTypeFragmentPresenter;
 
 /**
  * Created by Administrator on 2019/7/4.
@@ -22,12 +23,14 @@ public class TipsPopWindow extends PopupWindow implements View.OnClickListener {
     private TextView btn_sure;
     private TextView btn_cancel;
     private String title, msg;
+    private GoodsTypeFragmentPresenter mPresenter;
 
-    public TipsPopWindow(Context mContext, String title, String msg) {
+    public TipsPopWindow(Context mContext, String title, String msg, GoodsTypeFragmentPresenter mPresenter) {
         super(mContext);
         this.mContext = mContext;
         this.title = title;
         this.msg = msg;
+        this.mPresenter = mPresenter;
         view = View.inflate(mContext, R.layout.layout_tips_pop, null);
 
         initSet();
@@ -71,8 +74,18 @@ public class TipsPopWindow extends PopupWindow implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sure:
+                sureType(1);
                 break;
             case R.id.btn_cancel:
+                dismiss();
+                break;
+        }
+    }
+
+    private void sureType(int type) {
+        switch (type) {
+            case 1://删除分类操作
+                mPresenter.deleteGoodsType();
                 dismiss();
                 break;
         }

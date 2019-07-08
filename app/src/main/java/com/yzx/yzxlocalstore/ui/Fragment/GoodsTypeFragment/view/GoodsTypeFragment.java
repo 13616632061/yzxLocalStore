@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yzx.lib.base.BaseFragment;
@@ -72,7 +73,7 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
                 mPresenter.showGoodsTypePopWindow(1, null);
                 break;
             case R.id.btn_delete:
-                mPresenter.showGoodsTypePopWindow(3,null);
+                mPresenter.showGoodsTypePopWindow(3, null);
                 break;
         }
     }
@@ -124,7 +125,7 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
     //删除分类
     @Override
     public void deleteGoodsType() {
-        TipsPopWindow tipsPopWindow=new TipsPopWindow(mContext,getResources().getString(R.string.reminder),getResources().getString(R.string.sure_delete_item));
+        TipsPopWindow tipsPopWindow = new TipsPopWindow(mContext, getResources().getString(R.string.reminder), getResources().getString(R.string.sure_delete_item),mPresenter);
         tipsPopWindow.showAsDropDown(layoutGoodsType, Gravity.NO_GRAVITY, 0, 0);
     }
 
@@ -153,6 +154,19 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
             ivAllSelect.setImageResource(R.drawable.select);
         } else {
             ivAllSelect.setImageResource(R.drawable.unselect);
+        }
+    }
+
+    //操作提示信息
+    @Override
+    public void showToastMsg(int type) {
+        switch (type) {
+            case 1://分类名已存在，请重新输入！
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.goods_type_name_exist), Toast.LENGTH_SHORT).show();
+                break;
+            case 2://请选择要删除的分类信息
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.selete_delete_item), Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 

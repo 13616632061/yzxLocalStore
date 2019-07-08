@@ -38,7 +38,7 @@ public class GoodsTypeFragmentModel implements IGoodsTypeFragmentModelImp {
 
     @Override
     public List<GoodsType> getGoodsTypeInfo(Context context) {
-        List<GoodsType> list=initDaoSession(context).list();
+        List<GoodsType> list = initDaoSession(context).list();
         return list;
     }
 
@@ -52,8 +52,9 @@ public class GoodsTypeFragmentModel implements IGoodsTypeFragmentModelImp {
         MyAplication.getDaoSession().getGoodsTypeDao().update(goodsType);
     }
 
+    //删除分类
     @Override
-    public void deleteGoodsType(Context context) {
-
+    public void deleteGoodsType(GoodsType goodsType) {
+        MyAplication.getDaoSession().getGoodsTypeDao().delete(goodsType);
     }
 }

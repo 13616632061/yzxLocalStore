@@ -15,13 +15,16 @@ public interface IGoodsTypeFragmentPresenterImp {
     void getGoodsTypeInfo();
 
     //显示商品分类操作弹窗
-    void showGoodsTypePopWindow(int type,GoodsType goodsType);
+    void showGoodsTypePopWindow(int type, GoodsType goodsType);
 
     //新增分类
     void addGoodsType(String typeName, String sort);
 
     //删除分类
     void deleteGoodsType();
+
+    //显示删除分类msg
+    void showDeleteGoodsTypeMsg();
 
     //编辑分类
     void editGoodsType(GoodsType goodsType);
@@ -30,5 +33,8 @@ public interface IGoodsTypeFragmentPresenterImp {
     void editGoodsTypeSelectStatus(int type, int position);
 
     //商品分类启用状态
-    void setGoodsTypeEnableStatus(int position,boolean enable);
+    void setGoodsTypeEnableStatus(int position, boolean enable);
+
+    //是否全部选中
+    boolean isAllSelect();
 }

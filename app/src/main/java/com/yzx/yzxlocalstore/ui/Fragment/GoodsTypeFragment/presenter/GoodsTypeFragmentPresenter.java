@@ -36,6 +36,8 @@ public class GoodsTypeFragmentPresenter implements IGoodsTypeFragmentPresenterIm
         mView.getGoodsTypeDatas().addAll(list);
         mView.getAdapter().notifyDataSetChanged();
         mView.setGoodsTypeNum(list.size());
+        mView.setAllSelect(isAllSelect());
+        mView.allSelect();
     }
 
     @Override
@@ -48,7 +50,7 @@ public class GoodsTypeFragmentPresenter implements IGoodsTypeFragmentPresenterIm
                 mView.editGoodsType(goodsType);
                 break;
             case 3://删除
-                mView.deleteGoodsType();
+                showDeleteGoodsTypeMsg();
                 break;
         }
     }
@@ -62,13 +64,35 @@ public class GoodsTypeFragmentPresenter implements IGoodsTypeFragmentPresenterIm
             mModel.addGoodsType(goodsType);
             getGoodsTypeInfo();
         } else {
-            Toast.makeText(mView.getActivity(), mView.getResources().getString(R.string.goods_type_name_exist), Toast.LENGTH_SHORT).show();
+            mView.showToastMsg(1);
         }
     }
 
     @Override
     public void deleteGoodsType() {
+        for (GoodsType bean : mView.getGoodsTypeDatas()) {
+            if (bean.getIsSelect()) {
+                mModel.deleteGoodsType(bean);
+            }
+        }
+        getGoodsTypeInfo();
+    }
 
+    //显示删除分类msg
+    @Override
+    public void showDeleteGoodsTypeMsg() {
+        boolean isSelect = false;//是否有选中的分类
+        for (GoodsType bean : mView.getGoodsTypeDatas()) {
+            if (bean.getIsSelect()) {
+                isSelect = true;
+                break;
+            }
+        }
+        if (isSelect) {
+            mView.deleteGoodsType();
+        } else {
+            mView.showToastMsg(2);
+        }
     }
 
     @Override
@@ -101,15 +125,7 @@ public class GoodsTypeFragmentPresenter implements IGoodsTypeFragmentPresenterIm
                 } else {
                     mView.getGoodsTypeDatas().get(position).setIsSelect(true);
                 }
-                //判断是否全部选中
-                boolean isAllSelect = true;
-                for (int i = 0; i < mView.getGoodsTypeDatas().size(); i++) {
-                    if (!mView.getGoodsTypeDatas().get(i).getIsSelect()) {
-                        isAllSelect = false;
-                        break;
-                    }
-                }
-                mView.setAllSelect(isAllSelect);
+                mView.setAllSelect(isAllSelect());
                 mView.allSelect();
                 mView.getAdapter().notifyDataSetChanged();
                 break;
@@ -122,5 +138,22 @@ public class GoodsTypeFragmentPresenter implements IGoodsTypeFragmentPresenterIm
     @Override
     public void setGoodsTypeEnableStatus(int position, boolean enable) {
         mView.getGoodsTypeDatas().get(position).setStatus(enable);
+    }
+
+    //是否全部选中
+    @Override
+    public boolean isAllSelect() {
+        //判断是否全部选中
+        boolean isAllSelect = true;
+        if (mView.getGoodsTypeDatas().size() <= 0) {
+            isAllSelect = false;
+        }
+        for (int i = 0; i < mView.getGoodsTypeDatas().size(); i++) {
+            if (!mView.getGoodsTypeDatas().get(i).getIsSelect()) {
+                isAllSelect = false;
+                break;
+            }
+        }
+        return isAllSelect;
     }
 }
