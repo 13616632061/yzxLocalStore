@@ -2,7 +2,7 @@ package com.yzx.yzxlocalstore.ui.Activity.GoodsManage.GoodsInfoManageActivity.mo
 
 import android.support.v4.app.Fragment;
 
-import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.GoodsListFragment;
+import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.view.GoodsListFragment;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsTypeFragment.view.GoodsTypeFragment;
 
 import java.util.ArrayList;

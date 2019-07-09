@@ -5,6 +5,7 @@
     android:layout_height="34dp">
 
     <LinearLayout
+        android:background="@drawable/bg_shape_f8f8ff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"

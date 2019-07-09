@@ -5,11 +5,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,25 +40,26 @@ import butterknife.ButterKnife;
  * Created by lyf on 2019/4/29.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnSystemUiVisibilityChangeListener {
 
     public static Activity mCurrentActivity;
 
     private static List<Activity> mActivities = new LinkedList<>();
+    private Handler mHandler;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
-        //隐藏底部导航栏和顶部系统状态栏
-        hideStatusBar();
         ButterKnife.inject(this);
+        // 处理editText弹出软键盘后，沉侵式状态栏重新显示
+        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(this);
         //路由自动属性注入
         ARouter.getInstance().inject(this);
         synchronized (mActivities) {
             mActivities.add(this);
         }
-
+        mHandler = new Handler();
         initView();
         initListener();
 
@@ -78,6 +82,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 隐藏底部导航栏和顶部系统状态栏
+     */
     private void hideStatusBar() {
         if (Build.VERSION.SDK_INT >= 19) {
             View decorView = getWindow().getDecorView();
@@ -88,6 +95,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideStatusBar();
         }
     }
 
@@ -116,7 +131,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mCurrentActivity = this;
-        hideStatusBar();
+//        hideStatusBar();
     }
 
     @Override
@@ -162,7 +177,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0); //隐藏软键盘
                     v.clearFocus();
-                    hideStatusBar();
+//                    hideStatusBar();
                 }
             }
             return super.dispatchTouchEvent(ev);
@@ -193,4 +208,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onSystemUiVisibilityChange(int visibility) {
+        Log.d("immerse", "onSystemUiVisibilityChange: " + visibility);
+        if (visibility == 0) {
+            mHandler.removeCallbacks(enterImmerseMode);
+            mHandler.post(enterImmerseMode);
+        }
+
+    }
+
+    private Runnable enterImmerseMode = new Runnable() {
+        @Override
+        public void run() {
+            hideStatusBar();
+        }
+    };
 }

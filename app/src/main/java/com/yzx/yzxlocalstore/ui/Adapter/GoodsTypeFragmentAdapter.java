@@ -22,6 +22,12 @@ public class GoodsTypeFragmentAdapter extends BaseQuickAdapter<GoodsType, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, GoodsType item) {
+        if (helper.getAdapterPosition() % 2 == 0) {
+            helper.setBackgroundRes(R.id.layout_item, R.color.white);
+        } else {
+            helper.setBackgroundRes(R.id.layout_item, R.color.color_F8F8FF);
+        }
+
         //分类名
         helper.setText(R.id.tv_type_name, item.getTypeName());
         //排序号

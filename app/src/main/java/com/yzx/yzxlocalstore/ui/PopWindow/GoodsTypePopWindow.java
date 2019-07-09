@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ import java.util.List;
  * Created by Administrator on 2019/7/2.
  */
 
-public class GoodsTypePopWindow extends PopupWindow implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class GoodsTypePopWindow extends BasePopupWindow implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private View view;
     private Context mContext;
@@ -41,6 +42,7 @@ public class GoodsTypePopWindow extends PopupWindow implements View.OnClickListe
     private Button btn_sure;
     private Spinner spinner;
     private LinearLayout layout_status;
+    private RelativeLayout layout_content;
     private GoodsTypeFragmentPresenter mPresenter;
     private boolean isEnable;//是否启用
     private GoodsType goodsType;
@@ -53,8 +55,8 @@ public class GoodsTypePopWindow extends PopupWindow implements View.OnClickListe
         this.goodsType = goodsType;
         this.type = type;
         view = View.inflate(context, R.layout.layout_goods_type_pop, null);
-
-        initSet();
+        initSet(view);
+        hideStatusBar(view);
         initView(title);
     }
 
@@ -66,6 +68,8 @@ public class GoodsTypePopWindow extends PopupWindow implements View.OnClickListe
         btn_cancel = view.findViewById(R.id.btn_cancel);
         spinner = view.findViewById(R.id.spinner);
         layout_status = view.findViewById(R.id.layout_status);
+        layout_content = view.findViewById(R.id.layout_content);
+        setOnTouchListener(view,layout_content);
 
         tv_title.setText(title);
         List<String> spinnerItems = new ArrayList<>();
@@ -110,25 +114,6 @@ public class GoodsTypePopWindow extends PopupWindow implements View.OnClickListe
 
     }
 
-    private void initSet() {
-        this.setContentView(view);
-        //sdk > 21 解决 标题栏没有办法遮罩的问题
-        this.setClippingEnabled(false);
-        // 设置SelectPicPopupWindow弹出窗体的宽
-        this.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        // 设置SelectPicPopupWindow弹出窗体的高
-        this.setHeight(WindowManager.LayoutParams.MATCH_PARENT);//屏幕的高
-        // 设置SelectPicPopupWindow弹出窗体可点击
-        this.setFocusable(true);
-        // 设置SelectPicPopupWindow弹出窗体动画效果
-//        this.setAnimationStyle(R.style.AnimationWindow);
-        // 实例化一个ColorDrawable颜色为半透明
-        ColorDrawable dw = new ColorDrawable(0x80000000);
-        // 设置SelectPicPopupWindow弹出窗体的背景
-        this.setBackgroundDrawable(dw);
-        // mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
-
-    }
 
     @Override
     public void onClick(View v) {

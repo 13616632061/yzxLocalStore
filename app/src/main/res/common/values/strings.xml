@@ -78,6 +78,20 @@
     <string name="goods_profit">商品利润</string>
     <string name="goods_status">商品状态</string>
     <string name="handle">操作</string>
+    <string name="goods_list">商品列表</string>
+    <string name="alls">全部</string>
+    <string name="goods_out_stock">缺货商品</string>
+    <string name="waring_store">库存预警</string>
+    <string name="add_goods">添加商品</string>
+    <string name="goods_up_shelf">商品上架</string>
+    <string name="goods_down_shelf">商品下架</string>
+    <string name="import_into">导入</string>
+    <string name="export_out">导出</string>
+    <string name="label_printing">标签打印</string>
+    <string name="home_page">首页</string>
+    <string name="previous_page">上一页</string>
+    <string name="next_page">下一页</string>
+    <string name="last_page">尾页</string>
 
 
 </resources>

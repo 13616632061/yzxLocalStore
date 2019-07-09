@@ -7,12 +7,13 @@
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="15dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="商品列表"
+            android:text="@string/goods_list"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -35,21 +36,30 @@
             android:id="@+id/tv_all_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="全部(100)"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/bg_shape_f8f8ff"
+            android:padding="10dp"
+            android:text="@string/alls"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_lack_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="缺货商品(48)"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/bg_shape_f8f8ff"
+            android:padding="10dp"
+            android:text="@string/goods_out_stock"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_warning_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="库存预警(100)"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/bg_shape_f8f8ff"
+            android:padding="10dp"
+            android:text="@string/waring_store"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -76,9 +86,9 @@
             android:id="@+id/btn_delete_goods"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
+            android:layout_marginRight="15dp"
             android:layout_toLeftOf="@+id/btn_add_goods"
-            android:text="删除"
+            android:text="@string/delete"
             android:textSize="14sp" />
 
         <Button
@@ -87,19 +97,52 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:text="添加商品"
+            android:text="@string/add_goods"
             android:textSize="14sp" />
 
         <Button
+            android:id="@+id/btn_up_shelf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="添加商品"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/btn_delete_goods"
+            android:text="@string/goods_up_shelf"
             android:textSize="14sp" />
 
         <Button
+            android:id="@+id/btn_down_shelf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="添加商品"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/btn_up_shelf"
+            android:text="@string/goods_down_shelf"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_import"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/btn_down_shelf"
+            android:text="@string/import_into"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_export"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/btn_import"
+            android:text="@string/export_out"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_print"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/btn_export"
+            android:text="@string/label_printing"
             android:textSize="14sp" />
     </RelativeLayout>
 
@@ -139,7 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="首页"
+                android:text="@string/home_page"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -147,7 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="上一页"
+                android:text="@string/previous_page"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -155,7 +198,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="下一页"
+                android:text="@string/next_page"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -163,7 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="尾页"
+                android:text="@string/last_page"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
