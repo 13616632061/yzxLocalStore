@@ -92,6 +92,34 @@
     <string name="previous_page">上一页</string>
     <string name="next_page">下一页</string>
     <string name="last_page">尾页</string>
+    <string name="goods_type_">商品分类:</string>
+    <string name="goods_name_">商品名称:</string>
+    <string name="goods_loaction_">商品位置:</string>
+    <string name="goods_code_">商品条码:</string>
+    <string name="goods_pinyin_code_">商品拼音码:</string>
+    <string name="goods_store_">商品库存:</string>
+    <string name="goods_warning_store_">库存预警数量:</string>
+    <string name="goods_original_price_">商品进价:</string>
+    <string name="goods_price_">商品销售价:</string>
+    <string name="goods_status_">商品状态:</string>
+    <string name="goods_vip_level_price_">会员等级价格:</string>
+    <string name="goods_vip_level_one">V1:</string>
+    <string name="goods_vip_level_two">V2:</string>
+    <string name="goods_vip_level_three">V3:</string>
+    <string name="goods_vip_level_four">V4:</string>
+    <string name="goods_vip_level_five">V5:</string>
+    <string name="no_loaction">非位置</string>
+    <string name="quick_bar">快捷栏</string>
+    <string name="weight_bar">计重栏</string>
+    <string name="profit">利润</string>
+    <string name="defaut_type">默认分类</string>
+    <string name="empty_goods_name">商品名称为空！</string>
+    <string name="empty_goods_code">商品条码为空！</string>
+    <string name="empty_goods_pinyin_code">商品拼音码为空！</string>
+    <string name="empty_goods_store">商品库存为空！</string>
+    <string name="empty_goods_warning_store_num">商品预警数量为空！</string>
+    <string name="empty_goods_original_price">商品进价为空！</string>
+    <string name="empty_goods_price">商品销售价为空！</string>
 
 
 </resources>

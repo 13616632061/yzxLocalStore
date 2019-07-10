@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_score"
         android:layout_width="match_parent"
         android:layout_height="31dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:textColor="@color/color_000000"
         android:textSize="14sp" />
 
@@ -19,5 +20,5 @@
         android:layout_height="0.5dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="20dp"
-        android:background="@color/color_707070" />
+        android:background="@color/color_F8F8FF" />
 </LinearLayout>

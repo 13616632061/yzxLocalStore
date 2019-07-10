@@ -7,8 +7,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.autofocus"/>
+    <uses-feature android:name="android.hardware.autofocus" />
 
     <application
         android:name=".app.MyAplication"
@@ -54,7 +55,18 @@
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.Activity.GoodsManage.GoodsInfoManageActivity.view.GoodsInfoManageActivity"></activity>
+        <!-- 商品管理 -->
+        <activity
+            android:name=".ui.Activity.GoodsManage.GoodsInfoManageActivity.view.GoodsInfoManageActivity"
+            android:configChanges="keyboardHidden"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" />
+        <!-- 新增/编辑商品 -->
+        <activity
+            android:name=".ui.Activity.GoodsManage.AddGoodsInfoActivity.view.AddGoodsInfoActivity"
+            android:configChanges="keyboardHidden"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

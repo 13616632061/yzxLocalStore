@@ -39,7 +39,14 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         public final static Property GoodStatus = new Property(7, boolean.class, "goodStatus", false, "GOOD_STATUS");
         public final static Property GoodCode = new Property(8, String.class, "goodCode", false, "GOOD_CODE");
         public final static Property GoodPinyinCode = new Property(9, String.class, "goodPinyinCode", false, "GOOD_PINYIN_CODE");
-        public final static Property GoodType = new Property(10, int.class, "goodType", false, "GOOD_TYPE");
+        public final static Property GoodLoaction = new Property(10, int.class, "goodLoaction", false, "GOOD_LOACTION");
+        public final static Property VipLevelOnePrice = new Property(11, double.class, "vipLevelOnePrice", false, "VIP_LEVEL_ONE_PRICE");
+        public final static Property VipLevelTwoPrice = new Property(12, double.class, "vipLevelTwoPrice", false, "VIP_LEVEL_TWO_PRICE");
+        public final static Property VipLevelThreePrice = new Property(13, double.class, "vipLevelThreePrice", false, "VIP_LEVEL_THREE_PRICE");
+        public final static Property VipLevelFourthPrice = new Property(14, double.class, "vipLevelFourthPrice", false, "VIP_LEVEL_FOURTH_PRICE");
+        public final static Property VipLevelFivePrice = new Property(15, double.class, "vipLevelFivePrice", false, "VIP_LEVEL_FIVE_PRICE");
+        public final static Property GoodBriefIntroduction = new Property(16, String.class, "goodBriefIntroduction", false, "GOOD_BRIEF_INTRODUCTION");
+        public final static Property GoodRemarks = new Property(17, String.class, "goodRemarks", false, "GOOD_REMARKS");
     }
 
     private DaoSession daoSession;
@@ -68,7 +75,14 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
                 "\"GOOD_STATUS\" INTEGER NOT NULL ," + // 7: goodStatus
                 "\"GOOD_CODE\" TEXT," + // 8: goodCode
                 "\"GOOD_PINYIN_CODE\" TEXT," + // 9: goodPinyinCode
-                "\"GOOD_TYPE\" INTEGER NOT NULL );"); // 10: goodType
+                "\"GOOD_LOACTION\" INTEGER NOT NULL ," + // 10: goodLoaction
+                "\"VIP_LEVEL_ONE_PRICE\" REAL NOT NULL ," + // 11: vipLevelOnePrice
+                "\"VIP_LEVEL_TWO_PRICE\" REAL NOT NULL ," + // 12: vipLevelTwoPrice
+                "\"VIP_LEVEL_THREE_PRICE\" REAL NOT NULL ," + // 13: vipLevelThreePrice
+                "\"VIP_LEVEL_FOURTH_PRICE\" REAL NOT NULL ," + // 14: vipLevelFourthPrice
+                "\"VIP_LEVEL_FIVE_PRICE\" REAL NOT NULL ," + // 15: vipLevelFivePrice
+                "\"GOOD_BRIEF_INTRODUCTION\" TEXT," + // 16: goodBriefIntroduction
+                "\"GOOD_REMARKS\" TEXT);"); // 17: goodRemarks
     }
 
     /** Drops the underlying database table. */
@@ -106,7 +120,22 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         if (goodPinyinCode != null) {
             stmt.bindString(10, goodPinyinCode);
         }
-        stmt.bindLong(11, entity.getGoodType());
+        stmt.bindLong(11, entity.getGoodLoaction());
+        stmt.bindDouble(12, entity.getVipLevelOnePrice());
+        stmt.bindDouble(13, entity.getVipLevelTwoPrice());
+        stmt.bindDouble(14, entity.getVipLevelThreePrice());
+        stmt.bindDouble(15, entity.getVipLevelFourthPrice());
+        stmt.bindDouble(16, entity.getVipLevelFivePrice());
+ 
+        String goodBriefIntroduction = entity.getGoodBriefIntroduction();
+        if (goodBriefIntroduction != null) {
+            stmt.bindString(17, goodBriefIntroduction);
+        }
+ 
+        String goodRemarks = entity.getGoodRemarks();
+        if (goodRemarks != null) {
+            stmt.bindString(18, goodRemarks);
+        }
     }
 
     @Override
@@ -138,7 +167,22 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         if (goodPinyinCode != null) {
             stmt.bindString(10, goodPinyinCode);
         }
-        stmt.bindLong(11, entity.getGoodType());
+        stmt.bindLong(11, entity.getGoodLoaction());
+        stmt.bindDouble(12, entity.getVipLevelOnePrice());
+        stmt.bindDouble(13, entity.getVipLevelTwoPrice());
+        stmt.bindDouble(14, entity.getVipLevelThreePrice());
+        stmt.bindDouble(15, entity.getVipLevelFourthPrice());
+        stmt.bindDouble(16, entity.getVipLevelFivePrice());
+ 
+        String goodBriefIntroduction = entity.getGoodBriefIntroduction();
+        if (goodBriefIntroduction != null) {
+            stmt.bindString(17, goodBriefIntroduction);
+        }
+ 
+        String goodRemarks = entity.getGoodRemarks();
+        if (goodRemarks != null) {
+            stmt.bindString(18, goodRemarks);
+        }
     }
 
     @Override
@@ -165,7 +209,14 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             cursor.getShort(offset + 7) != 0, // goodStatus
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // goodCode
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // goodPinyinCode
-            cursor.getInt(offset + 10) // goodType
+            cursor.getInt(offset + 10), // goodLoaction
+            cursor.getDouble(offset + 11), // vipLevelOnePrice
+            cursor.getDouble(offset + 12), // vipLevelTwoPrice
+            cursor.getDouble(offset + 13), // vipLevelThreePrice
+            cursor.getDouble(offset + 14), // vipLevelFourthPrice
+            cursor.getDouble(offset + 15), // vipLevelFivePrice
+            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // goodBriefIntroduction
+            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17) // goodRemarks
         );
         return entity;
     }
@@ -182,7 +233,14 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         entity.setGoodStatus(cursor.getShort(offset + 7) != 0);
         entity.setGoodCode(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setGoodPinyinCode(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setGoodType(cursor.getInt(offset + 10));
+        entity.setGoodLoaction(cursor.getInt(offset + 10));
+        entity.setVipLevelOnePrice(cursor.getDouble(offset + 11));
+        entity.setVipLevelTwoPrice(cursor.getDouble(offset + 12));
+        entity.setVipLevelThreePrice(cursor.getDouble(offset + 13));
+        entity.setVipLevelFourthPrice(cursor.getDouble(offset + 14));
+        entity.setVipLevelFivePrice(cursor.getDouble(offset + 15));
+        entity.setGoodBriefIntroduction(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
+        entity.setGoodRemarks(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
      }
     
     @Override
