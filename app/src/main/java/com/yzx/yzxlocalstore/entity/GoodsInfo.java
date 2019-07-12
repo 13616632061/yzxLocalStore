@@ -158,13 +158,6 @@ public class GoodsInfo {
         this.goodPinyinCode = goodPinyinCode;
     }
 
-    public int getgoodLoaction() {
-        return this.goodLoaction;
-    }
-
-    public void setgoodLoaction(int goodLoaction) {
-        this.goodLoaction = goodLoaction;
-    }
 
     @Generated(hash = 2084741788)
     private transient Long goodsType__resolvedKey;

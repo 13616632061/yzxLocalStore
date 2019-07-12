@@ -1,6 +1,8 @@
 package com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.view;
 
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.yzx.yzxlocalstore.entity.GoodsType;
 
@@ -17,6 +19,11 @@ public interface IAddGoodsInfoActivityView {
     void setGoodType(List<GoodsType> spinnerItems);
 
     GoodsType getGoodType(GoodsType goodsType);
+
+    //选中的商品分类
+    void setSelectGoodtype(GoodsType goodsType);
+
+    GoodsType getSelectGoodtype();
 
     //商品名称
     void setGoodName(String goodName);
@@ -44,7 +51,7 @@ public interface IAddGoodsInfoActivityView {
     String getGoodStoreWarningNum();
 
     //商品上下架状态
-    void setGoodStatus(boolean Status);
+    void setGoodStatus(int type);
 
     boolean getGoodStatus();
 
@@ -87,6 +94,16 @@ public interface IAddGoodsInfoActivityView {
     void setGoodVipLevelFivePrice(String VipLevelFivePrice);
 
     String getGoodVipLevelFivePrice();
+
+    //商品利润
+    void setGoodProfit(String profit, int type);
+
+
+    //计算利润
+    void countProfit(EditText view1, EditText view2, int type);
+
+    //显示利润
+    void showProfitInfo();
 
     //错误信息提示
     void errorMsg(int type);

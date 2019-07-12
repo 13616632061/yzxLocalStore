@@ -30,11 +30,10 @@ public class MainActivityModel implements IMainActivityModelImp {
         String typeStr = null;
         if (userList.get(0).getTypeBeanList().size() > 0) {
             typeStr = userList.get(0).getTypeBeanList().toString();
-            LogUtils.e("typeStr:" + typeStr);
         } else {
             typeStr = FileUtil.readAssetsJson(context, "manegetype.json");
-            LogUtils.e("typeStr4:" + typeStr);
         }
+        LogUtils.e("typeStr4:" + typeStr);
         return typeStr;
     }
 }

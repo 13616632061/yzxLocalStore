@@ -1,7 +1,10 @@
 package com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.presenter;
 
 import android.text.TextUtils;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.yzx.lib.util.ArithUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.GoodsType;
@@ -35,36 +38,118 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
         mView.setGoodType(spinnerItems);
     }
 
-    @Override
-    public void getSelectedGoodType(GoodsType goodsType) {
-        mView.getGoodType(goodsType);
-    }
 
     //保存商品信息
     @Override
     public void saveGoodInfo() {
-        isEmptyInfo(mView.getGoodName(), 0);
-        isEmptyInfo(mView.getGoodCode(), 1);
-        isEmptyInfo(mView.getGoodPinyinCode(), 2);
-        isEmptyInfo(mView.getGoodStore(), 3);
-        isEmptyInfo(mView.getGoodStoreWarningNum(), 4);
-        isEmptyInfo(mView.getGoodOriginalPrice(), 5);
-        isEmptyInfo(mView.getGoodPrice(), 6);
+        if (TextUtils.isEmpty(mView.getGoodName())) {
+            mView.errorMsg(0);
+            return;
+        }
+        if (TextUtils.isEmpty(mView.getGoodCode())) {
+            mView.errorMsg(1);
+            return;
+        }
+        if (TextUtils.isEmpty(mView.getGoodPinyinCode())) {
+            mView.errorMsg(2);
+            return;
+        }
+        if (TextUtils.isEmpty(mView.getGoodStore())) {
+            mView.errorMsg(3);
+            return;
+        }
+        if (TextUtils.isEmpty(mView.getGoodStoreWarningNum())) {
+            mView.errorMsg(4);
+            return;
+        }
+        if (TextUtils.isEmpty(mView.getGoodOriginalPrice())) {
+            mView.errorMsg(5);
+            return;
+        }
+        if (TextUtils.isEmpty(mView.getGoodPrice())) {
+            mView.errorMsg(6);
+            return;
+        }
         GoodsInfo goodsInfo = new GoodsInfo();
-//        goodsInfo.setGoodsType();
+        goodsInfo.setGoodsType(mView.getSelectGoodtype());
         goodsInfo.setGoodName(mView.getGoodName());
         goodsInfo.setGoodCode(mView.getGoodCode());
         goodsInfo.setGoodPinyinCode(mView.getGoodPinyinCode());
         goodsInfo.setGoodStore(Double.parseDouble(mView.getGoodStore()));
         goodsInfo.setGoodStoreWarningNum(Double.parseDouble(mView.getGoodStoreWarningNum()));
+        goodsInfo.setGoodStatus(mView.getGoodStatus());
+        goodsInfo.setGoodLoaction(mView.getGoodLoaction());
+        goodsInfo.setGoodOriginalPrice(Double.parseDouble(mView.getGoodOriginalPrice()));
+        goodsInfo.setGoodPrice(Double.parseDouble(mView.getGoodPrice()));
+        goodsInfo.setVipLevelOnePrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelOnePrice())));
+        goodsInfo.setVipLevelTwoPrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelTwoPrice())));
+        goodsInfo.setVipLevelThreePrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelThreePrice())));
+        goodsInfo.setVipLevelFourthPrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelFourthPrice())));
+        goodsInfo.setVipLevelFivePrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelFivePrice())));
+
+        mModel.addGoodsInfo(goodsInfo);
+        mView.finish();
     }
 
-    //空信息
+
+    //商品上下架状态
     @Override
-    public void isEmptyInfo(String info, int type) {
-        if (TextUtils.isEmpty(info)) {
-            mView.errorMsg(type);
-            return;
+    public void setGoodStatus(int type, GoodsInfo goodsInfo) {
+        switch (type) {
+            case 1://新增
+                mView.setGoodStatus(3);
+                mView.setGoodLoaction(0);
+                break;
+            case 2://编辑
+                if (goodsInfo.getGoodStatus()) {
+                    mView.setGoodStatus(3);
+                } else {
+                    mView.setGoodStatus(4);
+                }
+                mView.setGoodLoaction(goodsInfo.getGoodLoaction());
+                break;
         }
+    }
+
+    @Override
+    public String setGoodVipLevelPrice(String vipLevelPrice) {
+        if (TextUtils.isEmpty(vipLevelPrice)) {
+            vipLevelPrice = 0 + "";
+        }
+        return vipLevelPrice;
+    }
+
+    //计算利润
+    @Override
+    public void setGoodProfit(String price, String originalPrice, int type) {
+        String profit = 0 + "";
+        if (!TextUtils.isEmpty(originalPrice) && !TextUtils.isEmpty(price)) {
+            //计算利润 （销售价-成本价）/成本价
+            profit = ArithUtil.roundByScale(ArithUtil.div(ArithUtil.sub(price, originalPrice) + "", originalPrice) + "", "#0.00");
+        }
+        mView.setGoodProfit(profit, type);
+
+    }
+
+    //商品利润
+    @Override
+    public void countProfit(EditText view1, EditText view2, int type) {
+        mView.countProfit(view1, view2, type);
+    }
+
+    //利润textView
+    @Override
+    public void setProfitTextView(TextView textView, String profit) {
+        if (!TextUtils.isEmpty(profit)) {
+            textView.setText(mView.getResources().getString(R.string.profit) + (Double.parseDouble(profit) * 100) + "%");
+        } else {
+            textView.setText("");
+        }
+    }
+
+    //显示利润
+    @Override
+    public void showProfitInfo() {
+        mView.showProfitInfo();
     }
 }
