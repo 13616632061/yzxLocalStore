@@ -38,22 +38,29 @@ public class GoodsInfo {
     private double vipLevelFivePrice;
     private String goodBriefIntroduction;//商品简介
     private String goodRemarks;//商品备注
-    @ToOne(joinProperty = "id")
+    private boolean isSelect;//商品是否选中
+    private boolean isAllSelect;//商品是否全选
+    private Long typeId;
+    @ToOne(joinProperty = "typeId")
     private GoodsType goodsType;//商品分类
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1612499996)
     private transient GoodsInfoDao myDao;
 
-    @Generated(hash = 461236040)
+    @Generated(hash = 19682104)
     public GoodsInfo(Long id, String goodName, double goodPrice, double goodOriginalPrice,
-            double goodStore, double goodStoreWarningNum, double goodProfit,
-            boolean goodStatus, String goodCode, String goodPinyinCode, int goodLoaction,
-            double vipLevelOnePrice, double vipLevelTwoPrice, double vipLevelThreePrice,
-            double vipLevelFourthPrice, double vipLevelFivePrice,
-            String goodBriefIntroduction, String goodRemarks) {
+            double goodStore, double goodStoreWarningNum, double goodProfit, boolean goodStatus,
+            String goodCode, String goodPinyinCode, int goodLoaction, double vipLevelOnePrice,
+            double vipLevelTwoPrice, double vipLevelThreePrice, double vipLevelFourthPrice,
+            double vipLevelFivePrice, String goodBriefIntroduction, String goodRemarks,
+            boolean isSelect, boolean isAllSelect, Long typeId) {
         this.id = id;
         this.goodName = goodName;
         this.goodPrice = goodPrice;
@@ -72,6 +79,9 @@ public class GoodsInfo {
         this.vipLevelFivePrice = vipLevelFivePrice;
         this.goodBriefIntroduction = goodBriefIntroduction;
         this.goodRemarks = goodRemarks;
+        this.isSelect = isSelect;
+        this.isAllSelect = isAllSelect;
+        this.typeId = typeId;
     }
 
     @Generated(hash = 1227172248)
@@ -162,10 +172,12 @@ public class GoodsInfo {
     @Generated(hash = 2084741788)
     private transient Long goodsType__resolvedKey;
 
-    /** To-one relationship, resolved on first access. */
-    @Generated(hash = 834357729)
+    /**
+     * To-one relationship, resolved on first access.
+     */
+    @Generated(hash = 680513423)
     public GoodsType getGoodsType() {
-        Long __key = this.id;
+        Long __key = this.typeId;
         if (goodsType__resolvedKey == null || !goodsType__resolvedKey.equals(__key)) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
@@ -181,13 +193,15 @@ public class GoodsInfo {
         return goodsType;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1203001536)
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
+    @Generated(hash = 243467471)
     public void setGoodsType(GoodsType goodsType) {
         synchronized (this) {
             this.goodsType = goodsType;
-            id = goodsType == null ? null : goodsType.getId();
-            goodsType__resolvedKey = id;
+            typeId = goodsType == null ? null : goodsType.getId();
+            goodsType__resolvedKey = typeId;
         }
     }
 
@@ -227,7 +241,9 @@ public class GoodsInfo {
         myDao.update(this);
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1127636671)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
@@ -296,5 +312,29 @@ public class GoodsInfo {
 
     public void setGoodLoaction(int goodLoaction) {
         this.goodLoaction = goodLoaction;
+    }
+
+    public boolean getIsSelect() {
+        return this.isSelect;
+    }
+
+    public void setIsSelect(boolean isSelect) {
+        this.isSelect = isSelect;
+    }
+
+    public Long getTypeId() {
+        return this.typeId;
+    }
+
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
+    }
+
+    public boolean getIsAllSelect() {
+        return this.isAllSelect;
+    }
+
+    public void setIsAllSelect(boolean isAllSelect) {
+        this.isAllSelect = isAllSelect;
     }
 }

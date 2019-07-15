@@ -3,6 +3,8 @@ package com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.model
 import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.GoodsType;
+import com.yzx.yzxlocalstore.greendao.GoodsInfoDao;
+import com.yzx.yzxlocalstore.greendao.GoodsTypeDao;
 
 import java.util.List;
 

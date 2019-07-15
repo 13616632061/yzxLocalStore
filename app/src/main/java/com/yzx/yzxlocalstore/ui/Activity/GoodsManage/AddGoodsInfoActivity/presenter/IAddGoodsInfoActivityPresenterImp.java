@@ -30,6 +30,8 @@ public interface IAddGoodsInfoActivityPresenterImp {
     //计算利润
     void setGoodProfit(String price, String originalPrice, int type);
 
+    String getGoodProfit(String price, String originalPrice);
+
     //商品利润
     void countProfit(EditText view1, EditText view2, int type);
 

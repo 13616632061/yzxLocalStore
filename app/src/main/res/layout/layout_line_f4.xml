@@ -6,6 +6,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_F4F4F4" />
+        android:background="@color/color_F8F8FF" />
 
 </android.support.constraint.ConstraintLayout>

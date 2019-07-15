@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_item"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:background="@color/color_F8F8FF">
+    android:layout_height="60dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/tv_handle">
+        android:layout_toLeftOf="@+id/tv_edit">
 
         <ImageView
-            android:id="@+id/iv_all_select"
+            android:id="@+id/iv_select"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="15dp"
@@ -18,6 +19,7 @@
             android:src="@drawable/unselect" />
 
         <TextView
+            android:id="@+id/tv_good_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -27,58 +29,63 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_good_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
             android:gravity="center"
+            android:layout_weight="1"
             android:text="@string/goods_price"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
         <TextView
+            android:gravity="center"
+            android:id="@+id/tv_good_store"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:gravity="center"
             android:text="@string/goods_store"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
         <TextView
+            android:gravity="center"
+            android:id="@+id/tv_goods_profit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:gravity="center"
             android:text="@string/goods_profit"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_goods_type"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:gravity="center"
             android:text="@string/goods_type"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_goods_status"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:gravity="center"
             android:text="@string/goods_status"
             android:textColor="@color/black"
             android:textSize="14sp" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_handle"
+        android:id="@+id/tv_edit"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
@@ -86,7 +93,13 @@
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="@string/handle"
-        android:textColor="@color/black"
+        android:text="@string/edit"
+        android:textColor="@color/color_1196EE"
         android:textSize="14sp" />
+
+    <include
+        layout="@layout/layout_line_f4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_handle"></include>
 </RelativeLayout>

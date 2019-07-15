@@ -8,8 +8,14 @@ public interface IGoodsListFragmentPresenterImp {
 
     void initAdapter();
 
-    //全部商品
-    void allGoodsInfo();
+    //查询商品
+    void getGoodsInfo(int page);
+
+    //商品选中状态 type:0全选，1单个选中
+    void editGoodsInfoSelectStatus(int type, int position);
+
+    //是否全部选中
+    boolean isAllSelect();
 
     //缺货商品
     void lackGoodsInfo();

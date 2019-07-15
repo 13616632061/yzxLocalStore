@@ -111,6 +111,7 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
         SpinnerGoodsTypeAdapter spinnerAdapter = new SpinnerGoodsTypeAdapter(this, R.layout.item_select);
         spinnerAdapter.setDatas(spinnerItems);
         spinnerGoodType.setAdapter(spinnerAdapter);
+        selectGoodtype = spinnerItems.get(0);
         spinnerGoodType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

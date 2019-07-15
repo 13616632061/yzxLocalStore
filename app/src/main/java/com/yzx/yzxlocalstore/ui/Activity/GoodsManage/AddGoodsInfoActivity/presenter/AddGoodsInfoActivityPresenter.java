@@ -4,12 +4,15 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.yzx.lib.entity.MessageEvent;
 import com.yzx.lib.util.ArithUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.GoodsType;
 import com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.model.AddGoodsInfoActivityModel;
 import com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.view.AddGoodsInfoActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +34,12 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
     //商品分类
     @Override
     public void setGoodType() {
-        List<GoodsType> spinnerItems = mModel.getGoodsTypeInfo();
+        List<GoodsType> spinnerItems = new ArrayList<>();
+        for (GoodsType type : mModel.getGoodsTypeInfo()) {
+            if (type.getStatus()) {
+                spinnerItems.add(type);
+            }
+        }
         GoodsType goodsType = new GoodsType();
         goodsType.setTypeName(mView.getResources().getString(R.string.defaut_type));
         spinnerItems.add(0, goodsType);
@@ -71,6 +79,7 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
             return;
         }
         GoodsInfo goodsInfo = new GoodsInfo();
+        goodsInfo.setTypeId(mView.getSelectGoodtype().getId());
         goodsInfo.setGoodsType(mView.getSelectGoodtype());
         goodsInfo.setGoodName(mView.getGoodName());
         goodsInfo.setGoodCode(mView.getGoodCode());
@@ -81,6 +90,7 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
         goodsInfo.setGoodLoaction(mView.getGoodLoaction());
         goodsInfo.setGoodOriginalPrice(Double.parseDouble(mView.getGoodOriginalPrice()));
         goodsInfo.setGoodPrice(Double.parseDouble(mView.getGoodPrice()));
+        goodsInfo.setGoodProfit(Double.parseDouble(ArithUtil.roundByScale(getGoodProfit(mView.getGoodPrice(), mView.getGoodOriginalPrice()), "#0.00")));
         goodsInfo.setVipLevelOnePrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelOnePrice())));
         goodsInfo.setVipLevelTwoPrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelTwoPrice())));
         goodsInfo.setVipLevelThreePrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelThreePrice())));
@@ -88,6 +98,7 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
         goodsInfo.setVipLevelFivePrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelFivePrice())));
 
         mModel.addGoodsInfo(goodsInfo);
+        EventBus.getDefault().post(new MessageEvent("addGoodsInfoSuccess", ""));
         mView.finish();
     }
 
@@ -122,13 +133,19 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
     //计算利润
     @Override
     public void setGoodProfit(String price, String originalPrice, int type) {
+        String profit = getGoodProfit(price, originalPrice);
+        mView.setGoodProfit(profit, type);
+
+    }
+
+    @Override
+    public String getGoodProfit(String price, String originalPrice) {
         String profit = 0 + "";
         if (!TextUtils.isEmpty(originalPrice) && !TextUtils.isEmpty(price)) {
             //计算利润 （销售价-成本价）/成本价
             profit = ArithUtil.roundByScale(ArithUtil.div(ArithUtil.sub(price, originalPrice) + "", originalPrice) + "", "#0.00");
         }
-        mView.setGoodProfit(profit, type);
-
+        return profit;
     }
 
     //商品利润
@@ -141,7 +158,7 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
     @Override
     public void setProfitTextView(TextView textView, String profit) {
         if (!TextUtils.isEmpty(profit)) {
-            textView.setText(mView.getResources().getString(R.string.profit) + (Double.parseDouble(profit) * 100) + "%");
+            textView.setText(mView.getResources().getString(R.string.profit) + (Double.parseDouble(ArithUtil.roundByScale(profit, "#0.00")) * 100) + "%");
         } else {
             textView.setText("");
         }

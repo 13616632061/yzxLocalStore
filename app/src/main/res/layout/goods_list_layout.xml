@@ -71,6 +71,7 @@
         android:layout_below="@+id/layout2"></include>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/layout4"
@@ -179,6 +180,7 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/tv_first_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -187,6 +189,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tv_pre_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -195,6 +198,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tv_next_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -203,6 +207,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tv_last_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"

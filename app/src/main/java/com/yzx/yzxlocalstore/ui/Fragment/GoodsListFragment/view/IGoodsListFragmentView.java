@@ -1,12 +1,30 @@
 package com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.view;
 
+import com.yzx.yzxlocalstore.entity.GoodsInfo;
+import com.yzx.yzxlocalstore.ui.Adapter.GoodsListFragmentAdapter;
+
+import java.util.List;
+
 /**
  * Created by Administrator on 2019/7/9.
  */
 
 public interface IGoodsListFragmentView {
-
+    //商品列表适配器
     void initAdapter();
+
+    GoodsListFragmentAdapter getAdapter();
+
+    //商品数据
+    List<GoodsInfo> getData();
+
+    //商品全选状态显示
+    void showAllSelectStatus();
+
+    //是否全部选中
+    void setAllSelect(boolean isAllSelect);
+
+    boolean isAllSelect();
 
     //全部商品
     void allGoodsInfo();

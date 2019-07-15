@@ -47,6 +47,9 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         public final static Property VipLevelFivePrice = new Property(15, double.class, "vipLevelFivePrice", false, "VIP_LEVEL_FIVE_PRICE");
         public final static Property GoodBriefIntroduction = new Property(16, String.class, "goodBriefIntroduction", false, "GOOD_BRIEF_INTRODUCTION");
         public final static Property GoodRemarks = new Property(17, String.class, "goodRemarks", false, "GOOD_REMARKS");
+        public final static Property IsSelect = new Property(18, boolean.class, "isSelect", false, "IS_SELECT");
+        public final static Property IsAllSelect = new Property(19, boolean.class, "isAllSelect", false, "IS_ALL_SELECT");
+        public final static Property TypeId = new Property(20, Long.class, "typeId", false, "TYPE_ID");
     }
 
     private DaoSession daoSession;
@@ -82,7 +85,10 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
                 "\"VIP_LEVEL_FOURTH_PRICE\" REAL NOT NULL ," + // 14: vipLevelFourthPrice
                 "\"VIP_LEVEL_FIVE_PRICE\" REAL NOT NULL ," + // 15: vipLevelFivePrice
                 "\"GOOD_BRIEF_INTRODUCTION\" TEXT," + // 16: goodBriefIntroduction
-                "\"GOOD_REMARKS\" TEXT);"); // 17: goodRemarks
+                "\"GOOD_REMARKS\" TEXT," + // 17: goodRemarks
+                "\"IS_SELECT\" INTEGER NOT NULL ," + // 18: isSelect
+                "\"IS_ALL_SELECT\" INTEGER NOT NULL ," + // 19: isAllSelect
+                "\"TYPE_ID\" INTEGER);"); // 20: typeId
     }
 
     /** Drops the underlying database table. */
@@ -136,6 +142,13 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         if (goodRemarks != null) {
             stmt.bindString(18, goodRemarks);
         }
+        stmt.bindLong(19, entity.getIsSelect() ? 1L: 0L);
+        stmt.bindLong(20, entity.getIsAllSelect() ? 1L: 0L);
+ 
+        Long typeId = entity.getTypeId();
+        if (typeId != null) {
+            stmt.bindLong(21, typeId);
+        }
     }
 
     @Override
@@ -183,6 +196,13 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         if (goodRemarks != null) {
             stmt.bindString(18, goodRemarks);
         }
+        stmt.bindLong(19, entity.getIsSelect() ? 1L: 0L);
+        stmt.bindLong(20, entity.getIsAllSelect() ? 1L: 0L);
+ 
+        Long typeId = entity.getTypeId();
+        if (typeId != null) {
+            stmt.bindLong(21, typeId);
+        }
     }
 
     @Override
@@ -216,7 +236,10 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             cursor.getDouble(offset + 14), // vipLevelFourthPrice
             cursor.getDouble(offset + 15), // vipLevelFivePrice
             cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // goodBriefIntroduction
-            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17) // goodRemarks
+            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17), // goodRemarks
+            cursor.getShort(offset + 18) != 0, // isSelect
+            cursor.getShort(offset + 19) != 0, // isAllSelect
+            cursor.isNull(offset + 20) ? null : cursor.getLong(offset + 20) // typeId
         );
         return entity;
     }
@@ -241,6 +264,9 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         entity.setVipLevelFivePrice(cursor.getDouble(offset + 15));
         entity.setGoodBriefIntroduction(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
         entity.setGoodRemarks(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
+        entity.setIsSelect(cursor.getShort(offset + 18) != 0);
+        entity.setIsAllSelect(cursor.getShort(offset + 19) != 0);
+        entity.setTypeId(cursor.isNull(offset + 20) ? null : cursor.getLong(offset + 20));
      }
     
     @Override
@@ -277,7 +303,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             builder.append(',');
             SqlUtils.appendColumns(builder, "T0", daoSession.getGoodsTypeDao().getAllColumns());
             builder.append(" FROM GOODS_INFO T");
-            builder.append(" LEFT JOIN GOODS_TYPE T0 ON T.\"_id\"=T0.\"_id\"");
+            builder.append(" LEFT JOIN GOODS_TYPE T0 ON T.\"TYPE_ID\"=T0.\"_id\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }
