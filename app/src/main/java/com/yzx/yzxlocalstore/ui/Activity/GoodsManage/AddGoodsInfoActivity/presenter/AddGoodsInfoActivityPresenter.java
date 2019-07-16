@@ -44,6 +44,7 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
         goodsType.setTypeName(mView.getResources().getString(R.string.defaut_type));
         spinnerItems.add(0, goodsType);
         mView.setGoodType(spinnerItems);
+        
     }
 
 
