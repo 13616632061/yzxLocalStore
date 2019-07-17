@@ -45,7 +45,7 @@ public class GoodsTypeDao extends AbstractDao<GoodsType, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS_TYPE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"TYPE_NAME\" TEXT," + // 1: typeName
+                "\"TYPE_NAME\" TEXT UNIQUE ," + // 1: typeName
                 "\"SORT\" INTEGER NOT NULL ," + // 2: sort
                 "\"STATUS\" INTEGER NOT NULL ," + // 3: status
                 "\"IS_SELECT\" INTEGER NOT NULL );"); // 4: isSelect

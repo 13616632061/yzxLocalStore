@@ -8,6 +8,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.yzx.yzxlocalstore.R;
+import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.presenter.GoodsListFragmentPresenter;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsTypeFragment.presenter.GoodsTypeFragmentPresenter;
 
 /**
@@ -23,14 +24,16 @@ public class TipsPopWindow extends BasePopupWindow implements View.OnClickListen
     private TextView btn_sure;
     private TextView btn_cancel;
     private String title, msg;
-    private GoodsTypeFragmentPresenter mPresenter;
+    private Object mPresenter;
+    private int type;//操作类型
 
-    public TipsPopWindow(Context mContext, String title, String msg, GoodsTypeFragmentPresenter mPresenter) {
+    public TipsPopWindow(Context mContext, String title, String msg, Object mPresenter, int type) {
         super(mContext);
         this.mContext = mContext;
         this.title = title;
         this.msg = msg;
         this.mPresenter = mPresenter;
+        this.type = type;
         view = View.inflate(mContext, R.layout.layout_tips_pop, null);
 
         initSet(view);
@@ -56,7 +59,7 @@ public class TipsPopWindow extends BasePopupWindow implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sure:
-                sureType(1);
+                sureType(type);
                 break;
             case R.id.btn_cancel:
                 dismiss();
@@ -67,7 +70,19 @@ public class TipsPopWindow extends BasePopupWindow implements View.OnClickListen
     private void sureType(int type) {
         switch (type) {
             case 1://删除分类操作
-                mPresenter.deleteGoodsType();
+                ((GoodsTypeFragmentPresenter) mPresenter).deleteGoodsType();
+                dismiss();
+                break;
+            case 2://删除商品信息操作
+                ((GoodsListFragmentPresenter) mPresenter).deteleGoodsInfo();
+                dismiss();
+                break;
+            case 3://上架商品信息操作
+                ((GoodsListFragmentPresenter) mPresenter).upShelfGoodsInfo();
+                dismiss();
+                break;
+            case 4://下架商品信息操作
+                ((GoodsListFragmentPresenter) mPresenter).dowmShelfGoodsInfo();
                 dismiss();
                 break;
         }

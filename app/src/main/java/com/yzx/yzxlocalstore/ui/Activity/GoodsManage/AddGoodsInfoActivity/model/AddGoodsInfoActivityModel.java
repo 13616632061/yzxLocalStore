@@ -26,4 +26,32 @@ public class AddGoodsInfoActivityModel implements IAddGoodsInfoActivityModelImp 
     public void addGoodsInfo(GoodsInfo goodsInfo) {
         MyAplication.getDaoSession().getGoodsInfoDao().insert(goodsInfo);
     }
+
+    //修改商品信息
+    @Override
+    public void editGoodsInfo(GoodsInfo goodsInfo) {
+        MyAplication.getDaoSession().getGoodsInfoDao().update(goodsInfo);
+    }
+
+    //商品名字是否存在
+    @Override
+    public boolean isExistGoodsInfoName(String goodsName) {
+        long count = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodName.eq(goodsName)).count();
+        if (count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //商品条码是否存在
+    @Override
+    public boolean isExistGoodsInfoCode(String goodsCode) {
+        long count = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodCode.eq(goodsCode)).count();
+        if (count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

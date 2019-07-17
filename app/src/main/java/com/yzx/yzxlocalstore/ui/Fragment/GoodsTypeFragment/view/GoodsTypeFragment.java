@@ -41,7 +41,6 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
 
     private GoodsTypeFragmentAdapter mAdapter;
     private List<GoodsType> datas = new ArrayList<>();
-    private Context mContext;
     private GoodsTypeFragmentPresenter mPresenter;
     private boolean isAllSelect = false;//是否全选
 
@@ -53,7 +52,6 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
     @Override
     public void initView(View rootView) {
         super.initView(rootView);
-        mContext = getActivity();
         mPresenter = new GoodsTypeFragmentPresenter(this);
         mPresenter.initAdapter();
     }
@@ -83,7 +81,7 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
     public void initAdapter() {
         mAdapter = new GoodsTypeFragmentAdapter(R.layout.item_goods_type, datas);
         list.setAdapter(mAdapter);
-        list.setLayoutManager(new LinearLayoutManager(mContext));
+        list.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -118,21 +116,21 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
     //新增分类
     @Override
     public void addGoodsType() {
-        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(mContext, getResources().getString(R.string.add_goods_type), null, 1, mPresenter);
+        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(getActivity(), getResources().getString(R.string.add_goods_type), null, 1, mPresenter);
         goodsTypePopWindow.showAsDropDown(layoutGoodsType, Gravity.NO_GRAVITY, 0, 0);
     }
 
     //删除分类
     @Override
     public void deleteGoodsType() {
-        TipsPopWindow tipsPopWindow = new TipsPopWindow(mContext, getResources().getString(R.string.reminder), getResources().getString(R.string.sure_delete_item),mPresenter);
+        TipsPopWindow tipsPopWindow = new TipsPopWindow(getActivity(), getResources().getString(R.string.reminder), getResources().getString(R.string.sure_delete_item), mPresenter, 1);
         tipsPopWindow.showAsDropDown(layoutGoodsType, Gravity.NO_GRAVITY, 0, 0);
     }
 
     //编辑分类
     @Override
     public void editGoodsType(GoodsType goodsType) {
-        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(mContext, getResources().getString(R.string.edit_goods_type), goodsType, 2, mPresenter);
+        GoodsTypePopWindow goodsTypePopWindow = new GoodsTypePopWindow(getActivity(), getResources().getString(R.string.edit_goods_type), goodsType, 2, mPresenter);
         goodsTypePopWindow.showAsDropDown(layoutGoodsType, Gravity.NO_GRAVITY, 0, 0);
     }
 
@@ -162,13 +160,18 @@ public class GoodsTypeFragment extends BaseFragment implements IGoodsTypeFragmen
     public void showToastMsg(int type) {
         switch (type) {
             case 1://分类名已存在，请重新输入！
-                Toast.makeText(mContext, mContext.getResources().getString(R.string.goods_type_name_exist), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.goods_type_name_exist), Toast.LENGTH_SHORT).show();
                 break;
             case 2://请选择要删除的分类信息
-                Toast.makeText(mContext, mContext.getResources().getString(R.string.selete_delete_item), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.selete_delete_item), Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter = null;
+        datas = null;
+    }
 }

@@ -42,9 +42,9 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnSystemUiVisibilityChangeListener {
 
-    public static Activity mCurrentActivity;
+//    public static Activity mCurrentActivity;
 
-    private static List<Activity> mActivities = new LinkedList<>();
+//    private static List<Activity> mActivities = new LinkedList<>();
     private Handler mHandler;
 
     @Override
@@ -56,9 +56,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnS
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(this);
         //路由自动属性注入
         ARouter.getInstance().inject(this);
-        synchronized (mActivities) {
-            mActivities.add(this);
-        }
+//        synchronized (mActivities) {
+//            mActivities.add(this);
+//        }
         mHandler = new Handler();
         initView();
         initListener();
@@ -130,7 +130,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnS
     @Override
     protected void onResume() {
         super.onResume();
-        mCurrentActivity = this;
+//        mCurrentActivity = this;
 //        hideStatusBar();
     }
 
@@ -148,9 +148,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnS
         RefWatcher refWatcher = LibAplication.getRefWatcher(this);//1
         refWatcher.watch(this);
 
-        synchronized (mActivities) {
-            mActivities.remove(this);
-        }
+//        synchronized (mActivities) {
+//            mActivities.remove(this);
+//        }
 
         KeyboardUtils.hideSoftInput(this);
 

@@ -1,5 +1,8 @@
 package com.yzx.yzxlocalstore.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToOne;
@@ -7,6 +10,7 @@ import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 
+import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.greendao.DaoSession;
 import com.yzx.yzxlocalstore.greendao.GoodsTypeDao;
 import com.yzx.yzxlocalstore.greendao.GoodsInfoDao;
@@ -16,7 +20,7 @@ import com.yzx.yzxlocalstore.greendao.GoodsInfoDao;
  */
 
 @Entity
-public class GoodsInfo {
+public class GoodsInfo implements Parcelable{
 
     @Id(autoincrement = true)
     private Long id;
@@ -87,6 +91,50 @@ public class GoodsInfo {
     @Generated(hash = 1227172248)
     public GoodsInfo() {
     }
+
+    protected GoodsInfo(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        goodName = in.readString();
+        goodPrice = in.readDouble();
+        goodOriginalPrice = in.readDouble();
+        goodStore = in.readDouble();
+        goodStoreWarningNum = in.readDouble();
+        goodProfit = in.readDouble();
+        goodStatus = in.readByte() != 0;
+        goodCode = in.readString();
+        goodPinyinCode = in.readString();
+        goodLoaction = in.readInt();
+        vipLevelOnePrice = in.readDouble();
+        vipLevelTwoPrice = in.readDouble();
+        vipLevelThreePrice = in.readDouble();
+        vipLevelFourthPrice = in.readDouble();
+        vipLevelFivePrice = in.readDouble();
+        goodBriefIntroduction = in.readString();
+        goodRemarks = in.readString();
+        isSelect = in.readByte() != 0;
+        isAllSelect = in.readByte() != 0;
+        if (in.readByte() == 0) {
+            typeId = null;
+        } else {
+            typeId = in.readLong();
+        }
+    }
+
+    public static final Creator<GoodsInfo> CREATOR = new Creator<GoodsInfo>() {
+        @Override
+        public GoodsInfo createFromParcel(Parcel in) {
+            return new GoodsInfo(in);
+        }
+
+        @Override
+        public GoodsInfo[] newArray(int size) {
+            return new GoodsInfo[size];
+        }
+    };
 
     public Long getId() {
         return this.id;
@@ -241,9 +289,7 @@ public class GoodsInfo {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1127636671)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
@@ -336,5 +382,45 @@ public class GoodsInfo {
 
     public void setIsAllSelect(boolean isAllSelect) {
         this.isAllSelect = isAllSelect;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        dest.writeString(goodName);
+        dest.writeDouble(goodPrice);
+        dest.writeDouble(goodOriginalPrice);
+        dest.writeDouble(goodStore);
+        dest.writeDouble(goodStoreWarningNum);
+        dest.writeDouble(goodProfit);
+        dest.writeByte((byte) (goodStatus ? 1 : 0));
+        dest.writeString(goodCode);
+        dest.writeString(goodPinyinCode);
+        dest.writeInt(goodLoaction);
+        dest.writeDouble(vipLevelOnePrice);
+        dest.writeDouble(vipLevelTwoPrice);
+        dest.writeDouble(vipLevelThreePrice);
+        dest.writeDouble(vipLevelFourthPrice);
+        dest.writeDouble(vipLevelFivePrice);
+        dest.writeString(goodBriefIntroduction);
+        dest.writeString(goodRemarks);
+        dest.writeByte((byte) (isSelect ? 1 : 0));
+        dest.writeByte((byte) (isAllSelect ? 1 : 0));
+        if (typeId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(typeId);
+        }
     }
 }

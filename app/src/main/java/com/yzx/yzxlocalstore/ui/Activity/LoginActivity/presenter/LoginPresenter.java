@@ -43,6 +43,5 @@ public class LoginPresenter implements ILoginPresenter {
         } else {
             loginActivity.LoginFail(2);
         }
-
     }
 }

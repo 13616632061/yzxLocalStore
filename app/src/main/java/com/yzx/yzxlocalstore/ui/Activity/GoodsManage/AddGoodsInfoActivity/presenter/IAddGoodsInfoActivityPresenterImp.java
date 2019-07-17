@@ -7,6 +7,7 @@ import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.GoodsType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2019/7/10.
@@ -15,14 +16,20 @@ import java.util.ArrayList;
 public interface IAddGoodsInfoActivityPresenterImp {
 
     //商品分类
-    void setGoodType();
+    void getGoodType();
+
+    //显示选中的商品分类
+    void showSelectGoodType(List<GoodsType> spinnerItems, GoodsInfo mGoodsInfo, int type);
 
     //保存商品信息
-    void saveGoodInfo();
+    void saveGoodInfo(int type, GoodsInfo mGoodsInfo);
+
+    //设置商品信息
+    void setGoodInfo(GoodsInfo mGoodsInfo);
 
 
-    //商品上下架状态
-    void setGoodStatus(int type, GoodsInfo goodsInfo);
+    //设置商品信息
+    void setGoodInfo(int type, GoodsInfo goodsInfo);
 
     //设置Vip等级价格
     String setGoodVipLevelPrice(String vipLevelPrice);
@@ -40,5 +47,6 @@ public interface IAddGoodsInfoActivityPresenterImp {
 
     //显示利润
     void showProfitInfo();
+
 
 }

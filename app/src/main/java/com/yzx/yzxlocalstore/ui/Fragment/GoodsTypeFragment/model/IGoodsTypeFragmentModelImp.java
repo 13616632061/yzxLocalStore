@@ -13,8 +13,6 @@ import java.util.List;
  */
 
 public interface IGoodsTypeFragmentModelImp {
-    //初始化DaoSession
-    QueryBuilder<GoodsType> initDaoSession(Context context);
 
     //分类名是否存在
     boolean isHasGoodsType(Context context, String typeName);

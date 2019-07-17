@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_goods_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -17,13 +18,6 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tv_all_nums"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="(100)"
-            android:textColor="@color/color_707070"
-            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,6 +34,7 @@
             android:background="@drawable/bg_shape_f8f8ff"
             android:padding="10dp"
             android:text="@string/alls"
+            android:textColor="@color/color_707070"
             android:textSize="14sp" />
 
         <TextView
@@ -50,6 +45,7 @@
             android:background="@drawable/bg_shape_f8f8ff"
             android:padding="10dp"
             android:text="@string/goods_out_stock"
+            android:textColor="@color/color_707070"
             android:textSize="14sp" />
 
         <TextView
@@ -60,6 +56,7 @@
             android:background="@drawable/bg_shape_f8f8ff"
             android:padding="10dp"
             android:text="@string/waring_store"
+            android:textColor="@color/color_707070"
             android:textSize="14sp" />
     </LinearLayout>
 

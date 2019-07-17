@@ -57,6 +57,7 @@
     <string name="delete">删除</string>
     <string name="add_goods_type">添加商品分类</string>
     <string name="edit_goods_type">编辑商品分类</string>
+    <string name="edit_goods">编辑商品</string>
     <string name="cancel">取消</string>
     <string name="sure">确定</string>
     <string name="input_goods_type_name">请输入分类名</string>
@@ -71,7 +72,12 @@
     <string name="smaller_value_more_advanced">值越小越靠前</string>
     <string name="reminder">温馨提示</string>
     <string name="sure_delete_item">确定删除选中项？</string>
+    <string name="sure_up_shelf_item">确定上架选中商品？</string>
+    <string name="sure_down_shelf_item">确定下架选中商品？</string>
     <string name="selete_delete_item">请选择要删除的分类信息</string>
+    <string name="selete_delete_goods_item">请选择要删除的商品</string>
+    <string name="selete_up_shelf_goods_item">请选择要上架的商品</string>
+    <string name="selete_down_shelf_goods_item">请选择要下架的商品</string>
     <string name="goods_name">商品名称</string>
     <string name="goods_price">商品价格</string>
     <string name="goods_store">商品库存</string>
@@ -122,6 +128,8 @@
     <string name="empty_goods_warning_store_num">商品预警数量为空！</string>
     <string name="empty_goods_original_price">商品进价为空！</string>
     <string name="empty_goods_price">商品销售价为空！</string>
+    <string name="exist_goods_name">商品名称已存在，请重新输入！</string>
+    <string name="exist_goods_code">商品条码已存在，请重新输入！</string>
 
 
 </resources>

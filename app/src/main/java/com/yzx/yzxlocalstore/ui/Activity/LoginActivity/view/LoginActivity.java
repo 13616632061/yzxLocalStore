@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
+import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.presenter.LoginPresenter;
 
@@ -27,7 +28,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @InjectView(R.id.et_pwd)
     EditText etPwd;
 
-    private LoginPresenter loginPresenter;
+    private LoginPresenter mPresenter;
 
     @Override
     public int getContentView() {
@@ -36,7 +37,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     protected void initView() {
-        loginPresenter = new LoginPresenter(this);
+        mPresenter = new LoginPresenter(this);
 
         initPermission();
 
@@ -76,10 +77,11 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                loginPresenter.Login();
+                mPresenter.Login();
                 break;
         }
     }
+
     /**
      * 初始化权限
      */
@@ -91,18 +93,23 @@ public class LoginActivity extends BaseActivity implements ILoginView {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ).request();
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionGen.onRequestPermissionsResult(this,requestCode,permissions,grantResults);
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
-    @PermissionSuccess(requestCode =100)
-    public void  requestPermissionsSuccess(){
+
+    @PermissionSuccess(requestCode = 100)
+    public void requestPermissionsSuccess() {
+        if (Constants.loginUserInfo != null) {
+            LoginSuccess();
+        }
     }
 
 
     @PermissionFail(requestCode = 100)
-    public void  requestPermissionsFail(){
+    public void requestPermissionsFail() {
         showToast(getResources().getString(R.string.permissions_fail));
     }
 }

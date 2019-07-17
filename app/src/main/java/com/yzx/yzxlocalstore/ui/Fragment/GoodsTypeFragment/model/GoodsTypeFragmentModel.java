@@ -19,15 +19,8 @@ public class GoodsTypeFragmentModel implements IGoodsTypeFragmentModelImp {
 
 
     @Override
-    public QueryBuilder<GoodsType> initDaoSession(Context context) {
-        DaoSession daoSession = ((MyAplication) context.getApplicationContext()).getDaoSession();
-        QueryBuilder<GoodsType> queryBuilder = daoSession.queryBuilder(GoodsType.class);
-        return queryBuilder;
-    }
-
-    @Override
     public boolean isHasGoodsType(Context context, String typeName) {
-        List<GoodsType> list = initDaoSession(context).where(GoodsTypeDao.Properties.TypeName.eq(typeName)).list();
+        List<GoodsType> list = MyAplication.getDaoSession().getGoodsTypeDao().queryBuilder().where(GoodsTypeDao.Properties.TypeName.eq(typeName)).list();
         if (list.size() > 0) {
             return true;
         } else {
@@ -38,7 +31,7 @@ public class GoodsTypeFragmentModel implements IGoodsTypeFragmentModelImp {
 
     @Override
     public List<GoodsType> getGoodsTypeInfo(Context context) {
-        List<GoodsType> list = initDaoSession(context).list();
+        List<GoodsType> list = MyAplication.getDaoSession().getGoodsTypeDao().queryBuilder().list();
         return list;
     }
 

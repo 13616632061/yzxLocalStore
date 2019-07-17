@@ -7,10 +7,12 @@ import android.widget.TextView;
 import com.yzx.lib.entity.MessageEvent;
 import com.yzx.lib.util.ArithUtil;
 import com.yzx.yzxlocalstore.R;
+import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.GoodsType;
 import com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.model.AddGoodsInfoActivityModel;
 import com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.view.AddGoodsInfoActivity;
+import com.yzx.yzxlocalstore.utils.AsyncTaskQureUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,7 +35,7 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
 
     //商品分类
     @Override
-    public void setGoodType() {
+    public void getGoodType() {
         List<GoodsType> spinnerItems = new ArrayList<>();
         for (GoodsType type : mModel.getGoodsTypeInfo()) {
             if (type.getStatus()) {
@@ -43,14 +45,43 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
         GoodsType goodsType = new GoodsType();
         goodsType.setTypeName(mView.getResources().getString(R.string.defaut_type));
         spinnerItems.add(0, goodsType);
-        mView.setGoodType(spinnerItems);
-        
+        mView.initGoodTypeInfo(spinnerItems);
+
+    }
+
+    /**
+     * 显示选中的商品分类
+     *
+     * @param spinnerItems
+     * @param mGoodsInfo
+     */
+    @Override
+    public void showSelectGoodType(List<GoodsType> spinnerItems, GoodsInfo mGoodsInfo, int type) {
+        switch (type) {
+            case 1:
+                mView.setSelectGoodtypeItem(0);
+                break;
+            case 2:
+                mGoodsInfo.__setDaoSession(MyAplication.getDaoSession());
+                if (mGoodsInfo.getGoodsType()==null||TextUtils.isEmpty(mGoodsInfo.getGoodsType().getTypeName())) {
+                    mView.setSelectGoodtypeItem(0);
+                    return;
+                }
+                for (int i = 0; i < spinnerItems.size(); i++) {
+                    if (mGoodsInfo.getGoodsType().getTypeName().equals(spinnerItems.get(i).getTypeName())) {
+                        mView.setSelectGoodtypeItem(i);
+                        break;
+                    }
+                }
+                break;
+
+        }
     }
 
 
     //保存商品信息
     @Override
-    public void saveGoodInfo() {
+    public void saveGoodInfo(int type, GoodsInfo mGoodsInfo) {
         if (TextUtils.isEmpty(mView.getGoodName())) {
             mView.errorMsg(0);
             return;
@@ -79,9 +110,38 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
             mView.errorMsg(6);
             return;
         }
-        GoodsInfo goodsInfo = new GoodsInfo();
-        goodsInfo.setTypeId(mView.getSelectGoodtype().getId());
-        goodsInfo.setGoodsType(mView.getSelectGoodtype());
+
+        switch (type) {
+            case 1://新增
+                GoodsInfo goodsInfo = new GoodsInfo();
+                setGoodInfo(goodsInfo);
+                if (mModel.isExistGoodsInfoName(goodsInfo.getGoodName())) {
+                    mView.errorMsg(7);
+                } else if (mModel.isExistGoodsInfoCode(goodsInfo.getGoodCode())) {
+                    mView.errorMsg(8);
+                } else {
+                    mModel.addGoodsInfo(goodsInfo);
+                }
+                break;
+            case 2://编辑
+                setGoodInfo(mGoodsInfo);
+                mModel.editGoodsInfo(mGoodsInfo);
+                break;
+        }
+        EventBus.getDefault().post(new MessageEvent("addGoodsInfoSuccess", ""));
+        mView.finish();
+
+    }
+
+    /**
+     * 设置商品信息
+     *
+     * @param goodsInfo
+     */
+    @Override
+    public void setGoodInfo(GoodsInfo goodsInfo) {
+        goodsInfo.setTypeId(mView.getSelectGoodType().getId());
+        goodsInfo.setGoodsType(mView.getSelectGoodType());
         goodsInfo.setGoodName(mView.getGoodName());
         goodsInfo.setGoodCode(mView.getGoodCode());
         goodsInfo.setGoodPinyinCode(mView.getGoodPinyinCode());
@@ -97,28 +157,38 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
         goodsInfo.setVipLevelThreePrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelThreePrice())));
         goodsInfo.setVipLevelFourthPrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelFourthPrice())));
         goodsInfo.setVipLevelFivePrice(Double.parseDouble(setGoodVipLevelPrice(mView.getGoodVipLevelFivePrice())));
-
-        mModel.addGoodsInfo(goodsInfo);
-        EventBus.getDefault().post(new MessageEvent("addGoodsInfoSuccess", ""));
-        mView.finish();
     }
 
-
-    //商品上下架状态
+    /**
+     * 设置商品信息
+     *
+     * @param type
+     * @param goodsInfo
+     */
     @Override
-    public void setGoodStatus(int type, GoodsInfo goodsInfo) {
+    public void setGoodInfo(int type, GoodsInfo goodsInfo) {
         switch (type) {
             case 1://新增
                 mView.setGoodStatus(3);
                 mView.setGoodLoaction(0);
                 break;
             case 2://编辑
-                if (goodsInfo.getGoodStatus()) {
-                    mView.setGoodStatus(3);
-                } else {
-                    mView.setGoodStatus(4);
+                if (goodsInfo != null) {
+                    mView.setGoodName(goodsInfo.getGoodName());
+                    mView.setGoodCode(goodsInfo.getGoodCode());
+                    mView.setGoodPinyinCode(goodsInfo.getGoodPinyinCode());
+                    mView.setGoodStore(goodsInfo.getGoodStore() + "");
+                    mView.setGoodStoreWarningNum(goodsInfo.getGoodStoreWarningNum() + "");
+                    mView.setGoodStatus(goodsInfo.getGoodStatus() ? 3 : 4);
+                    mView.setGoodLoaction(goodsInfo.getGoodLoaction());
+                    mView.setGoodOriginalPrice(goodsInfo.getGoodOriginalPrice() + "");
+                    mView.setGoodPrice(goodsInfo.getGoodPrice() + "");
+                    mView.setGoodVipLevelOnePrice(goodsInfo.getVipLevelOnePrice() + "");
+                    mView.setGoodVipLevelTwoPrice(goodsInfo.getVipLevelTwoPrice() + "");
+                    mView.setGoodVipLevelThreePrice(goodsInfo.getVipLevelThreePrice() + "");
+                    mView.setGoodVipLevelFourthPrice(goodsInfo.getVipLevelFourthPrice() + "");
+                    mView.setGoodVipLevelFivePrice(goodsInfo.getVipLevelFivePrice() + "");
                 }
-                mView.setGoodLoaction(goodsInfo.getGoodLoaction());
                 break;
         }
     }
@@ -158,8 +228,8 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
     //利润textView
     @Override
     public void setProfitTextView(TextView textView, String profit) {
-        if (!TextUtils.isEmpty(profit)) {
-            textView.setText(mView.getResources().getString(R.string.profit) + (Double.parseDouble(ArithUtil.roundByScale(profit, "#0.00")) * 100) + "%");
+        if (!TextUtils.isEmpty(profit) && Double.parseDouble(profit) > 0) {
+            textView.setText(mView.getResources().getString(R.string.profit) + ArithUtil.roundByScale((Double.parseDouble(profit) * 100) + "", "#0.00") + "%");
         } else {
             textView.setText("");
         }
@@ -170,4 +240,5 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
     public void showProfitInfo() {
         mView.showProfitInfo();
     }
+
 }

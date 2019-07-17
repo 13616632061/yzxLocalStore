@@ -2,6 +2,7 @@ package com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.view;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.yzx.yzxlocalstore.entity.GoodsType;
@@ -16,14 +17,12 @@ import java.util.List;
 public interface IAddGoodsInfoActivityView {
 
     //商品分类
-    void setGoodType(List<GoodsType> spinnerItems);
+    void initGoodTypeInfo(List<GoodsType> spinnerGoodsTypeItems);
 
-    GoodsType getGoodType(GoodsType goodsType);
+//    //选中的商品分类
+    void setSelectGoodtypeItem(int position);
 
-    //选中的商品分类
-    void setSelectGoodtype(GoodsType goodsType);
-
-    GoodsType getSelectGoodtype();
+    GoodsType getSelectGoodType();
 
     //商品名称
     void setGoodName(String goodName);

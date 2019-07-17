@@ -26,6 +26,27 @@ public interface IGoodsListFragmentView {
 
     boolean isAllSelect();
 
+    //所有商品数量
+    void setAllGoodsNum(String allGoodsNum);
+
+    //是否选中所有商品类型
+    void isSelectAllGoodsType(boolean isSelectAllGoods);
+
+    //缺货商品数量
+    void setLackGoodsInfom(String lackGoodsNum);
+
+    //是否选中缺货商品类型
+    void isSelectLackGoodsType(boolean iisSelectLackGoods);
+
+    //库存预警
+    void setWarningGoodsNum(String warningGoodsNum);
+
+    //是否选中库存预警商品类型
+    void isSelectWarningGoodsType(boolean isSelectWarningGoods);
+
+    //编辑商品
+    void goToEditGoodsInfo(GoodsInfo goodInfo);
+
     //全部商品
     void allGoodsInfo();
 
@@ -67,6 +88,9 @@ public interface IGoodsListFragmentView {
 
     //下一页
     void nextPage();
+
+    //显示提示信息
+    void showErrorMsg(int type);
 
 
 }

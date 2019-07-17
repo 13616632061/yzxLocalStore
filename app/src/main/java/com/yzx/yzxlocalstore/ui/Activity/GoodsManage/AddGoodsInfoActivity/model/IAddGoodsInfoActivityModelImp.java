@@ -16,4 +16,13 @@ public interface IAddGoodsInfoActivityModelImp {
 
     //添加商品信息
     void addGoodsInfo(GoodsInfo goodsInfo);
+
+    //修改商品信息
+    void editGoodsInfo(GoodsInfo goodsInfo);
+
+    //商品名字是否存在
+    boolean isExistGoodsInfoName(String goodsName);
+
+    //商品条码是否存在
+    boolean isExistGoodsInfoCode(String goodsCode);
 }

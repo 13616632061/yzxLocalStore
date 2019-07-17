@@ -12,15 +12,21 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.apkfuns.logutils.LogUtils;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.lib.util.ArithUtil;
 import com.yzx.yzxlocalstore.R;
+import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.constant.RouteMap;
+import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.GoodsType;
 import com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.presenter.AddGoodsInfoActivityPresenter;
 import com.yzx.yzxlocalstore.ui.Adapter.SpinnerGoodsTypeAdapter;
 
+import java.security.Key;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -74,8 +80,12 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
     @InjectView(R.id.rg_location)
     RadioGroup rgLocation;
 
+    @Autowired(name = "type")
+    public int mType;
+    @Autowired(name = "mGoodsInfo")
+    public GoodsInfo mGoodsInfo;
+
     private AddGoodsInfoActivityPresenter mPresenter;
-    private GoodsType selectGoodtype;//选中的商品分类
 
 
     @Override
@@ -85,10 +95,18 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
 
     @Override
     protected void initView() {
-        inintTitle(getResources().getString(R.string.add_goods));
         mPresenter = new AddGoodsInfoActivityPresenter(this);
-        mPresenter.setGoodType();
-        mPresenter.setGoodStatus(1, null);
+        switch (mType) {
+            case 1:
+                inintTitle(getResources().getString(R.string.add_goods));
+                break;
+            case 2:
+                inintTitle(getResources().getString(R.string.edit_goods));
+                break;
+
+        }
+        mPresenter.getGoodType();
+        mPresenter.setGoodInfo(mType, mGoodsInfo);
         mPresenter.showProfitInfo();
 
     }
@@ -100,22 +118,24 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
                 finish();
                 break;
             case R.id.btn_sure://确定
-                mPresenter.saveGoodInfo();
+                mPresenter.saveGoodInfo(mType,mGoodsInfo);
                 break;
         }
     }
 
     //商品分类
     @Override
-    public void setGoodType(final List<GoodsType> spinnerItems) {
+    public void initGoodTypeInfo(List<GoodsType> mSpinnerGoodsTypeItems) {
         SpinnerGoodsTypeAdapter spinnerAdapter = new SpinnerGoodsTypeAdapter(this, R.layout.item_select);
-        spinnerAdapter.setDatas(spinnerItems);
+        spinnerAdapter.setDatas(mSpinnerGoodsTypeItems);
         spinnerGoodType.setAdapter(spinnerAdapter);
-        selectGoodtype = spinnerItems.get(0);
+
+        mPresenter.showSelectGoodType(mSpinnerGoodsTypeItems, mGoodsInfo, mType);
+
         spinnerGoodType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectGoodtype = spinnerItems.get(position);
+//                selectGoodtype = spinnerItems.get(position);
             }
 
             @Override
@@ -125,20 +145,21 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
         });
     }
 
+
+    /**
+     * 商品分类选中的item
+     *
+     * @param position
+     */
     @Override
-    public GoodsType getGoodType(GoodsType goodsType) {
-        return goodsType;
+    public void setSelectGoodtypeItem(int position) {
+        spinnerGoodType.setSelection(position);
     }
 
-    //选中的商品分类
-    @Override
-    public void setSelectGoodtype(GoodsType goodsType) {
-        selectGoodtype = goodsType;
-    }
 
     @Override
-    public GoodsType getSelectGoodtype() {
-        return selectGoodtype;
+    public GoodsType getSelectGoodType() {
+        return (GoodsType) spinnerGoodType.getSelectedItem();
     }
 
     //商品名称
@@ -332,6 +353,7 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
     //商品利润
     @Override
     public void setGoodProfit(String profit, int type) {
+        LogUtils.e("profit"+type);
 
         switch (type) {
             case 0:
@@ -359,15 +381,16 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
     //计算利润
     @Override
     public void countProfit(final EditText view1, final EditText view2, final int type) {
+        if (mType == 2) {
+            mPresenter.setGoodProfit(view2.getText().toString().trim(), view1.getText().toString().trim(), type);
+        }
         view1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -428,6 +451,12 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
                 break;
             case 6:
                 showToast(getResources().getString(R.string.empty_goods_price));
+                break;
+            case 7:
+                showToast(getResources().getString(R.string.exist_goods_name));
+                break;
+            case 8:
+                showToast(getResources().getString(R.string.exist_goods_name));
                 break;
 
         }
