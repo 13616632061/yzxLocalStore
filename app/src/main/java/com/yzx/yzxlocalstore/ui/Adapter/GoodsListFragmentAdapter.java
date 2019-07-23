@@ -2,11 +2,13 @@ package com.yzx.yzxlocalstore.ui.Adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yzx.lib.util.ArithUtil;
 import com.yzx.yzxlocalstore.R;
+import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class GoodsListFragmentAdapter extends BaseQuickAdapter<GoodsInfo, BaseVi
 
     public GoodsListFragmentAdapter(Context mContext, int layoutResId, @Nullable List<GoodsInfo> data) {
         super(layoutResId, data);
-        this.mContext = mContext;
+        this.mContext = mContext.getApplicationContext();
     }
 
     @Override
@@ -42,8 +44,8 @@ public class GoodsListFragmentAdapter extends BaseQuickAdapter<GoodsInfo, BaseVi
         //商品利润
         helper.setText(R.id.tv_goods_profit, ArithUtil.roundByScale((item.getGoodProfit() * 100) + "", "0.00") + "%");
         //商品分类名字
-        if (item.getGoodsType() != null) {
-            helper.setText(R.id.tv_goods_type, item.getGoodsType().getTypeName() + "");
+        if (!TextUtils.isEmpty(item.getTypeName())) {
+            helper.setText(R.id.tv_goods_type, item.getTypeName() + "");
         } else {
             helper.setText(R.id.tv_goods_type, mContext.getResources().getString(R.string.defaut_type));
         }

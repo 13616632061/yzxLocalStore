@@ -25,16 +25,17 @@ public class AsyncTaskQureUtils extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
         if (mQureData != null) {
-            mQureData.qureData();
+            return mQureData.qureData();
+        }else {
+            return null;
         }
-        return null;
     }
 
     @Override
-    protected void onPostExecute(Object o) {
-        super.onPostExecute(o);
+    protected void onPostExecute(Object object) {
+        super.onPostExecute(object);
         if (mSuccess != null) {
-            mSuccess.Success(o);
+            mSuccess.Success(object);
         }
     }
 

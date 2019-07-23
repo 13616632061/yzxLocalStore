@@ -65,6 +65,10 @@
     <string name="goods_type_name_exist">分类名已存在，请重新输入！</string>
     <string name="all">共</string>
     <string name="strip">条</string>
+    <string name="record">记录</string>
+    <string name="current">当前</string>
+    <string name="di">第</string>
+    <string name="page">页</string>
     <string name="status">状态</string>
     <string name="enable">启用</string>
     <string name="forbidden">禁用</string>
@@ -78,6 +82,7 @@
     <string name="selete_delete_goods_item">请选择要删除的商品</string>
     <string name="selete_up_shelf_goods_item">请选择要上架的商品</string>
     <string name="selete_down_shelf_goods_item">请选择要下架的商品</string>
+    <string name="input_search_content">请输入搜索内容！</string>
     <string name="goods_name">商品名称</string>
     <string name="goods_price">商品价格</string>
     <string name="goods_store">商品库存</string>
@@ -85,6 +90,7 @@
     <string name="goods_status">商品状态</string>
     <string name="handle">操作</string>
     <string name="goods_list">商品列表</string>
+    <string name="goods_infos">商品信息</string>
     <string name="alls">全部</string>
     <string name="goods_out_stock">缺货商品</string>
     <string name="waring_store">库存预警</string>
@@ -130,6 +136,24 @@
     <string name="empty_goods_price">商品销售价为空！</string>
     <string name="exist_goods_name">商品名称已存在，请重新输入！</string>
     <string name="exist_goods_code">商品条码已存在，请重新输入！</string>
+    <string name="input_goods_search_hint">输入名称/拼音码/条码</string>
+    <string name="search">搜索</string>
+    <string name="max_page_show">每页做多显示</string>
 
-
+    <string-array name="goodsInfoHeader">
+        <item>商品名称</item>
+        <item>商品分类</item>
+        <item>商品价格</item>
+        <item>商品进价</item>
+        <item>商品库存</item>
+        <item>库存预警数量</item>
+        <item>商品利润</item>
+        <item>商品条码</item>
+        <item>商品拼音码</item>
+        <item>VIP1价格</item>
+        <item>VIP2价格</item>
+        <item>VIP3价格</item>
+        <item>VIP4价格</item>
+        <item>VIP5价格</item>
+    </string-array>
 </resources>

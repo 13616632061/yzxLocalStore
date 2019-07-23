@@ -68,6 +68,12 @@ public interface IGoodsListFragmentView {
     //商品下架
     void dowmShelfGoodsInfo();
 
+    //每页最多显示多少条
+    void setMaxShowPage(String num);
+
+    //当前页的记录
+    void setCurRecord(long totalNum, long page, long firstNum, long lastNum);
+
     //商品导入
     void importGoodsInfo();
 
@@ -77,17 +83,9 @@ public interface IGoodsListFragmentView {
     //标签打印
     void printLabel();
 
-    //首页
-    void firstPage();
 
-    //尾页
-    void lastPage();
-
-    //上一页
-    void previousPage();
-
-    //下一页
-    void nextPage();
+    //获取搜索文本
+    String getEtSearchContent();
 
     //显示提示信息
     void showErrorMsg(int type);

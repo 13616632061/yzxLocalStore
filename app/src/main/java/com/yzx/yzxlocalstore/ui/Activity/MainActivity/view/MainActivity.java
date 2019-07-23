@@ -32,7 +32,6 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_more:
-//                ARouter.getInstance().build(RouteMap.ROUTE_MANAGE_ACTIVITY).navigation();
                 mPresenter.showMoreTypeChannel();
                 break;
         }

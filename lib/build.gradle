@@ -20,6 +20,9 @@ android {
         }
 //         64k
         multiDexEnabled true
+        jackOptions {
+            enabled true
+        }
     }
 
     buildTypes {
@@ -33,7 +36,10 @@ android {
         preDexLibraries = false
     }
 
-
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
 }
 
 dependencies {
@@ -69,7 +75,7 @@ dependencies {
     api rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
     api rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["multidex"]
-//    api rootProject.ext.dependencies["ChannelView"]
+    api rootProject.ext.dependencies["FilePicker"]
 
 
 

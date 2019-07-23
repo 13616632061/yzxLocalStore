@@ -1,18 +1,13 @@
 package com.yzx.yzxlocalstore.greendao;
 
-import java.util.List;
-import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.Property;
-import org.greenrobot.greendao.internal.SqlUtils;
 import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
-
-import com.yzx.yzxlocalstore.entity.GoodsType;
 
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 
@@ -49,10 +44,8 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         public final static Property GoodRemarks = new Property(17, String.class, "goodRemarks", false, "GOOD_REMARKS");
         public final static Property IsSelect = new Property(18, boolean.class, "isSelect", false, "IS_SELECT");
         public final static Property IsAllSelect = new Property(19, boolean.class, "isAllSelect", false, "IS_ALL_SELECT");
-        public final static Property TypeId = new Property(20, Long.class, "typeId", false, "TYPE_ID");
+        public final static Property TypeName = new Property(20, String.class, "typeName", false, "TYPE_NAME");
     }
-
-    private DaoSession daoSession;
 
 
     public GoodsInfoDao(DaoConfig config) {
@@ -61,7 +54,6 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
     
     public GoodsInfoDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
-        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -69,7 +61,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS_INFO\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"GOOD_NAME\" TEXT UNIQUE ," + // 1: goodName
+                "\"GOOD_NAME\" TEXT," + // 1: goodName
                 "\"GOOD_PRICE\" REAL NOT NULL ," + // 2: goodPrice
                 "\"GOOD_ORIGINAL_PRICE\" REAL NOT NULL ," + // 3: goodOriginalPrice
                 "\"GOOD_STORE\" REAL NOT NULL ," + // 4: goodStore
@@ -88,7 +80,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
                 "\"GOOD_REMARKS\" TEXT," + // 17: goodRemarks
                 "\"IS_SELECT\" INTEGER NOT NULL ," + // 18: isSelect
                 "\"IS_ALL_SELECT\" INTEGER NOT NULL ," + // 19: isAllSelect
-                "\"TYPE_ID\" INTEGER);"); // 20: typeId
+                "\"TYPE_NAME\" TEXT);"); // 20: typeName
     }
 
     /** Drops the underlying database table. */
@@ -145,9 +137,9 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         stmt.bindLong(19, entity.getIsSelect() ? 1L: 0L);
         stmt.bindLong(20, entity.getIsAllSelect() ? 1L: 0L);
  
-        Long typeId = entity.getTypeId();
-        if (typeId != null) {
-            stmt.bindLong(21, typeId);
+        String typeName = entity.getTypeName();
+        if (typeName != null) {
+            stmt.bindString(21, typeName);
         }
     }
 
@@ -199,16 +191,10 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         stmt.bindLong(19, entity.getIsSelect() ? 1L: 0L);
         stmt.bindLong(20, entity.getIsAllSelect() ? 1L: 0L);
  
-        Long typeId = entity.getTypeId();
-        if (typeId != null) {
-            stmt.bindLong(21, typeId);
+        String typeName = entity.getTypeName();
+        if (typeName != null) {
+            stmt.bindString(21, typeName);
         }
-    }
-
-    @Override
-    protected final void attachEntity(GoodsInfo entity) {
-        super.attachEntity(entity);
-        entity.__setDaoSession(daoSession);
     }
 
     @Override
@@ -239,7 +225,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17), // goodRemarks
             cursor.getShort(offset + 18) != 0, // isSelect
             cursor.getShort(offset + 19) != 0, // isAllSelect
-            cursor.isNull(offset + 20) ? null : cursor.getLong(offset + 20) // typeId
+            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20) // typeName
         );
         return entity;
     }
@@ -266,7 +252,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         entity.setGoodRemarks(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
         entity.setIsSelect(cursor.getShort(offset + 18) != 0);
         entity.setIsAllSelect(cursor.getShort(offset + 19) != 0);
-        entity.setTypeId(cursor.isNull(offset + 20) ? null : cursor.getLong(offset + 20));
+        entity.setTypeName(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
      }
     
     @Override
@@ -294,95 +280,4 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         return true;
     }
     
-    private String selectDeep;
-
-    protected String getSelectDeep() {
-        if (selectDeep == null) {
-            StringBuilder builder = new StringBuilder("SELECT ");
-            SqlUtils.appendColumns(builder, "T", getAllColumns());
-            builder.append(',');
-            SqlUtils.appendColumns(builder, "T0", daoSession.getGoodsTypeDao().getAllColumns());
-            builder.append(" FROM GOODS_INFO T");
-            builder.append(" LEFT JOIN GOODS_TYPE T0 ON T.\"TYPE_ID\"=T0.\"_id\"");
-            builder.append(' ');
-            selectDeep = builder.toString();
-        }
-        return selectDeep;
-    }
-    
-    protected GoodsInfo loadCurrentDeep(Cursor cursor, boolean lock) {
-        GoodsInfo entity = loadCurrent(cursor, 0, lock);
-        int offset = getAllColumns().length;
-
-        GoodsType goodsType = loadCurrentOther(daoSession.getGoodsTypeDao(), cursor, offset);
-        entity.setGoodsType(goodsType);
-
-        return entity;    
-    }
-
-    public GoodsInfo loadDeep(Long key) {
-        assertSinglePk();
-        if (key == null) {
-            return null;
-        }
-
-        StringBuilder builder = new StringBuilder(getSelectDeep());
-        builder.append("WHERE ");
-        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
-        String sql = builder.toString();
-        
-        String[] keyArray = new String[] { key.toString() };
-        Cursor cursor = db.rawQuery(sql, keyArray);
-        
-        try {
-            boolean available = cursor.moveToFirst();
-            if (!available) {
-                return null;
-            } else if (!cursor.isLast()) {
-                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
-            }
-            return loadCurrentDeep(cursor, true);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<GoodsInfo> loadAllDeepFromCursor(Cursor cursor) {
-        int count = cursor.getCount();
-        List<GoodsInfo> list = new ArrayList<GoodsInfo>(count);
-        
-        if (cursor.moveToFirst()) {
-            if (identityScope != null) {
-                identityScope.lock();
-                identityScope.reserveRoom(count);
-            }
-            try {
-                do {
-                    list.add(loadCurrentDeep(cursor, false));
-                } while (cursor.moveToNext());
-            } finally {
-                if (identityScope != null) {
-                    identityScope.unlock();
-                }
-            }
-        }
-        return list;
-    }
-    
-    protected List<GoodsInfo> loadDeepAllAndCloseCursor(Cursor cursor) {
-        try {
-            return loadAllDeepFromCursor(cursor);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-
-    /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<GoodsInfo> queryDeep(String where, String... selectionArg) {
-        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
-        return loadDeepAllAndCloseCursor(cursor);
-    }
- 
 }

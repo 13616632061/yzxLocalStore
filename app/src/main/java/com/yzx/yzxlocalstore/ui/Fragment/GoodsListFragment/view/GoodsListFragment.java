@@ -1,6 +1,6 @@
 package com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.view;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,12 +8,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.apkfuns.logutils.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yzx.lib.base.BaseFragment;
 import com.yzx.lib.entity.MessageEvent;
@@ -35,6 +37,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by Administrator on 2019/7/2.
  */
@@ -53,13 +57,19 @@ public class GoodsListFragment extends BaseFragment implements IGoodsListFragmen
     RecyclerView list;
     @InjectView(R.id.layout_goods_list)
     RelativeLayout layoutGoodsList;
+    @InjectView(R.id.et_search)
+    EditText etSearch;
+    @InjectView(R.id.tv_search)
+    TextView tvSearch;
+    @InjectView(R.id.tv_max_show_page)
+    TextView tvMaxShowPage;
+    @InjectView(R.id.tv_bottom_right)
+    TextView tvBottomRight;
 
 
     private GoodsListFragmentPresenter mPresenter;
     private GoodsListFragmentAdapter mAdapter;
     private List<GoodsInfo> mData = new ArrayList<>();
-//    private Context mContext;
-    private int mPage = 1;
     private boolean isAllSelect = false;//是否全选
 
 
@@ -79,27 +89,28 @@ public class GoodsListFragment extends BaseFragment implements IGoodsListFragmen
 
     @Override
     protected void loadData() {
-        mPresenter.getGoodsInfo(mPage, 0);
+        mPresenter.getGoodsInfo(1, 0);
         mPresenter.setLackGoodsInfom();
         mPresenter.setWarningGoodsNum();
+        mPresenter.setMaxShowPage();
 
     }
 
     @OnClick({R.id.iv_all_select, R.id.btn_add_goods, R.id.btn_delete_goods, R.id.btn_up_shelf, R.id.btn_down_shelf, R.id.btn_import, R.id.btn_export, R.id.btn_print,
-            R.id.tv_all_type, R.id.tv_lack_type, R.id.tv_warning_type})
+            R.id.tv_all_type, R.id.tv_lack_type, R.id.tv_warning_type, R.id.tv_search, R.id.tv_first_page, R.id.tv_pre_page, R.id.tv_next_page, R.id.tv_last_page})
     public void setOnClick(View view) {
         switch (view.getId()) {
             case R.id.iv_all_select://全部选中
                 mPresenter.editGoodsInfoSelectStatus(0, 0);
                 break;
             case R.id.tv_all_type://全部商品
-                mPresenter.getGoodsInfo(mPage, 0);
+                mPresenter.getGoodsInfo(1, 0);
                 break;
             case R.id.tv_lack_type://缺货商品
-                mPresenter.getGoodsInfo(mPage, 1);
+                mPresenter.getGoodsInfo(1, 1);
                 break;
             case R.id.tv_warning_type://库存预警商品
-                mPresenter.getGoodsInfo(mPage, 2);
+                mPresenter.getGoodsInfo(1, 2);
                 break;
             case R.id.btn_add_goods://新增商品
                 mPresenter.addGoodsInfo();
@@ -114,10 +125,26 @@ public class GoodsListFragment extends BaseFragment implements IGoodsListFragmen
                 mPresenter.showHandleGoodsInfoTipMsg(3);
                 break;
             case R.id.btn_import://导入商品
+                mPresenter.selectimportGoodsInfoFile();
                 break;
             case R.id.btn_export://导出商品
                 break;
             case R.id.btn_print://打印标签
+                break;
+            case R.id.tv_search://搜索
+                mPresenter.searchGoodsInfo();
+                break;
+            case R.id.tv_first_page://首页
+                mPresenter.firstPage();
+                break;
+            case R.id.tv_pre_page://上一页
+                mPresenter.previousPage();
+                break;
+            case R.id.tv_next_page://下一页
+                mPresenter.nextPage();
+                break;
+            case R.id.tv_last_page://尾页
+                mPresenter.lastPage();
                 break;
         }
     }
@@ -315,6 +342,24 @@ public class GoodsListFragment extends BaseFragment implements IGoodsListFragmen
         tipsPopWindow.showAsDropDown(layoutGoodsList, Gravity.NO_GRAVITY, 0, 0);
     }
 
+    /**
+     * 每页最多显示多少条
+     */
+    @Override
+    public void setMaxShowPage(String num) {
+        tvMaxShowPage.setText(getResources().getString(R.string.max_page_show) + num + getResources().getString(R.string.strip));
+    }
+
+    /**
+     * 当前页的记录
+     */
+    @Override
+    public void setCurRecord(long totalNum, long page, long firstNum, long lastNum) {
+        tvBottomRight.setText(getResources().getString(R.string.all) + totalNum + getResources().getString(R.string.record) + ","
+                + getResources().getString(R.string.current) + getResources().getString(R.string.di) + page + getResources().getString(R.string.page)
+                + "," + firstNum + "-" + lastNum + getResources().getString(R.string.strip));
+    }
+
     @Override
     public void importGoodsInfo() {
 
@@ -330,24 +375,15 @@ public class GoodsListFragment extends BaseFragment implements IGoodsListFragmen
 
     }
 
+
+    /**
+     * 获取搜索文本
+     *
+     * @return
+     */
     @Override
-    public void firstPage() {
-
-    }
-
-    @Override
-    public void lastPage() {
-
-    }
-
-    @Override
-    public void previousPage() {
-
-    }
-
-    @Override
-    public void nextPage() {
-
+    public String getEtSearchContent() {
+        return etSearch.getText().toString().trim();
     }
 
     /**
@@ -367,17 +403,48 @@ public class GoodsListFragment extends BaseFragment implements IGoodsListFragmen
             case 3:
                 Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.selete_down_shelf_goods_item), Toast.LENGTH_SHORT).show();
                 break;
+            case 4:
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.input_search_content), Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEven(MessageEvent msg) {
         if (msg.getKey().contains("addGoodsInfoSuccess")) {
-            mPresenter.getGoodsInfo(mPage, 0);
+            mPresenter.getGoodsInfo(1, 0);
             mPresenter.setLackGoodsInfom();
             mPresenter.setWarningGoodsNum();
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 100) {
+                List<String> list = data.getStringArrayListExtra("paths");
+                if (list != null && list.size() > 0) {
+                    String path = list.get(0);
+                    LogUtils.e("ImportExcel: path: " + path);
+                    mPresenter.importGoodsInfo(path);
+                }
+            }
+        }
+    }
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
 }

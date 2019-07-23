@@ -125,7 +125,7 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
 
     //商品分类
     @Override
-    public void initGoodTypeInfo(List<GoodsType> mSpinnerGoodsTypeItems) {
+    public void initGoodTypeInfo(List<String> mSpinnerGoodsTypeItems) {
         SpinnerGoodsTypeAdapter spinnerAdapter = new SpinnerGoodsTypeAdapter(this, R.layout.item_select);
         spinnerAdapter.setDatas(mSpinnerGoodsTypeItems);
         spinnerGoodType.setAdapter(spinnerAdapter);
@@ -158,8 +158,8 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
 
 
     @Override
-    public GoodsType getSelectGoodType() {
-        return (GoodsType) spinnerGoodType.getSelectedItem();
+    public String getSelectGoodType() {
+        return (String) spinnerGoodType.getSelectedItem();
     }
 
     //商品名称

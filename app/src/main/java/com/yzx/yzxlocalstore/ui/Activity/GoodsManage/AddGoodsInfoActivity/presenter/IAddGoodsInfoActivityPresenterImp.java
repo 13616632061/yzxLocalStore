@@ -19,7 +19,7 @@ public interface IAddGoodsInfoActivityPresenterImp {
     void getGoodType();
 
     //显示选中的商品分类
-    void showSelectGoodType(List<GoodsType> spinnerItems, GoodsInfo mGoodsInfo, int type);
+    void showSelectGoodType(List<String> spinnerItems, GoodsInfo mGoodsInfo, int type);
 
     //保存商品信息
     void saveGoodInfo(int type, GoodsInfo mGoodsInfo);

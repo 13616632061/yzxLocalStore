@@ -1,14 +1,20 @@
 package com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.presenter;
 
+import android.content.res.TypedArray;
 import android.nfc.tech.NfcV;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import com.apkfuns.logutils.LogUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.leon.lfilepickerlibrary.LFilePicker;
 import com.yzx.lib.entity.MessageEvent;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.model.GoodsListFragmentModel;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.view.GoodsListFragment;
 import com.yzx.yzxlocalstore.utils.AsyncTaskQureUtils;
+import com.yzx.yzxlocalstore.utils.ExcelUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,6 +29,9 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
 
     private GoodsListFragment mView;
     private GoodsListFragmentModel mModel;
+    private int mType;
+    private long mPage = 1;
+    private int mLimitPageNum = 20;
 
     public GoodsListFragmentPresenter(GoodsListFragment mView) {
         this.mView = mView;
@@ -42,8 +51,10 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
      * @return
      */
     @Override
-    public void getGoodsInfo(int page, int type) {
-        List<GoodsInfo> goodsInfoList = mModel.getGoodsInfo(page, type);
+    public void getGoodsInfo(long page, int type) {
+        mType = type;
+        mPage = page;
+        List<GoodsInfo> goodsInfoList = mModel.getGoodsInfo((int) page, type);
         mView.getData().clear();
         mView.getData().addAll(goodsInfoList);
         mView.getAdapter().notifyDataSetChanged();
@@ -67,6 +78,7 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
                 isSelectWarningGoodsType(true);
                 break;
         }
+        setCurRecord();
     }
 
     /**
@@ -132,7 +144,7 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
      */
     @Override
     public void setAllGoodsNum() {
-        mView.setAllGoodsNum(mModel.getAllGoodsNum());
+        mView.setAllGoodsNum(mModel.getAllGoodsNum(mType) + "");
     }
 
     /**
@@ -307,8 +319,60 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
     }
 
     @Override
-    public void importGoodsInfo() {
+    public void selectimportGoodsInfoFile() {
+        new LFilePicker()
+                .withSupportFragment(mView)
+                .withRequestCode(100)
+                .withStartPath("/storage/emulated/0/Download")//指定初始显示路径
+                .withTitle("选择导入的文件")
+                .withMaxNum(1)
+                .withMutilyMode(true)
+                .withNotFoundBooks("至少选择一个文件")
+                .withFileFilter(new String[]{".xls"})
+                .start();
+    }
 
+    /**
+     * 导入商品
+     */
+    @Override
+    public void importGoodsInfo(final String path) {
+        new AsyncTaskQureUtils(new AsyncTaskQureUtils.preBefore() {
+            @Override
+            public void before() {
+
+            }
+        }, new AsyncTaskQureUtils.QureData() {
+            @Override
+            public Object qureData() {
+                return ExcelUtil.ImportExcelData(path);
+            }
+        }, new AsyncTaskQureUtils.Success() {
+            @Override
+            public void Success(Object object) {
+                List<GoodsInfo> infoList = new Gson().fromJson((String) object, new TypeToken<List<GoodsInfo>>() {
+                }.getType());
+                if (infoList != null && infoList.size() > 0) {
+                    for (GoodsInfo goodsInfo : infoList) {
+                        mModel.addGoodsInfo(goodsInfo);
+                    }
+                    getGoodsInfo(1, 0);
+                }
+            }
+        }).execute();
+    }
+
+    @Override
+    public void searchGoodsInfo() {
+        String content = mView.getEtSearchContent();
+        if (TextUtils.isEmpty(content)) {
+            mView.showErrorMsg(4);
+            return;
+        }
+        List<GoodsInfo> list = mModel.qureyGoodsInfo(content);
+        mView.getData().clear();
+        mView.getData().addAll(list);
+        mView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -321,24 +385,59 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
 
     }
 
+    /**
+     * 首页
+     */
     @Override
     public void firstPage() {
-
+        mPage = 1;
+        getGoodsInfo(mPage, mType);
     }
 
+    /**
+     * 尾页
+     */
     @Override
     public void lastPage() {
-
+        mPage = getlastPageNum();
+        getGoodsInfo(mPage, mType);
     }
 
+    /**
+     * 上一页
+     */
     @Override
     public void previousPage() {
-
+        if (mPage > 1) {
+            mPage--;
+        }
+        getGoodsInfo(mPage, mType);
     }
 
+    /**
+     * 下一页
+     */
     @Override
     public void nextPage() {
+        if (mPage < getlastPageNum()) {
+            mPage++;
+        }
+        getGoodsInfo(mPage, mType);
+    }
 
+    /**
+     * 获取最后一页的页码
+     */
+    @Override
+    public long getlastPageNum() {
+        long count = mModel.getAllGoodsNum(mType) / mLimitPageNum;
+        if (mModel.getAllGoodsNum(mType) % mLimitPageNum > 0) {
+            count++;
+        }
+        if (count == 0) {
+            count = 1;
+        }
+        return count;
     }
 
     /**
@@ -349,5 +448,21 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
     @Override
     public void goToEditGoodsInfo(GoodsInfo goodInfo) {
         mView.goToEditGoodsInfo(goodInfo);
+    }
+
+    /**
+     * 每页最多显示多少条
+     */
+    @Override
+    public void setMaxShowPage() {
+        mView.setMaxShowPage(mLimitPageNum + "");
+    }
+
+    /**
+     * 当前记录
+     */
+    @Override
+    public void setCurRecord() {
+        mView.setCurRecord(mModel.getAllGoodsNum(mType), mPage, ((mPage - 1) * mLimitPageNum) + 1, mPage * mLimitPageNum);
     }
 }

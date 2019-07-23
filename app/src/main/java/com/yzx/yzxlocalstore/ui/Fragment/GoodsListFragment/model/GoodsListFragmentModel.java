@@ -1,10 +1,14 @@
 package com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.model;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.apkfuns.logutils.LogUtils;
 import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.greendao.GoodsInfoDao;
 import com.yzx.yzxlocalstore.greendao.GoodsTypeDao;
+import com.yzx.yzxlocalstore.service.SaveDataService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +18,8 @@ import java.util.List;
  */
 
 public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
+
+    private SaveDataService mService;
 
     /**
      * 查询商品
@@ -49,9 +55,27 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
      * @return
      */
     @Override
-    public String getAllGoodsNum() {
-        long num = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().count();
-        return num + "";
+    public long getAllGoodsNum(int type) {
+        long num = 0;
+        switch (type) {
+            case 0://全部
+                num = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().count();
+                break;
+            case 1://缺货商品
+                num = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodStore.le(0)).count();
+                break;
+            case 2://库存预警商品
+                List<GoodsInfo> goodsInfoList = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().list();
+                List<GoodsInfo> warningGoodsInfoList = new ArrayList<>();
+                for (GoodsInfo goodsInfo : goodsInfoList) {
+                    if (goodsInfo.getGoodStore() <= goodsInfo.getGoodStoreWarningNum()) {
+                        warningGoodsInfoList.add(goodsInfo);
+                    }
+                }
+                num = warningGoodsInfoList.size();
+                break;
+        }
+        return num;
     }
 
     /**
@@ -100,5 +124,23 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
         for (GoodsInfo goodsInfo : goodsInfoList) {
             MyAplication.getDaoSession().getGoodsInfoDao().update(goodsInfo);
         }
+    }
+
+    //添加商品信息
+    @Override
+    public void addGoodsInfo(GoodsInfo goodsInfo) {
+        MyAplication.getDaoSession().getGoodsInfoDao().insert(goodsInfo);
+    }
+
+    /**
+     * 搜索
+     *
+     * @param content
+     */
+    @Override
+    public List<GoodsInfo> qureyGoodsInfo(String content) {
+        List<GoodsInfo> goodsInfoList = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().whereOr(GoodsInfoDao.Properties.GoodName.like("%" + content + "%"),
+                GoodsInfoDao.Properties.GoodCode.like("%" + content + "%"), GoodsInfoDao.Properties.GoodPinyinCode.like("%" + content + "%")).list();
+        return goodsInfoList;
     }
 }

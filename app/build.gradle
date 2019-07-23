@@ -54,4 +54,5 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
     implementation project(':lib')
     implementation project(':channelview')
+    implementation files('libs/jxl-2.6.12.jar')
 }

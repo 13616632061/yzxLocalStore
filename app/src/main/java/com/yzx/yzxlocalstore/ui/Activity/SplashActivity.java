@@ -2,14 +2,21 @@ package com.yzx.yzxlocalstore.ui.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.apkfuns.logutils.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.google.gson.Gson;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.constant.RouteMap;
+import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view.LoginActivity;
+import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 
 @Route(path = RouteMap.ROUTE_SPLASH_ACTIVITY)
 public class SplashActivity extends BaseActivity {
@@ -35,10 +42,13 @@ public class SplashActivity extends BaseActivity {
             finish();
             return;
         }
-        if (Constants.loginUserInfo == null) {
+        String loginUserStr = SPUtils.getInstance().getString(Constants.LoginUser.LOGIN_USER_INFO_KEY);
+        if (TextUtils.isEmpty(loginUserStr)) {
             Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(intent);
         } else {
+            User loginUser = new Gson().fromJson(SPUtils.getInstance().getString(Constants.LoginUser.LOGIN_USER_INFO_KEY), User.class);
+            LoginUserUtil.getInstance().setLoginUser(loginUser);
             ARouter.getInstance().build(RouteMap.ROUTE_MAIN_ACTIVITY).navigation();
         }
         finish();

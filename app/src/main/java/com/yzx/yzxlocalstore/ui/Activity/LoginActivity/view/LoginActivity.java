@@ -102,9 +102,6 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @PermissionSuccess(requestCode = 100)
     public void requestPermissionsSuccess() {
-        if (Constants.loginUserInfo != null) {
-            LoginSuccess();
-        }
     }
 
 

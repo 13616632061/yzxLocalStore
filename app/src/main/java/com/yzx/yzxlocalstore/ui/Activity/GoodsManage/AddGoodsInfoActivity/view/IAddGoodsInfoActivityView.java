@@ -17,12 +17,12 @@ import java.util.List;
 public interface IAddGoodsInfoActivityView {
 
     //商品分类
-    void initGoodTypeInfo(List<GoodsType> spinnerGoodsTypeItems);
+    void initGoodTypeInfo(List<String> spinnerGoodsTypeItems);
 
 //    //选中的商品分类
     void setSelectGoodtypeItem(int position);
 
-    GoodsType getSelectGoodType();
+    String getSelectGoodType();
 
     //商品名称
     void setGoodName(String goodName);

@@ -11,6 +11,7 @@ import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.greendao.DaoSession;
 import com.yzx.yzxlocalstore.greendao.UserDao;
+import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -26,9 +27,10 @@ public class MainActivityModel implements IMainActivityModelImp {
     public String getTypeChannel(Context context) {
         DaoSession daoSession = ((MyAplication) context.getApplicationContext()).getDaoSession();
         QueryBuilder<User> queryBuilder = daoSession.queryBuilder(User.class);
-        List<User> userList = queryBuilder.where(UserDao.Properties.Id.eq(Constants.loginUserInfo.getId())).list();
+        List<User> userList = queryBuilder.where(UserDao.Properties.Id.eq(LoginUserUtil.getInstance().getLoginUser().getId())).list();
         String typeStr = null;
-        if (userList.get(0).getTypeBeanList().size() > 0) {
+        if (userList != null && userList.size()>0  && userList.get(0).getTypeBeanList() != null &&
+                userList.get(0).getTypeBeanList().size() > 0) {
             typeStr = userList.get(0).getTypeBeanList().toString();
         } else {
             typeStr = FileUtil.readAssetsJson(context, "manegetype.json");

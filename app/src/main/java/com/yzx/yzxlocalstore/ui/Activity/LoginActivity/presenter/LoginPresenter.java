@@ -3,10 +3,13 @@ package com.yzx.yzxlocalstore.ui.Activity.LoginActivity.presenter;
 import android.text.TextUtils;
 
 import com.apkfuns.logutils.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.google.gson.Gson;
 import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.model.LoginModel;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view.LoginActivity;
+import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 
 import java.util.List;
 
@@ -38,8 +41,9 @@ public class LoginPresenter implements ILoginPresenter {
 
         if (users.size() > 0) {
             loginActivity.LoginSuccess();
-            LogUtils.e("loginUserInfo: " + users.get(0));
-            Constants.loginUserInfo = users.get(0);
+            SPUtils.getInstance().put(Constants.LoginUser.LOGIN_USER_INFO_KEY, new Gson().toJson(users.get(0)));
+            LoginUserUtil.getInstance().setLoginUser(users.get(0));
+
         } else {
             loginActivity.LoginFail(2);
         }

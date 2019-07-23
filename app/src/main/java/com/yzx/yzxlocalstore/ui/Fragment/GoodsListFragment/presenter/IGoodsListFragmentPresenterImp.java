@@ -13,7 +13,7 @@ public interface IGoodsListFragmentPresenterImp {
     void initAdapter();
 
     //查询商品
-    void getGoodsInfo(int page, int type);
+    void getGoodsInfo(long page, int type);
 
     //商品选中状态 type:0全选，1单个选中
     void editGoodsInfoSelectStatus(int type, int position);
@@ -66,8 +66,14 @@ public interface IGoodsListFragmentPresenterImp {
     //商品下架
     void dowmShelfGoodsInfo();
 
+    //选中导入的商品文件
+    void selectimportGoodsInfoFile();
+
     //商品导入
-    void importGoodsInfo();
+    void importGoodsInfo(String path);
+
+    //商品搜索
+    void searchGoodsInfo();
 
     //商品导出
     void exportGoodsInfo();
@@ -87,7 +93,16 @@ public interface IGoodsListFragmentPresenterImp {
     //下一页
     void nextPage();
 
+    //获取最后一页的页码
+    long getlastPageNum();
+
     //编辑商品
     void goToEditGoodsInfo(GoodsInfo goodInfo);
+
+    //每页最多显示多少条
+    void setMaxShowPage();
+
+    //当前记录
+    void setCurRecord();
 
 }

@@ -21,7 +21,7 @@ public interface IGoodsListFragmentModelImp {
     List<GoodsInfo> getGoodsInfo(int page, int type);
 
     //所有商品数量
-    String getAllGoodsNum();
+    long getAllGoodsNum(int type);
 
     //缺货商品数量
     String getLackGoodsInfom();
@@ -34,4 +34,10 @@ public interface IGoodsListFragmentModelImp {
 
     //编辑商品
     void editGoodsInfo(List<GoodsInfo> goodsInfoList);
+
+    //添加商品
+    void addGoodsInfo(GoodsInfo goodsInfo);
+
+    //搜索
+    List<GoodsInfo> qureyGoodsInfo(String content);
 }

@@ -1,5 +1,6 @@
 package com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.presenter;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.GoodsType;
+import com.yzx.yzxlocalstore.service.SaveDataService;
 import com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.model.AddGoodsInfoActivityModel;
 import com.yzx.yzxlocalstore.ui.Activity.GoodsManage.AddGoodsInfoActivity.view.AddGoodsInfoActivity;
 import com.yzx.yzxlocalstore.utils.AsyncTaskQureUtils;
@@ -27,6 +29,7 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
 
     private AddGoodsInfoActivity mView;
     private AddGoodsInfoActivityModel mModel;
+    private SaveDataService mService;
 
     public AddGoodsInfoActivityPresenter(AddGoodsInfoActivity mView) {
         this.mView = mView;
@@ -36,15 +39,13 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
     //商品分类
     @Override
     public void getGoodType() {
-        List<GoodsType> spinnerItems = new ArrayList<>();
+        List<String> spinnerItems = new ArrayList<>();
         for (GoodsType type : mModel.getGoodsTypeInfo()) {
             if (type.getStatus()) {
-                spinnerItems.add(type);
+                spinnerItems.add(type.getTypeName());
             }
         }
-        GoodsType goodsType = new GoodsType();
-        goodsType.setTypeName(mView.getResources().getString(R.string.defaut_type));
-        spinnerItems.add(0, goodsType);
+        spinnerItems.add(0, mView.getResources().getString(R.string.defaut_type));
         mView.initGoodTypeInfo(spinnerItems);
 
     }
@@ -56,19 +57,18 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
      * @param mGoodsInfo
      */
     @Override
-    public void showSelectGoodType(List<GoodsType> spinnerItems, GoodsInfo mGoodsInfo, int type) {
+    public void showSelectGoodType(List<String> spinnerItems, GoodsInfo mGoodsInfo, int type) {
         switch (type) {
             case 1:
                 mView.setSelectGoodtypeItem(0);
                 break;
             case 2:
-                mGoodsInfo.__setDaoSession(MyAplication.getDaoSession());
-                if (mGoodsInfo.getGoodsType()==null||TextUtils.isEmpty(mGoodsInfo.getGoodsType().getTypeName())) {
+                if (mGoodsInfo.getTypeName() == null || TextUtils.isEmpty(mGoodsInfo.getTypeName())) {
                     mView.setSelectGoodtypeItem(0);
                     return;
                 }
                 for (int i = 0; i < spinnerItems.size(); i++) {
-                    if (mGoodsInfo.getGoodsType().getTypeName().equals(spinnerItems.get(i).getTypeName())) {
+                    if (mGoodsInfo.getTypeName().equals(spinnerItems.get(i))) {
                         mView.setSelectGoodtypeItem(i);
                         break;
                     }
@@ -122,6 +122,10 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
                 } else {
                     mModel.addGoodsInfo(goodsInfo);
                 }
+//                if (mService==null){
+//                    Intent intent=new Intent(mView,SaveDataService.class);
+//                    mView.startService(intent);
+//                }
                 break;
             case 2://编辑
                 setGoodInfo(mGoodsInfo);
@@ -140,8 +144,7 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
      */
     @Override
     public void setGoodInfo(GoodsInfo goodsInfo) {
-        goodsInfo.setTypeId(mView.getSelectGoodType().getId());
-        goodsInfo.setGoodsType(mView.getSelectGoodType());
+        goodsInfo.setTypeName(mView.getSelectGoodType());
         goodsInfo.setGoodName(mView.getGoodName());
         goodsInfo.setGoodCode(mView.getGoodCode());
         goodsInfo.setGoodPinyinCode(mView.getGoodPinyinCode());
