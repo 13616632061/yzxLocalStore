@@ -39,7 +39,7 @@ public class ChannelView extends ScrollView {
     /**
      * 列数
      */
-    private int channelColumn = 4;
+    private int channelColumn = 6;
 
     private int channelWidth;
 
@@ -164,15 +164,15 @@ public class ChannelView extends ScrollView {
         channelEditBackground = typedArray.getResourceId(R.styleable.ChannelView_channelEditBackground, R.drawable.bg_channel_edit);
         channelFocusedBackground = typedArray.getResourceId(R.styleable.ChannelView_channelFocusedBackground, R.drawable.bg_channel_focused);
         channelFixedBackground = typedArray.getResourceId(R.styleable.ChannelView_channelFixedBackground, R.drawable.bg_channel_normal);
-        channelNormalTextColor = typedArray.getColor(R.styleable.ChannelView_channelNormalTextColor, getResources().getColor(R.color.channelNormalTextColor));
-        channelFixedTextColor = typedArray.getColor(R.styleable.ChannelView_channelFixedTextColor, getResources().getColor(R.color.channelFixedTextColor));
+        channelNormalTextColor = typedArray.getColor(R.styleable.ChannelView_channelNormalTextColor, getResources().getColor(R.color.color_000000));
+        channelFixedTextColor = typedArray.getColor(R.styleable.ChannelView_channelFixedTextColor, getResources().getColor(R.color.color_000000));
         channelFocusedTextColor = typedArray.getColor(R.styleable.ChannelView_channelFocusedTextColor, getResources().getColor(R.color.channelNormalTextColor));
         channelFixedCount = typedArray.getInteger(R.styleable.ChannelView_channelFixedCount, channelFixedCount);
         channelTextSize = typedArray.getDimensionPixelSize(R.styleable.ChannelView_channelTextSize, getResources().getDimensionPixelSize(R.dimen.channelTextSize));
         tipEditBackground = typedArray.getResourceId(R.styleable.ChannelView_tipEditBackground, R.drawable.bg_channel_transparent);
         platesTitleBackground = typedArray.getResourceId(R.styleable.ChannelView_platesTitleBackground, R.drawable.bg_channel_transparent);
         tipEditTextColor = typedArray.getColor(R.styleable.ChannelView_tipEditTextColor, getResources().getColor(R.color.channelNormalTextColor));
-        platesTitleColor = typedArray.getColor(R.styleable.ChannelView_platesTitleColor, getResources().getColor(R.color.channelNormalTextColor));
+        platesTitleColor = typedArray.getColor(R.styleable.ChannelView_platesTitleColor, getResources().getColor(R.color.color_000000));
         platesTitleBold = typedArray.getBoolean(R.styleable.ChannelView_platesTitleBold, false);
         platesTitleSize = typedArray.getDimensionPixelSize(R.styleable.ChannelView_platesTitleSize, getResources().getDimensionPixelSize(R.dimen.channelTextSize));
         tipEditTextSize = typedArray.getDimensionPixelSize(R.styleable.ChannelView_tipEditTextSize, getResources().getDimensionPixelSize(R.dimen.channelTextSize));
@@ -187,7 +187,7 @@ public class ChannelView extends ScrollView {
         subTitleName = typedArray.getString(R.styleable.ChannelView_subTitleName);
         otherSubTitleName = typedArray.getString(R.styleable.ChannelView_otherSubTitleName);
         tipFinishBackground = typedArray.getResourceId(R.styleable.ChannelView_tipFinishBackground, R.drawable.bg_channel_transparent);
-        tipFinishTextColor = typedArray.getColor(R.styleable.ChannelView_tipFinishTextColor, getResources().getColor(R.color.channelNormalTextColor));
+        tipFinishTextColor = typedArray.getColor(R.styleable.ChannelView_tipFinishTextColor, getResources().getColor(R.color.color_f5260b));
         tipFinishTextSize = typedArray.getDimensionPixelSize(R.styleable.ChannelView_tipFinishTextSize, getResources().getDimensionPixelSize(R.dimen.channelTextSize));
         typedArray.recycle();
         if (subTitleName == null) {
@@ -222,7 +222,7 @@ public class ChannelView extends ScrollView {
      */
     public void setChannelFixedCount(int channelFixedCount) {
         if (channelFixedCount < 0) {
-            throw new RuntimeException("固定频道数量必须大于0");
+            throw new RuntimeException(getResources().getString(R.string.channels_must_than_0));
         }
         this.channelFixedCount = channelFixedCount;
         if (channelLayout == null) {
@@ -630,7 +630,7 @@ public class ChannelView extends ScrollView {
     public void inflateData() {
         //如果只有一组频道，默认再加上一组
         if (channelContents.size() == 1) {
-            channelContents.put("推荐频道", null);
+            channelContents.put(getResources().getString(R.string.moreChannel), null);
         }
         if (channelLayout == null) {
             channelLayout = new ChannelLayout(mContext);
@@ -1105,11 +1105,11 @@ public class ChannelView extends ScrollView {
                         }
                     }
                 } else {//点击的其他频道组中的频道
-                    if (isEditState){//编辑状态
+                    if (isEditState) {//编辑状态
                         forwardSort(v, channels);
                         //增加我的频道
                         addMyChannel(v);
-                    }else {
+                    } else {
                         if (onChannelListener != null) {
                             onChannelListener.channelItemClick(channels.indexOf(v), ((ChannelAttr) v.getTag()).channel);
                         }

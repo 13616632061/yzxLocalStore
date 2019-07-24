@@ -1,8 +1,68 @@
 {
   "type": [
     {
+      "name": "挂单",
+      "channelTag": "putOrder"
+    },
+    {
+      "name": "取单",
+      "channelTag": "getOrder"
+    },
+    {
+      "name": "退货",
+      "channelTag": "rejectedGood"
+    },
+    {
+      "name": "兑奖",
+      "channelTag": "cashPrize"
+    },
+    {
+      "name": "换钱",
+      "channelTag": "changeMoney"
+    },
+    {
+      "name": "赊账",
+      "channelTag": "OnCredit"
+    },
+    {
+      "name": "零售",
+      "channelTag": "retail"
+    },
+    {
+      "name": "外卖",
+      "channelTag": "takeOutFood"
+    },
+    {
+      "name": "删除",
+      "channelTag": "detele"
+    },
+    {
       "name": "商品管理",
       "channelTag": "goodsManage"
+    },
+    {
+      "name": "员工管理",
+      "channelTag": "staffManage"
+    },
+    {
+      "name": "订单管理",
+      "channelTag": "orderManage"
+    },
+    {
+      "name": "报表中心",
+      "channelTag": "reportForm"
+    },
+    {
+      "name": "盘点",
+      "channelTag": "Inventory"
+    },
+    {
+      "name": "会员",
+      "channelTag": "vip"
+    },
+    {
+      "name": "设置",
+      "channelTag": "Set"
     }
   ]
 }

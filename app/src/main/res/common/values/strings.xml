@@ -140,6 +140,26 @@
     <string name="search">搜索</string>
     <string name="max_page_show">每页做多显示</string>
 
+
+    <!--管理栏目-->
+    <string name="putOrder">挂单</string>
+    <string name="getOrder">取单</string>
+    <string name="rejectedGood">退货</string>
+    <string name="cashPrize">兑奖</string>
+    <string name="changeMoney">换钱</string>
+    <string name="onCredit">赊账</string>
+    <string name="retail">零售</string>
+    <string name="takeOutFood">外卖</string>
+    <string name="detele">删除</string>
+    <string name="goodsManage">商品管理</string>
+    <string name="staffManage">员工管理</string>
+    <string name="orderManage">订单管理</string>
+    <string name="reportForm">报表中心</string>
+    <string name="inventory">盘点</string>
+    <string name="vip">会员</string>
+    <string name="set">设置</string>
+
+
     <string-array name="goodsInfoHeader">
         <item>商品名称</item>
         <item>商品分类</item>

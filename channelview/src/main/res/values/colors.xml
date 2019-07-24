@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="channelNormalTextColor">#6D6D6D</color>
+    <color name="color_f5260b">#f5260b</color>
     <color name="channelFixedTextColor">#CCCCCC</color>
     <color name="subTitleTextColor">#A0A3AF</color>
+    <color name="color_000000">#000000</color>
 </resources>

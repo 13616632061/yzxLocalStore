@@ -3,4 +3,6 @@
     <string name="myChannel">已选频道</string>
     <string name="channelEdit">编辑</string>
     <string name="channelEditFinish">完成</string>
+    <string name="moreChannel">更多栏目</string>
+    <string name="channels_must_than_0">固定频道数量必须大于0</string>
 </resources>

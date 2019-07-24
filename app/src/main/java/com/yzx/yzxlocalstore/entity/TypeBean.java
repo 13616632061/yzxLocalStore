@@ -17,15 +17,24 @@ public class TypeBean {
     private Long id;//登录用户id
     private String name;
     private String channelTag;
-    @Generated(hash = 1323114236)
-    public TypeBean(Long typeId, Long id, String name, String channelTag) {
+    private int typeCode;//1为常用栏目
+    @Generated(hash = 2094889216)
+    public TypeBean(Long typeId, Long id, String name, String channelTag,
+            int typeCode) {
         this.typeId = typeId;
         this.id = id;
         this.name = name;
         this.channelTag = channelTag;
+        this.typeCode = typeCode;
     }
     @Generated(hash = 119682038)
     public TypeBean() {
+    }
+    public Long getTypeId() {
+        return this.typeId;
+    }
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
     }
     public Long getId() {
         return this.id;
@@ -45,11 +54,14 @@ public class TypeBean {
     public void setChannelTag(String channelTag) {
         this.channelTag = channelTag;
     }
-    public Long getTypeId() {
-        return this.typeId;
+    public int getTypeCode() {
+        return this.typeCode;
     }
-    public void setTypeId(Long typeId) {
-        this.typeId = typeId;
+    public void setTypeCode(int typeCode) {
+        this.typeCode = typeCode;
     }
+
+  
+
 
 }

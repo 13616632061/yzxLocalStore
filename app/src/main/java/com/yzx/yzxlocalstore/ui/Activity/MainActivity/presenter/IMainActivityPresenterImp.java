@@ -1,6 +1,7 @@
 package com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter;
 
 import com.cheng.channel.Channel;
+import com.yzx.yzxlocalstore.entity.TypeBean;
 
 import java.util.List;
 
@@ -9,6 +10,9 @@ import java.util.List;
  */
 
 public interface IMainActivityPresenterImp {
+
+    //初始化管理栏目
+    void initTypeChannel();
 
     //显示更多分类信息
     void showMoreTypeChannel();

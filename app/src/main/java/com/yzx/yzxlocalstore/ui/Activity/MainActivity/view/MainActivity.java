@@ -25,7 +25,8 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     @Override
     protected void initView() {
         mPresenter = new MainActivityPresenter(this);
-        mPresenter.getTypeChannel();
+        mPresenter.initTypeChannel();
+//        mPresenter.getTypeChannel();
     }
 
     @OnClick({R.id.btn_more})
@@ -40,7 +41,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     //显示更多分类信息
     @Override
     public void showMoreTypeChannel() {
-        MainMenuPopWindow menuPopWindow = new MainMenuPopWindow(this,mPresenter);
+        MainMenuPopWindow menuPopWindow = new MainMenuPopWindow(this, mPresenter);
         menuPopWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.NO_GRAVITY, 0, 0);
 
     }
