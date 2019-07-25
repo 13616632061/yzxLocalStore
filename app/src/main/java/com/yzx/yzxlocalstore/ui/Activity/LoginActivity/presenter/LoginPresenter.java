@@ -1,5 +1,6 @@
 package com.yzx.yzxlocalstore.ui.Activity.LoginActivity.presenter;
 
+import android.support.v7.view.menu.MenuView;
 import android.text.TextUtils;
 
 import com.apkfuns.logutils.LogUtils;
@@ -19,33 +20,63 @@ import java.util.List;
 
 public class LoginPresenter implements ILoginPresenter {
 
-    private LoginActivity loginActivity;
+    private LoginActivity mView;
     private LoginModel loginModel;
+    private boolean requestPermissionsSuccess;
 
-    public LoginPresenter(LoginActivity loginActivity) {
-        this.loginActivity = loginActivity;
+    public LoginPresenter(LoginActivity mView) {
+        this.mView = mView;
         loginModel = new LoginModel();
-        loginModel.initUserInfo(loginActivity);
+    }
+
+    /**
+     * 获取权限是否成功
+     *
+     * @param requestPermissionsSuccess
+     */
+    @Override
+    public void setRequestPermissionsSuccess(boolean requestPermissionsSuccess) {
+        this.requestPermissionsSuccess = requestPermissionsSuccess;
     }
 
     @Override
+    public boolean isRequestPermissionsSuccess() {
+        return requestPermissionsSuccess;
+    }
+
+    /**
+     * 初始化登录信息
+     */
+    @Override
+    public void initUserInfo() {
+        loginModel.initUserInfo();
+    }
+
+    /**
+     * 登录
+     */
+    @Override
     public void Login() {
-        String name = loginActivity.getName();
-        String pwd = loginActivity.getPwd();
+        if (!requestPermissionsSuccess) {
+            mView.LoginFail(3);
+            return;
+        }
+        String name = mView.getName();
+        String pwd = mView.getPwd();
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(pwd)) {
-            loginActivity.LoginFail(1);
+            mView.LoginFail(1);
             return;
         }
 
-        List<User> users = loginModel.checkUserLogin(loginActivity, name, pwd);
+        List<User> users = loginModel.checkUserLogin(mView, name, pwd);
 
         if (users.size() > 0) {
-            loginActivity.LoginSuccess();
+            mView.LoginSuccess();
             SPUtils.getInstance().put(Constants.LoginUser.LOGIN_USER_INFO_KEY, new Gson().toJson(users.get(0)));
             LoginUserUtil.getInstance().setLoginUser(users.get(0));
 
         } else {
-            loginActivity.LoginFail(2);
+            mView.LoginFail(2);
         }
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ILoginModel {
 
-     List<User> initUserInfo(Context context);
+     List<User> initUserInfo();
 
      List<User> checkUserLogin(Context context, String name, String pwd);
 }

@@ -1,6 +1,5 @@
 package com.yzx.yzxlocalstore.greendao;
 
-import java.util.List;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
@@ -9,8 +8,6 @@ import org.greenrobot.greendao.Property;
 import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
-import org.greenrobot.greendao.query.Query;
-import org.greenrobot.greendao.query.QueryBuilder;
 
 import com.yzx.yzxlocalstore.entity.TypeBean;
 
@@ -34,7 +31,6 @@ public class TypeBeanDao extends AbstractDao<TypeBean, Long> {
         public final static Property TypeCode = new Property(4, int.class, "typeCode", false, "TYPE_CODE");
     }
 
-    private Query<TypeBean> user_TypeBeanListQuery;
 
     public TypeBeanDao(DaoConfig config) {
         super(config);
@@ -164,18 +160,4 @@ public class TypeBeanDao extends AbstractDao<TypeBean, Long> {
         return true;
     }
     
-    /** Internal query to resolve the "typeBeanList" to-many relationship of User. */
-    public List<TypeBean> _queryUser_TypeBeanList(Long id) {
-        synchronized (this) {
-            if (user_TypeBeanListQuery == null) {
-                QueryBuilder<TypeBean> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.Id.eq(null));
-                user_TypeBeanListQuery = queryBuilder.build();
-            }
-        }
-        Query<TypeBean> query = user_TypeBeanListQuery.forCurrentThread();
-        query.setParameter(0, id);
-        return query.list();
-    }
-
 }

@@ -8,7 +8,7 @@ import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter.MainActivityPresenter;
-import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow;
+import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view.MainMenuPopWindow;
 
 import butterknife.OnClick;
 
@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     //显示更多分类信息
     @Override
     public void showMoreTypeChannel() {
-        MainMenuPopWindow menuPopWindow = new MainMenuPopWindow(this, mPresenter);
+        MainMenuPopWindow menuPopWindow = new MainMenuPopWindow(this);
         menuPopWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.NO_GRAVITY, 0, 0);
 
     }

@@ -17,6 +17,4 @@ public interface IMainActivityPresenterImp {
     //显示更多分类信息
     void showMoreTypeChannel();
 
-    //获取管理分类信息
-    List<Channel> getTypeChannel();
 }

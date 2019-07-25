@@ -8,6 +8,7 @@ import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.greendao.GoodsInfoDao;
 import com.yzx.yzxlocalstore.greendao.GoodsTypeDao;
+import com.yzx.yzxlocalstore.greendao.GreenDaoHelp;
 import com.yzx.yzxlocalstore.service.SaveDataService;
 
 import java.util.ArrayList;
@@ -31,13 +32,13 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
         List<GoodsInfo> goodsInfoList = null;
         switch (type) {
             case 0:
-                goodsInfoList = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().offset((page - 1) * 20).limit(20).list();
+                goodsInfoList = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().offset((page - 1) * 20).limit(20).list();
                 break;
             case 1:
-                goodsInfoList = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodStore.le(0)).offset((page - 1) * 20).limit(20).list();
+                goodsInfoList = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodStore.le(0)).offset((page - 1) * 20).limit(20).list();
                 break;
             case 2:
-                List<GoodsInfo> allGoodsInfoList = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().offset((page - 1) * 20).limit(20).list();
+                List<GoodsInfo> allGoodsInfoList = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().offset((page - 1) * 20).limit(20).list();
                 goodsInfoList = new ArrayList<>();
                 for (GoodsInfo goodsInfo : allGoodsInfoList) {
                     if (goodsInfo.getGoodStore() > 0 && goodsInfo.getGoodStore() <= goodsInfo.getGoodStoreWarningNum()) {
@@ -59,13 +60,13 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
         long num = 0;
         switch (type) {
             case 0://全部
-                num = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().count();
+                num = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().count();
                 break;
             case 1://缺货商品
-                num = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodStore.le(0)).count();
+                num = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodStore.le(0)).count();
                 break;
             case 2://库存预警商品
-                List<GoodsInfo> goodsInfoList = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().list();
+                List<GoodsInfo> goodsInfoList = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().list();
                 List<GoodsInfo> warningGoodsInfoList = new ArrayList<>();
                 for (GoodsInfo goodsInfo : goodsInfoList) {
                     if (goodsInfo.getGoodStore() <= goodsInfo.getGoodStoreWarningNum()) {
@@ -83,7 +84,7 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
      */
     @Override
     public String getLackGoodsInfom() {
-        long num = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodStore.le(0)).count();
+        long num = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodStore.le(0)).count();
         return num + "";
     }
 
@@ -92,7 +93,7 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
      */
     @Override
     public String getWarningGoodsNum() {
-        List<GoodsInfo> goodsInfoList = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().list();
+        List<GoodsInfo> goodsInfoList = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().list();
         List<GoodsInfo> warningGoodsinfoList = new ArrayList<>();
         for (GoodsInfo goodsInfo : goodsInfoList) {
             if (goodsInfo.getGoodStore() > 0 && goodsInfo.getGoodStore() <= goodsInfo.getGoodStoreWarningNum()) {
@@ -110,7 +111,7 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
     @Override
     public void deteleGoodsInfo(List<GoodsInfo> goodsInfoList) {
         for (GoodsInfo goodsInfo : goodsInfoList) {
-            MyAplication.getDaoSession().getGoodsInfoDao().delete(goodsInfo);
+            GreenDaoHelp.getDaoSession().getGoodsInfoDao().delete(goodsInfo);
         }
     }
 
@@ -122,14 +123,14 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
     @Override
     public void editGoodsInfo(List<GoodsInfo> goodsInfoList) {
         for (GoodsInfo goodsInfo : goodsInfoList) {
-            MyAplication.getDaoSession().getGoodsInfoDao().update(goodsInfo);
+            GreenDaoHelp.getDaoSession().getGoodsInfoDao().update(goodsInfo);
         }
     }
 
     //添加商品信息
     @Override
     public void addGoodsInfo(GoodsInfo goodsInfo) {
-        MyAplication.getDaoSession().getGoodsInfoDao().insert(goodsInfo);
+        GreenDaoHelp.getDaoSession().getGoodsInfoDao().insert(goodsInfo);
     }
 
     /**
@@ -139,7 +140,7 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
      */
     @Override
     public List<GoodsInfo> qureyGoodsInfo(String content) {
-        List<GoodsInfo> goodsInfoList = MyAplication.getDaoSession().getGoodsInfoDao().queryBuilder().whereOr(GoodsInfoDao.Properties.GoodName.like("%" + content + "%"),
+        List<GoodsInfo> goodsInfoList = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().whereOr(GoodsInfoDao.Properties.GoodName.like("%" + content + "%"),
                 GoodsInfoDao.Properties.GoodCode.like("%" + content + "%"), GoodsInfoDao.Properties.GoodPinyinCode.like("%" + content + "%")).list();
         return goodsInfoList;
     }

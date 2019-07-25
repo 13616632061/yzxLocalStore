@@ -5,6 +5,7 @@ import android.content.Context;
 import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.greendao.DaoSession;
+import com.yzx.yzxlocalstore.greendao.GreenDaoHelp;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -23,9 +24,7 @@ public class StaffManageFragmentModel implements IStaffManageFragmentModel {
      */
     @Override
     public List<User> getStaffData(Context context) {
-        DaoSession daoSession=((MyAplication)context.getApplicationContext()).getDaoSession();
-        QueryBuilder<User> queryBuilder=daoSession.queryBuilder(User.class);
-        List<User> userList=queryBuilder.list();
+        List<User> userList =GreenDaoHelp.getDaoSession().getUserDao().queryBuilder().list();
         return userList;
     }
 }

@@ -11,6 +11,7 @@ import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.constant.RouteMap;
+import com.yzx.yzxlocalstore.greendao.GreenDaoHelp;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.presenter.LoginPresenter;
 
 import butterknife.InjectView;
@@ -70,6 +71,9 @@ public class LoginActivity extends BaseActivity implements ILoginView {
             case 2:
                 showToast(getResources().getString(R.string.error_name_pwd));
                 break;
+            case 3:
+                showToast(getResources().getString(R.string.permissions_fail));
+                break;
         }
     }
 
@@ -102,11 +106,15 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @PermissionSuccess(requestCode = 100)
     public void requestPermissionsSuccess() {
+        mPresenter.setRequestPermissionsSuccess(true);
+        GreenDaoHelp.getInstance(this);
+        mPresenter.initUserInfo();
+
     }
 
 
     @PermissionFail(requestCode = 100)
     public void requestPermissionsFail() {
-        showToast(getResources().getString(R.string.permissions_fail));
+        LoginFail(3);
     }
 }

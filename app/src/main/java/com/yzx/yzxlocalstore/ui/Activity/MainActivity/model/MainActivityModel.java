@@ -11,6 +11,7 @@ import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.greendao.DaoSession;
+import com.yzx.yzxlocalstore.greendao.GreenDaoHelp;
 import com.yzx.yzxlocalstore.greendao.TypeBeanDao;
 import com.yzx.yzxlocalstore.greendao.UserDao;
 import com.yzx.yzxlocalstore.utils.LoginUserUtil;
@@ -32,7 +33,7 @@ public class MainActivityModel implements IMainActivityModelImp {
     @Override
     public boolean isInitTypeChannel() {
         boolean isInitTypeChannel = false;
-        long count = MyAplication.getDaoSession().getTypeBeanDao().queryBuilder().where(TypeBeanDao.Properties.Id.eq(LoginUserUtil.getInstance().getLoginUser().getId())).count();
+        long count = GreenDaoHelp.getDaoSession().getTypeBeanDao().queryBuilder().where(TypeBeanDao.Properties.Id.eq(LoginUserUtil.getInstance().getLoginUser().getId())).count();
         if (count > 0) {
             isInitTypeChannel = true;
         }
@@ -44,13 +45,7 @@ public class MainActivityModel implements IMainActivityModelImp {
      */
     @Override
     public void initTypeChannel(TypeBean typeBean) {
-        MyAplication.getDaoSession().getTypeBeanDao().insert(typeBean);
+        GreenDaoHelp.getDaoSession().getTypeBeanDao().insert(typeBean);
     }
 
-    //获取管理分类信息
-    @Override
-    public List<TypeBean> getTypeChannel() {
-        List<TypeBean> list = MyAplication.getDaoSession().getTypeBeanDao().queryBuilder().where(TypeBeanDao.Properties.Id.eq(LoginUserUtil.getInstance().getLoginUser().getId())).list();
-        return list;
-    }
 }

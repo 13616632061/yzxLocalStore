@@ -17,11 +17,11 @@ public class MyAplication extends LibAplication {
     public void onCreate() {
         super.onCreate();
 
-        initGreenDao();
+//        initGreenDao();
     }
 
     /**
-     * 初始化GreenDao,直接在Application中进行初始化操作
+     * 初始化GreenDao,直接在Application中进行初始化操作,因更改数据库地址至sd卡需要读写权限
      */
     private void initGreenDao() {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(new GreenDaoContext(this), "yzxData.db");

@@ -91,12 +91,6 @@ public class GoodsType implements Comparable<GoodsType>,Parcelable{
         this.isSelect = isSelect;
     }
 
-
-    @Override
-    public int compareTo(@NonNull GoodsType goodsType) {
-        return this.sort-goodsType.getSort();
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -114,5 +108,10 @@ public class GoodsType implements Comparable<GoodsType>,Parcelable{
         dest.writeInt(sort);
         dest.writeByte((byte) (status ? 1 : 0));
         dest.writeByte((byte) (isSelect ? 1 : 0));
+    }
+
+    @Override
+    public int compareTo(@NonNull GoodsType o) {
+        return 0;
     }
 }

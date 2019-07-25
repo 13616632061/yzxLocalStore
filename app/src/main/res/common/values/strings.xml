@@ -139,6 +139,7 @@
     <string name="input_goods_search_hint">输入名称/拼音码/条码</string>
     <string name="search">搜索</string>
     <string name="max_page_show">每页做多显示</string>
+    <string name="common_columns">常用栏目</string>
 
 
     <!--管理栏目-->

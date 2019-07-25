@@ -17,8 +17,6 @@ public interface IMainActivityModelImp {
     //初始化管理栏目
     void initTypeChannel(TypeBean typeBean);
 
-    //获取管理分类信息
-    List<TypeBean> getTypeChannel();
 
 
 }

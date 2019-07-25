@@ -33,7 +33,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
      */
     @Override
     public void initTypeChannel() {
-        if (!mModel.isInitTypeChannel()) {
+        if (mModel.isInitTypeChannel()) {
             return;
         }
         String[] typNameList = new String[]{
@@ -59,6 +59,9 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             TypeBean typeBean = new TypeBean();
             typeBean.setId(LoginUserUtil.getInstance().getLoginUser().getId());
             typeBean.setName(typeName);
+            if (typeName.equals(R.string.putOrder)){
+                typeBean.setTypeCode(1);
+            }
             typeBeanList.add(typeBean);
         }
         for (TypeBean bean : typeBeanList) {
@@ -72,15 +75,4 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         mView.showMoreTypeChannel();
     }
 
-    //获取管理分类信息
-    @Override
-    public List<Channel> getTypeChannel() {
-        List<Channel> mChannelTypeList = new ArrayList<>();
-        List<TypeBean> typeList = mModel.getTypeChannel();
-        for (TypeBean typeBean : typeList) {
-            Channel channel = new Channel(typeBean.getName(), typeBean.getTypeCode(), null);
-            mChannelTypeList.add(channel);
-        }
-        return mChannelTypeList;
-    }
 }

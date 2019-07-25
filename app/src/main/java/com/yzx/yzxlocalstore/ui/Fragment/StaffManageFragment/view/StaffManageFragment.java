@@ -92,7 +92,7 @@ public class StaffManageFragment extends BaseFragment implements IStaffManageFra
         mUserList.clear();
         mUserList.addAll(userList);
         if (adapter == null) {
-            adapter = new StaffManageFragmentAdapter(R.layout.item_staff_manage_fragment, mUserList);
+            adapter = new StaffManageFragmentAdapter(getActivity(),R.layout.item_staff_manage_fragment, mUserList);
             list.setAdapter(adapter);
             list.setLayoutManager(new LinearLayoutManager(mActivity));
         } else {

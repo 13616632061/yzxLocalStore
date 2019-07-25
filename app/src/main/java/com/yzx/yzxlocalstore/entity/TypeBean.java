@@ -61,7 +61,14 @@ public class TypeBean {
         this.typeCode = typeCode;
     }
 
-  
-
-
+    @Override
+    public String toString() {
+        return "TypeBean{" +
+                "typeId=" + typeId +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", channelTag='" + channelTag + '\'' +
+                ", typeCode=" + typeCode +
+                '}';
+    }
 }

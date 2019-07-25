@@ -15,6 +15,7 @@ import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.User;
+import com.yzx.yzxlocalstore.greendao.GreenDaoHelp;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view.LoginActivity;
 import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 
@@ -47,6 +48,7 @@ public class SplashActivity extends BaseActivity {
             Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(intent);
         } else {
+            GreenDaoHelp.getInstance(this);
             User loginUser = new Gson().fromJson(SPUtils.getInstance().getString(Constants.LoginUser.LOGIN_USER_INFO_KEY), User.class);
             LoginUserUtil.getInstance().setLoginUser(loginUser);
             ARouter.getInstance().build(RouteMap.ROUTE_MAIN_ACTIVITY).navigation();

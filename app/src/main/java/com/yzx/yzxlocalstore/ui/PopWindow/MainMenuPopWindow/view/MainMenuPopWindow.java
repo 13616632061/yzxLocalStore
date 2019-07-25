@@ -1,4 +1,4 @@
-package com.yzx.yzxlocalstore.ui.PopWindow;
+package com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +18,8 @@ import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter.MainActivityPresenter;
+import com.yzx.yzxlocalstore.ui.PopWindow.BasePopupWindow;
+import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.presenter.MainMenuPopWindowPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +35,12 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
     private View view;
     private ImageView iv_close;
     private ChannelView chanel_type;
-    private MainActivityPresenter mPresenter;
+    private MainMenuPopWindowPresenter mPresenter;
 
-    public MainMenuPopWindow(Context context, MainActivityPresenter mPresenter) {
+    public MainMenuPopWindow(Context context) {
         super(context);
         mContext = context;
-        this.mPresenter = mPresenter;
+        mPresenter = new MainMenuPopWindowPresenter(context, this);
         view = View.inflate(context, R.layout.main_menu_layout, null);
         initSet(view);
         hideStatusBar(view);
@@ -51,12 +53,10 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
         chanel_type = view.findViewById(R.id.chanel_type);
         chanel_type.setOnChannelItemClickListener(this);
 
-        List<Channel> myChannelList = new ArrayList<>();
-        for (Channel channel : mPresenter.getTypeChannel()) {
-            myChannelList.add(channel);
-        }
+
         chanel_type.setChannelFixedCount(0);
-        chanel_type.addPlate("常用栏目", myChannelList);
+        chanel_type.addPlate(mContext.getResources().getString(R.string.common_columns), mPresenter.getCommonlyType());
+        chanel_type.addPlate("更多栏目", mPresenter.getMoreType());
         chanel_type.setSubTitleName("长按栏目或者点击编辑，进行拖动排序或删除");
         chanel_type.setSubTitleTextColor(mContext.getResources().getColor(R.color.color_f5260b));
         chanel_type.inflateData();
@@ -68,22 +68,30 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
         });
     }
 
-
+    /**
+     * 正常状态点击事件
+     *
+     * @param position
+     * @param channel
+     */
     @Override
     public void channelItemClick(int position, Channel channel) {
-        TypeBean typeBean = (TypeBean) channel.getObj();
-        switch (typeBean.getChannelTag()) {
-            case "goodsManage":
-                ARouter.getInstance().build(RouteMap.ROUTE_GOODS_MANAGE_ACTIVITY).navigation();
-                break;
-        }
+        mPresenter.typeItemClick(position, channel);
     }
 
+    /**
+     * 编辑完成
+     *
+     * @param channelList
+     */
     @Override
     public void channelEditFinish(List<Channel> channelList) {
-
+        mPresenter.typeEditFinish(channelList);
     }
 
+    /**
+     * 开始编辑
+     */
     @Override
     public void channelEditStart() {
 
