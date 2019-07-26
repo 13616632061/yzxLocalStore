@@ -32,4 +32,14 @@ public class MainMenuPopWindowModel implements IMainMenuPopWindowModelImp {
     public void updateTypeInfo(TypeBean typeBean) {
         GreenDaoHelp.getDaoSession().getTypeBeanDao().update(typeBean);
     }
+
+    @Override
+    public void clearAllTypeInfo() {
+        GreenDaoHelp.getDaoSession().getTypeBeanDao().deleteAll();
+    }
+
+    @Override
+    public void addTypeInfo(TypeBean typeBean) {
+        GreenDaoHelp.getDaoSession().getTypeBeanDao().insert(typeBean);
+    }
 }

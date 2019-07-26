@@ -96,4 +96,13 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
     public void channelEditStart() {
 
     }
+
+    /**
+     * 获取其他栏目
+     *
+     * @return
+     */
+    public List<Channel> getOtherChannel() {
+        return chanel_type.getOtherChannel().get(0);
+    }
 }

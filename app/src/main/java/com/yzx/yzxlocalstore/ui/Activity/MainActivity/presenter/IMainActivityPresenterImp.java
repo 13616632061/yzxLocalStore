@@ -17,4 +17,8 @@ public interface IMainActivityPresenterImp {
     //显示更多分类信息
     void showMoreTypeChannel();
 
+    //获取底部管理分类
+    void getBottomType();
+
+    void setBottomTypeView();
 }

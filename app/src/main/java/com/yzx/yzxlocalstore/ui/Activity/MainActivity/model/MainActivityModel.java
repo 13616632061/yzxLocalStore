@@ -48,4 +48,16 @@ public class MainActivityModel implements IMainActivityModelImp {
         GreenDaoHelp.getDaoSession().getTypeBeanDao().insert(typeBean);
     }
 
+    /**
+     * 获取底部管理分类
+     *
+     * @return
+     */
+    @Override
+    public List<TypeBean> getBottomType() {
+        List<TypeBean> list = GreenDaoHelp.getDaoSession().getTypeBeanDao().queryBuilder().where(TypeBeanDao.Properties.TypeCode.eq(1)).list();
+        return list;
+    }
+
+
 }

@@ -14,4 +14,10 @@ public interface IMainMenuPopWindowModelImp {
 
     //更新分类信息
     void updateTypeInfo(TypeBean typeBean);
+
+    //清除分类信息数据
+    void clearAllTypeInfo();
+
+    //添加分类信息
+    void addTypeInfo(TypeBean typeBean);
 }

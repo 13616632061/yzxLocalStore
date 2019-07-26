@@ -59,7 +59,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             TypeBean typeBean = new TypeBean();
             typeBean.setId(LoginUserUtil.getInstance().getLoginUser().getId());
             typeBean.setName(typeName);
-            if (typeName.equals(R.string.putOrder)){
+            if (typeName.equals(R.string.putOrder)) {
                 typeBean.setTypeCode(1);
             }
             typeBeanList.add(typeBean);
@@ -73,6 +73,21 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     @Override
     public void showMoreTypeChannel() {
         mView.showMoreTypeChannel();
+    }
+
+    /**
+     * 获取底部管理分类
+     */
+    @Override
+    public void getBottomType() {
+        mView.mBottomTypeData().clear();
+        mView.mBottomTypeData().addAll(mModel.getBottomType());
+        mView.mainBottomTypeAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void setBottomTypeView() {
+        mView.setBottomTypeView();
     }
 
 }
