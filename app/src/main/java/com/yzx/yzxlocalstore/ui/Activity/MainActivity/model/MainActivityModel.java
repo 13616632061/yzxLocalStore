@@ -28,14 +28,17 @@ public class MainActivityModel implements IMainActivityModelImp {
     /**
      * 登录用户是否已经初始管理栏目
      *
+     * @param curTypeCount 现有管理栏目的数量
      * @return
      */
     @Override
-    public boolean isInitTypeChannel() {
+    public boolean isInitTypeChannel(int curTypeCount) {
         boolean isInitTypeChannel = false;
         long count = GreenDaoHelp.getDaoSession().getTypeBeanDao().queryBuilder().where(TypeBeanDao.Properties.Id.eq(LoginUserUtil.getInstance().getLoginUser().getId())).count();
-        if (count > 0) {
+        if (count == curTypeCount) {
             isInitTypeChannel = true;
+        } else {
+            GreenDaoHelp.getDaoSession().getTypeBeanDao().deleteAll();
         }
         return isInitTypeChannel;
     }
@@ -56,6 +59,7 @@ public class MainActivityModel implements IMainActivityModelImp {
     @Override
     public List<TypeBean> getBottomType() {
         List<TypeBean> list = GreenDaoHelp.getDaoSession().getTypeBeanDao().queryBuilder().where(TypeBeanDao.Properties.TypeCode.eq(1)).list();
+//        List<TypeBean> list2 = GreenDaoHelp.getDaoSession().getTypeBeanDao().queryBuilder().list();
         return list;
     }
 

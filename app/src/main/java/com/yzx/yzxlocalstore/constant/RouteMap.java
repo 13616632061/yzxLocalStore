@@ -12,6 +12,7 @@ public class RouteMap {
     public static final String ROUTE_ADDSTAFF_ACTIVITY = "/app/AddStaffActivity";//新增员工
     public static final String ROUTE_GOODS_MANAGE_ACTIVITY = "/app/GoodsInfoManageActivity";//商品管理
     public static final String ROUTE_ADD_GOODS_INFO_ACTIVITY = "/app/AddGoodsInfoActivity";//新增or编辑商品
+    public static final String ROUTE_STAFF_MANAGE_ACTIVITY = "/app/StaffManageActivity";//员工管理
 
 
 }

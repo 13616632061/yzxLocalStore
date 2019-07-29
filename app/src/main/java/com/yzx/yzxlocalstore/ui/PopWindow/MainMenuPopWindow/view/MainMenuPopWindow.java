@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cheng.channel.Channel;
@@ -34,6 +35,7 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
     private Context mContext;
     private View view;
     private ImageView iv_close;
+    private TextView tv_close;
     private ChannelView chanel_type;
     private MainMenuPopWindowPresenter mPresenter;
 
@@ -51,6 +53,7 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
     private void initView() {
         iv_close = view.findViewById(R.id.iv_close);
         chanel_type = view.findViewById(R.id.chanel_type);
+        tv_close = view.findViewById(R.id.tv_close);
         chanel_type.setOnChannelItemClickListener(this);
 
 
@@ -61,6 +64,12 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
         chanel_type.setSubTitleTextColor(mContext.getResources().getColor(R.color.color_f5260b));
         chanel_type.inflateData();
         iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        tv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();

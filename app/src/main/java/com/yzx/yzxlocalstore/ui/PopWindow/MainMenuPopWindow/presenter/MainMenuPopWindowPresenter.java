@@ -5,7 +5,9 @@ import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
+import com.chad.library.adapter.base.util.TouchEventUtil;
 import com.cheng.channel.Channel;
+import com.yzx.lib.util.EventBusMapUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.TypeBean;
@@ -13,8 +15,11 @@ import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.model.MainMenuPopWin
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view.MainMenuPopWindow;
 import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2019/7/25.
@@ -80,6 +85,8 @@ public class MainMenuPopWindowPresenter implements IMainMenuPopWindowPresenterIm
     public void typeItemClick(int position, Channel channel) {
         if (channel.getChannelName().equals(mContext.getResources().getString(R.string.goodsManage))) {//商品管理
             ARouter.getInstance().build(RouteMap.ROUTE_GOODS_MANAGE_ACTIVITY).navigation();
+        } else if (channel.getChannelName().equals(mContext.getResources().getString(R.string.moreType))) {//更多
+
         }
     }
 
@@ -113,6 +120,7 @@ public class MainMenuPopWindowPresenter implements IMainMenuPopWindowPresenterIm
         for (int i = 0; i < newTypeList.size(); i++) {
             mModel.addTypeInfo(newTypeList.get(i));
         }
+        EventBus.getDefault().post(EventBusMapUtil.getObjectMap("updateManageType", null));
     }
 
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface IMainActivityModelImp {
     //登录用户是否已经初始管理栏目
-    boolean isInitTypeChannel();
+    boolean isInitTypeChannel(int curTypeCount);
 
     //初始化管理栏目
     void initTypeChannel(TypeBean typeBean);

@@ -33,32 +33,31 @@ public class MainBottomTypeAdapter extends BaseQuickAdapter<TypeBean, BaseViewHo
     protected void convert(BaseViewHolder helper, TypeBean item) {
 
         helper.setText(R.id.tv_function_type, item.getName());
-        ImageView iv_function_icon = helper.getView(R.id.iv_function_icon);
 
         if (item.getName().equals(mContext.getResources().getString(R.string.goodsManage))) {//商品管理
-            Glide.with(mContext).load(R.drawable.icon_goods).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_goods);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.more))) {
-            Glide.with(mContext).load(R.drawable.icon_more).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_more);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.staffManage))) {
-            Glide.with(mContext).load(R.drawable.icon_staff).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_staff);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.vip))) {
-            Glide.with(mContext).load(R.drawable.icon_vip).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_vip);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.putOrder))) {
-            Glide.with(mContext).load(R.drawable.icon_put_order).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_put_order);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.getOrder))) {
-            Glide.with(mContext).load(R.drawable.icon_get_order).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_get_order);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.rejectedGood))) {
-            Glide.with(mContext).load(R.drawable.icon_rejected).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_rejected);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.detele))) {
-            Glide.with(mContext).load(R.drawable.icon_detele).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_detele);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.orderManage))) {
-            Glide.with(mContext).load(R.drawable.icon_order).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_order);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.reportForm))) {
-            Glide.with(mContext).load(R.drawable.icon_form).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_form);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.inventory))) {
-            Glide.with(mContext).load(R.drawable.icon_inventory).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_inventory);
         } else if (item.getName().equals(mContext.getResources().getString(R.string.set))) {
-            Glide.with(mContext).load(R.drawable.icon_set).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(iv_function_icon);
+            helper.setImageResource(R.id.iv_function_icon, R.drawable.icon_set);
         }
     }
 }

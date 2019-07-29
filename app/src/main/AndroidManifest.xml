@@ -71,7 +71,9 @@
         <service
             android:name=".service.SaveDataService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".ui.Activity.StaffManageActivity.StaffManageActivity"></activity>
     </application>
 
 </manifest>

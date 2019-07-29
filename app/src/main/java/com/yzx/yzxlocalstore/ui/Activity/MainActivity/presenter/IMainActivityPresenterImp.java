@@ -21,4 +21,7 @@ public interface IMainActivityPresenterImp {
     void getBottomType();
 
     void setBottomTypeView();
+
+    //底部管理分类点击事件
+    void setBottomTypeOnClick(String name);
 }

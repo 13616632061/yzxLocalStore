@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F5F5F5"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_toolbar"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layout_left"
+            android:layout_width="137dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:gravity="center"
+                android:text="@string/staffer"
+                android:textColor="@color/color_707070"
+                android:textSize="15sp" />
+
+            <q.rorbin.verticaltablayout.VerticalTabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:indicator_color="@color/color_f5260b"
+                app:indicator_gravity="right"
+                app:indicator_width="2dp"
+                app:tab_height="50dp"
+                app:tab_margin="5dp"
+                app:tab_mode="scrollable"></q.rorbin.verticaltablayout.VerticalTabLayout>
+        </LinearLayout>
+
+        <com.yzx.lib.weight.NoScrollViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.yzx.lib.weight.NoScrollViewPager>
+    </LinearLayout>
+</LinearLayout>

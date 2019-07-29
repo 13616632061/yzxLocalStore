@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
@@ -15,8 +16,13 @@ import com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter.MainActivityPres
 import com.yzx.yzxlocalstore.ui.Adapter.MainBottomTypeAdapter;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view.MainMenuPopWindow;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -38,20 +44,13 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
         mPresenter = new MainActivityPresenter(this);
         mPresenter.initTypeChannel();
         mPresenter.setBottomTypeView();
         mPresenter.getBottomType();
     }
 
-    @OnClick({R.id.btn_more})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_more:
-                mPresenter.showMoreTypeChannel();
-                break;
-        }
-    }
 
     //显示更多分类信息
     @Override
@@ -69,6 +68,12 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
         mBottomTypeAdapter = new MainBottomTypeAdapter(this, R.layout.item_main_bottom_type, mBottomTypeData);
         listBottom.setAdapter(mBottomTypeAdapter);
         listBottom.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mBottomTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                mPresenter.setBottomTypeOnClick(mBottomTypeData.get(position).getName());
+            }
+        });
 
     }
 
@@ -92,5 +97,16 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
         return mBottomTypeData;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvenBus(Map<Object, Object> map) {
+        if (map.containsKey("updateManageType")) {//更新底部管理分类
+            mPresenter.getBottomType();
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }
