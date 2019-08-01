@@ -11,6 +11,7 @@ import com.yzx.lib.util.EventBusMapUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.TypeBean;
+import com.yzx.yzxlocalstore.ui.Activity.MainActivity.MainToAction.MainToAction;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.model.MainMenuPopWindowModel;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view.MainMenuPopWindow;
 import com.yzx.yzxlocalstore.utils.LoginUserUtil;
@@ -83,11 +84,7 @@ public class MainMenuPopWindowPresenter implements IMainMenuPopWindowPresenterIm
      */
     @Override
     public void typeItemClick(int position, Channel channel) {
-        if (channel.getChannelName().equals(mContext.getResources().getString(R.string.goodsManage))) {//商品管理
-            ARouter.getInstance().build(RouteMap.ROUTE_GOODS_MANAGE_ACTIVITY).navigation();
-        } else if (channel.getChannelName().equals(mContext.getResources().getString(R.string.moreType))) {//更多
-
-        }
+        MainToAction.toAction(mContext, channel.getChannelName());
     }
 
     /**

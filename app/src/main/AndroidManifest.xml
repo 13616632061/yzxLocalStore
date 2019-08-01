@@ -72,8 +72,12 @@
             android:name=".service.SaveDataService"
             android:enabled="true"
             android:exported="true" />
-
-        <activity android:name=".ui.Activity.StaffManageActivity.StaffManageActivity"></activity>
+        <!-- 员工管理 -->
+        <activity
+            android:name=".ui.Activity.StaffManageActivity.view.StaffManageActivity"
+            android:configChanges="keyboardHidden"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

@@ -13,7 +13,6 @@ import com.yzx.yzxlocalstore.ui.Fragment.MemberFragment;
 import com.yzx.yzxlocalstore.ui.Fragment.OutGoStoreFragment;
 import com.yzx.yzxlocalstore.ui.Fragment.ReportFormFragment;
 import com.yzx.yzxlocalstore.ui.Fragment.SetFragment;
-import com.yzx.yzxlocalstore.ui.Fragment.StaffFragment.view.StaffFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +49,6 @@ public class ManageActivityModel implements IManageActivityModel {
         fragmentList.add(new GoodsManageFragment());
         fragmentList.add(new OutGoStoreFragment());
         fragmentList.add(new InventoryFragment());
-        fragmentList.add(new StaffFragment());
         fragmentList.add(new MemberFragment());
         fragmentList.add(new SetFragment());
         fragmentList.add(new AboutFragment());

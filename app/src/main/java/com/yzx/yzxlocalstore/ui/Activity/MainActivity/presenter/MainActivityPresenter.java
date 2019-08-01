@@ -10,6 +10,7 @@ import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.ManageChannelType;
 import com.yzx.yzxlocalstore.entity.ManageType;
 import com.yzx.yzxlocalstore.entity.TypeBean;
+import com.yzx.yzxlocalstore.ui.Activity.MainActivity.MainToAction.MainToAction;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.model.MainActivityModel;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.view.MainActivity;
 import com.yzx.yzxlocalstore.utils.LoginUserUtil;
@@ -113,10 +114,8 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public void setBottomTypeOnClick(String name) {
         if (mView.getResources().getString(R.string.moreType).equals(name)) {//更多
             mView.showMoreTypeChannel();
-        }else if (mView.getResources().getString(R.string.goodsManage).equals(name)){//商品管理
-            ARouter.getInstance().build(RouteMap.ROUTE_GOODS_MANAGE_ACTIVITY).navigation();
-        } else if (mView.getResources().getString(R.string.staffManage).equals(name)){//员工管理
-            ARouter.getInstance().build(RouteMap.ROUTE_GOODS_MANAGE_ACTIVITY).navigation();
+        } else {
+            MainToAction.toAction(mView, name);
         }
     }
 
