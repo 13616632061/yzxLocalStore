@@ -141,6 +141,14 @@
     <string name="search">搜索</string>
     <string name="max_page_show">每页做多显示</string>
     <string name="common_columns">常用栏目</string>
+    <string name="receivable">应收</string>
+    <string name="receipts">实收</string>
+    <string name="change">找零</string>
+    <string name="vertical_reduction">立减</string>
+    <string name="discount">折扣</string>
+    <string name="membership_payment">会员支付</string>
+    <string name="cash">现金</string>
+    <string name="mobile_payment">移动支付</string>
 
 
     <!--管理栏目-->
