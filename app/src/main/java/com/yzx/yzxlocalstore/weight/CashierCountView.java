@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.apkfuns.logutils.LogUtils;
 import com.yzx.lib.util.ArithUtil;
 import com.yzx.lib.weight.CashierInputFilter;
 import com.yzx.yzxlocalstore.R;
@@ -45,7 +46,6 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
     private Button btn_zero, btn_one, btn_two, btn_three, btn_four, btn_five;
     private Button btn_six, btn_seven, btn_eight, btn_nine;
     private Button btn_membership_payment, btn_cash_payment, btn_mobile_payment;
-
 
 
     public CashierCountView(@NonNull Context context) {
@@ -81,6 +81,7 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
      * 设置显示限制
      * 默认控制输入10位数，小数点前7位，后2位，小数一位，共10位
      */
+
     private void setInputFilter() {
         InputFilter[] filters = {new CashierInputFilter(10), new InputFilter.LengthFilter(10)};
         tv_receivable.setFilters(filters);
@@ -189,6 +190,7 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
                 tv_receivable.setText(str + ((Button) v).getText().toString());
                 break;
             case R.id.btn_add:
+
                 break;
             case R.id.btn_remove:
                 // 点击删除按钮，删除一个字符

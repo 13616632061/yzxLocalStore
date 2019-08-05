@@ -25,11 +25,12 @@ public class CashierInputFilter implements InputFilter {
     private final int POINTER_AFTER_LENGTH = 2;
 
     //小数点前的7位数
-    private int POINTER_BEFORE_LENGTH = 7;
+    private int POINTER_BEFORE_LENGTH = 5;
 
     private final String POINTER = ".";
 
     private static final String ZERO = "0";
+    private static final String ZERO_POINT_ZERO = "0.00";
 
     public CashierInputFilter() {
         mPattern = Pattern.compile("([0-9]|\\.)*");
@@ -57,73 +58,66 @@ public class CashierInputFilter implements InputFilter {
                                Spanned dest, int dstart, int dend) {
 
         String sourceText = source.toString();
-        String destText = dest.toString();
-        if (!TextUtils.isEmpty(sourceText)) {
-            sourceText = sourceText.substring(sourceText.length() - 1, sourceText.length());
+        LogUtils.e("CharSequence: sourceText: " + sourceText);
+        String sourceEndText = "";
+
+        if (TextUtils.isEmpty(sourceText)) {
+            return ZERO_POINT_ZERO;
+        }
+//        if (sourceText.equals(POINTER)) {
+//            sourceText = ZERO;
+//        }
+//        int mCount = sourceText.length();
+//        if (sourceText.startsWith(ZERO_POINT_ZERO)) {
+//            sourceText = sourceText.substring(ZERO_POINT_ZERO.length(), mCount);
+//        }
+        while (sourceText.startsWith(POINTER)||sourceText.startsWith(ZERO)){
+            if (sourceText.length()>1){
+                sourceText = sourceText.substring(1, sourceText.length());
+            }else {
+                sourceText="";
+            }
         }
         LogUtils.e("CharSequence: sourceText: " + sourceText);
-        LogUtils.e("CharSequence: destText: " + destText);
-        //验证删除等按键
-        if (TextUtils.isEmpty(sourceText)) {
-            return "";
-        }
+        int mStart = 0;
+        int mBefore = sourceText.length() - 1;
+        int mCount = sourceText.length();
+        String sourceBeforeText = sourceText.substring(mStart, mBefore);
+        String sourceCurText = sourceText.substring(mBefore, mCount);
+        LogUtils.e("CharSequence: sourceBeforeText0: " + sourceBeforeText);
+        LogUtils.e("CharSequence: sourceCurText0: " + sourceCurText);
+//        if (sourceBeforeText.equals(ZERO)) {
+//            if (sourceCurText.equals(POINTER)) {
+//                sourceCurText = "";
+//            }else {
+//            }
+//        }
 
-        Matcher matcher = mPattern.matcher(source);
-        LogUtils.e("CharSequence: xxx: " + destText.contains(POINTER));
-        //已经输入小数点的情况下，只能输入数字
-        if (destText.contains(POINTER)) {
-            if (!matcher.matches()) {
-                return "";
-            } else {
-                if (POINTER.equals(source)) {  //只能输入一个小数点
-                    return "";
-                }
-            }
-
-            int index = destText.indexOf(POINTER);
-            //验证小数点精度，保证小数点后只能输入两位
-            int afterLength = dend - index;
-
-            // 输入后，修改控制不了，//验证小数点精度，保证小数点前位数
-
-            if (dstart == POINTER_BEFORE_LENGTH && index == POINTER_BEFORE_LENGTH) {
-                return dest.subSequence(dstart, dend);
-
-            }
-
-
-            //验证小数点精度，保证小数点后只能输入两位
-            if (afterLength > POINTER_AFTER_LENGTH) {
-                return dest.subSequence(dstart, dend);
-            }
-
-
+        if (sourceBeforeText.contains(POINTER) && sourceCurText.equals(POINTER)) {
+            sourceCurText = "";
         } else {
-            //没有输入小数点的情况下，只能输入小数点和数字，但首位不能输入小数点和0
-            if (!matcher.matches()) {
-                return "";
-            } else {
-                //验证小数点精度，保证小数点前只能输入7位
-
-                if (dstart == POINTER_BEFORE_LENGTH) {
-                    if (sourceText.contains(POINTER))
-                        return dest.subSequence(dstart, dend) + sourceText + ZERO + ZERO;
-                    else
-                        return dest.subSequence(dstart, dend) + POINTER + ZERO + ZERO;
+            int pointIndex = sourceText.indexOf(POINTER);
+            LogUtils.e("CharSequence: pointIndex: " + pointIndex);
+            if (pointIndex == -1) {//小数点前5位
+                if (mCount > POINTER_BEFORE_LENGTH) {
+                    sourceBeforeText = sourceText.substring(mStart, POINTER_BEFORE_LENGTH);
+                    if (!sourceCurText.equals(POINTER)) {
+                        sourceCurText = "";
+                    }
                 }
-                if ((POINTER.equals(source) || ZERO.equals(source)) && TextUtils.isEmpty(destText)) {
-                    return ZERO + POINTER + ZERO + ZERO;
-                }
+            }
+            if (pointIndex != -1 && mCount > pointIndex + POINTER_AFTER_LENGTH) {//小数点后两位
+                sourceBeforeText = sourceText.substring(mStart, pointIndex + POINTER_AFTER_LENGTH + 1);
+                sourceCurText = "";
             }
         }
 
-        //验证输入金额的大小
-        double sumText = Double.parseDouble(destText + sourceText);
-        if (sumText >= MAX_VALUE) {
-            return dest.subSequence(dstart, dend);
-        }
+        sourceEndText = sourceBeforeText + sourceCurText;
+        LogUtils.e("CharSequence: sourceBeforeText: " + sourceBeforeText);
+        LogUtils.e("CharSequence: sourceCurText: " + sourceCurText);
+        LogUtils.e("CharSequence: sourceEndText: " + sourceEndText);
 
-        return dest.subSequence(dstart, dend) + sourceText;
+        return sourceEndText;
     }
 
 
