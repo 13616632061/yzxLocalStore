@@ -5,6 +5,7 @@
     android:id="@+id/main_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_f1f1f1"
     tools:context=".ui.Activity.MainActivity.view.MainActivity">
 
 
@@ -18,54 +19,45 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/layout_bottom">
 
-            <RelativeLayout
+            <include
+                layout="@layout/layout_main_left"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:background="@color/color_B8B8B8"></RelativeLayout>
+                android:layout_weight="4"></include>
 
-            <RelativeLayout
+            <View
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/bg_max_h"></View>
+
+            <include
+                layout="@layout/layout_mian_middle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"></RelativeLayout>
+                android:layout_weight="3"></include>
         </LinearLayout>
-
-        <FrameLayout
+        <!--底部功能栏-->
+        <include
             android:id="@+id/layout_bottom"
+            layout="@layout/layout_mian_bottom"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/color_DCDCDC">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/color_B8B8B8"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/list_bottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
-            </LinearLayout>
-        </FrameLayout>
+            android:background="@color/color_DCDCDC"></include>
     </RelativeLayout>
 
-    <RelativeLayout
+    <View
+        android:layout_width="15dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/bg_max_h"></View>
+    <!--收银计算器-->
+    <include
         android:id="@+id/layout_right"
+        layout="@layout/layout_mian_right"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_weight="2"
-        android:background="@color/colorAccent">
-
-        <com.yzx.yzxlocalstore.weight.CashierCountView
-            android:id="@+id/cashier_count_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.yzx.yzxlocalstore.weight.CashierCountView>
-    </RelativeLayout>
+        android:layout_weight="2"></include>
 </LinearLayout>

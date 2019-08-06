@@ -61,9 +61,6 @@ public class CashierInputFilter implements InputFilter {
         LogUtils.e("CharSequence: sourceText: " + sourceText);
         String sourceEndText = "";
 
-        if (TextUtils.isEmpty(sourceText)) {
-            return ZERO_POINT_ZERO;
-        }
 //        if (sourceText.equals(POINTER)) {
 //            sourceText = ZERO;
 //        }
@@ -79,6 +76,9 @@ public class CashierInputFilter implements InputFilter {
             }
         }
         LogUtils.e("CharSequence: sourceText: " + sourceText);
+        if (TextUtils.isEmpty(sourceText)) {
+            return ZERO_POINT_ZERO;
+        }
         int mStart = 0;
         int mBefore = sourceText.length() - 1;
         int mCount = sourceText.length();

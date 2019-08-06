@@ -47,6 +47,8 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
     private Button btn_six, btn_seven, btn_eight, btn_nine;
     private Button btn_membership_payment, btn_cash_payment, btn_mobile_payment;
 
+    public paymentType mPaymentType;
+
 
     public CashierCountView(@NonNull Context context) {
         super(context);
@@ -169,7 +171,7 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
      */
     @Override
     public void onClick(View v) {
-        String str = tv_receivable.getText().toString();
+        String str = tv_receipts.getText().toString();
         switch (v.getId()) {
             case R.id.btn_zero:
             case R.id.btn_one:
@@ -203,12 +205,27 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
                 break;
             case R.id.btn_discount:
                 break;
-            case R.id.btn_membership_payment:
+            case R.id.btn_membership_payment://会员支付
+                if (mPaymentType != null) mPaymentType.membershipPayment();
                 break;
-            case R.id.btn_cash_payment:
+            case R.id.btn_cash_payment://现金支付
+                if (mPaymentType != null) mPaymentType.cashPayment();
                 break;
-            case R.id.btn_mobile_payment:
+            case R.id.btn_mobile_payment://移动支付
+                if (mPaymentType != null) mPaymentType.mobilePayment();
                 break;
         }
+    }
+
+    public interface paymentType {
+        void membershipPayment();
+
+        void cashPayment();
+
+        void mobilePayment();
+    }
+
+    public void setPaymentType(paymentType mPaymentType) {
+        this.mPaymentType = mPaymentType;
     }
 }
