@@ -3,150 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--顶部-->
-    <LinearLayout
+    <include
         android:id="@+id/layout_top1"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@drawable/icon_top01"
-        android:gravity="center_vertical">
+        layout="@layout/layout_main_left_top"></include>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_logo"
-                android:drawablePadding="5dp"
-                android:lines="1"
-                android:text="易众云xxx收银机"
-                android:textColor="@color/color_000000"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_shop"
-                android:drawablePadding="5dp"
-                android:lines="1"
-                android:text="龙岗天安数码城店"
-                android:textColor="@color/color_000000"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_time01"
-                android:drawablePadding="5dp"
-                android:lines="1"
-                android:text="2019/08/06  15:31:48"
-                android:textColor="@color/color_000000"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
+    <include
+        layout="@layout/layout_main_left_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/layout_bottom1"
-        android:layout_below="@+id/layout_top1"></android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/layout_top1"></include>
+
     <!--底部-->
-    <RelativeLayout
+    <include
         android:id="@+id/layout_bottom1"
+        layout="@layout/layout_main_left_bottom"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_alignParentBottom="true">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/line_stroke"
-            android:layerType="software"></TextView>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="重量："
-                android:textColor="@color/color_000000"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0.0斤"
-                android:textColor="@color/color_FF4500"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="数量："
-                android:textColor="@color/color_000000"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4.0"
-                android:textColor="@color/color_FF4500"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="金额："
-                android:textColor="@color/color_000000"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="68.50"
-                android:textColor="@color/color_FF4500"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </RelativeLayout>
+        android:layout_alignParentBottom="true"></include>
 </RelativeLayout>

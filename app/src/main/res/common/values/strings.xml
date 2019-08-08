@@ -149,6 +149,13 @@
     <string name="membership_payment">会员支付</string>
     <string name="cash">现金</string>
     <string name="mobile_payment">移动支付</string>
+    <string name="name_str">名称</string>
+    <string name="unit_price">单价</string>
+    <string name="num">数量</string>
+    <string name="subtotal">小计</string>
+    <string name="weight_">重量：</string>
+    <string name="num_">数量：</string>
+    <string name="money_">金额：</string>
 
 
     <!--管理栏目-->
@@ -174,6 +181,7 @@
     <string name="inventory">盘点</string>
     <string name="vip">会员</string>
     <string name="set">设置</string>
+
 
 
     <string-array name="goodsInfoHeader">

@@ -165,6 +165,16 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
     }
 
     /**
+     * 找零
+     */
+    public void setChangeMoney() {
+        String receivableMoney = tv_receivable.getText().toString().trim();
+        String receiptsMoney = tv_receipts.getText().toString().trim();
+        double changeMoney = ArithUtil.sub(receiptsMoney, receivableMoney);
+        tv_change.setText(ArithUtil.roundByScale(changeMoney + "", "#0.00"));
+    }
+
+    /**
      * 点击事件
      *
      * @param v
@@ -189,7 +199,8 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
             case R.id.btn_one_hundred:
             case R.id.btn_point:
                 // 点击数字按钮和小数点时，在文本内追加内容
-                tv_receivable.setText(str + ((Button) v).getText().toString());
+                tv_receipts.setText(str + ((Button) v).getText().toString());
+                setChangeMoney();
                 break;
             case R.id.btn_add:
 
@@ -198,7 +209,8 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
                 // 点击删除按钮，删除一个字符
                 if (str != null && !str.equals("")) {
                     str = str.substring(0, str.length() - 1);
-                    tv_receivable.setText(str);
+                    tv_receipts.setText(str);
+                    setChangeMoney();
                 }
                 break;
             case R.id.btn_vertical_reduction:

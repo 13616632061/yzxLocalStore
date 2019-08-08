@@ -2,6 +2,7 @@ package com.yzx.yzxlocalstore.ui.Activity.MainActivity.model;
 
 import android.content.Context;
 
+import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 
 import java.util.List;
@@ -19,6 +20,9 @@ public interface IMainActivityModelImp {
 
     //获取底部管理分类
     List<TypeBean> getBottomType();
+
+    //根据条码查询商品
+    List<GoodsInfo> fromCodeQureGoodsinfo(String code);
 
 
 }

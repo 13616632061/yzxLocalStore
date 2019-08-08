@@ -1,14 +1,19 @@
 package com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter;
 
+import android.widget.Toast;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.cheng.channel.Channel;
 import com.google.gson.Gson;
+import com.yzx.lib.util.ArithUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
+import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.ManageChannelType;
 import com.yzx.yzxlocalstore.entity.ManageType;
+import com.yzx.yzxlocalstore.entity.SaleGoodsInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.MainToAction.MainToAction;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.model.MainActivityModel;
@@ -28,6 +33,8 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
 
     private MainActivity mView;
     private MainActivityModel mModel;
+    private List<SaleGoodsInfo> saleGoodsInfoData = new ArrayList<>();
+
 
     public MainActivityPresenter(MainActivity mView) {
         this.mView = mView;
@@ -114,9 +121,135 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public void setBottomTypeOnClick(String name) {
         if (mView.getResources().getString(R.string.moreType).equals(name)) {//更多
             mView.showMoreTypeChannel();
+        } else if (mView.getResources().getString(R.string.detele).equals(name)) {//删除
+            removeSelectSaleGoodsInfoItem();
+        } else if (mView.getResources().getString(R.string.retail).equals(name)) {
+            addSaleGoodsInfo();
         } else {
             MainToAction.toAction(mView, name);
         }
+    }
+
+    /**
+     * 初始化左边销售商品信息
+     */
+    @Override
+    public void setLeftSaleGoodsListView() {
+        mView.setLeftSaleGoodsListView();
+    }
+
+    /**
+     * 销售商品信息数据
+     *
+     * @return
+     */
+    @Override
+    public List<SaleGoodsInfo> saleGoodsInfoData() {
+        return saleGoodsInfoData;
+    }
+
+    /**
+     * 设置选中的销售商品信息item
+     */
+    @Override
+    public void setSelectSaleGoodsInfoItem(int position) {
+        for (int i = 0; i < saleGoodsInfoData.size(); i++) {
+            saleGoodsInfoData.get(i).setSelectItem(false);
+        }
+        saleGoodsInfoData.get(position).setSelectItem(true);
+        mView.mainLeftSaleGoodsListAdapter().notifyDataSetChanged();
+    }
+
+    /**
+     * 添加销售商品
+     */
+    @Override
+    public void addSaleGoodsInfo() {
+        List<GoodsInfo> list = mModel.fromCodeQureGoodsinfo("123456");
+        if (list.size() > 0) {
+            SaleGoodsInfo saleGoodsInfo = new SaleGoodsInfo();
+            saleGoodsInfo.setGoodsInfo(list.get(0));
+            saleGoodsInfo.setNum(1);
+            saleGoodsInfo.setSubtotalPrice(list.get(0).getGoodPrice() * 1);
+            saleGoodsInfoData.add(saleGoodsInfo);
+            mView.LeftSaleGoodsListScrollToPosition();
+            setSelectSaleGoodsInfoItem(saleGoodsInfoData.size() - 1);
+            mView.mainLeftSaleGoodsListAdapter().notifyDataSetChanged();
+
+            setTotalGoodNum();
+            setTotalPrice();
+            setReceivableMoney();
+            mView.setChangeMoney();
+
+        } else {
+            Toast.makeText(mView, "没有此商品", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 删除选中的item
+     */
+    @Override
+    public void removeSelectSaleGoodsInfoItem() {
+        for (int i = 0; i < saleGoodsInfoData.size(); i++) {
+            if (saleGoodsInfoData.get(i).isSelectItem()) {
+                saleGoodsInfoData.remove(i);
+                break;
+            }
+        }
+        if (saleGoodsInfoData.size() > 0) {
+            mView.LeftSaleGoodsListScrollToPosition();
+            setSelectSaleGoodsInfoItem(saleGoodsInfoData.size() - 1);
+        }
+        mView.mainLeftSaleGoodsListAdapter().notifyDataSetChanged();
+        setTotalGoodNum();
+        setTotalPrice();
+        setReceivableMoney();
+        mView.setChangeMoney();
+    }
+
+    /**
+     * 销售商品的总重量
+     */
+    @Override
+    public void setTotalWeight() {
+
+    }
+
+    /**
+     * 销售商品的总数量
+     */
+    @Override
+    public void setTotalGoodNum() {
+        double totalNum = 0;
+        for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
+            totalNum += saleGoodsInfo.getNum();
+        }
+        mView.setTotalGoodNum(totalNum + "");
+    }
+
+    /**
+     * 销售商品的总价格
+     */
+    @Override
+    public void setTotalPrice() {
+        double totalPrice = 0;
+        for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
+            totalPrice += saleGoodsInfo.getSubtotalPrice();
+        }
+        mView.setTotalPrice(ArithUtil.roundByScale(totalPrice + "", "#0.00"));
+    }
+
+    /**
+     * 应收金额
+     */
+    @Override
+    public void setReceivableMoney() {
+        double totalPrice = 0;
+        for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
+            totalPrice += saleGoodsInfo.getSubtotalPrice();
+        }
+        mView.setReceivableMoney(ArithUtil.roundByScale(totalPrice + "", "#0.00"));
     }
 
 }

@@ -2,6 +2,7 @@ package com.yzx.yzxlocalstore.ui.Activity.MainActivity.view;
 
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.ui.Adapter.MainBottomTypeAdapter;
+import com.yzx.yzxlocalstore.ui.Adapter.MainLeftSaleGoodsListAdapter;
 
 import java.util.List;
 
@@ -22,4 +23,31 @@ public interface IMainActivityView {
 
     //底部功能管理分类数据
     List<TypeBean> mBottomTypeData();
+
+    //要销售的商品列表
+    void setLeftSaleGoodsListView();
+
+    //销售的商品列表的Adapter
+    MainLeftSaleGoodsListAdapter mainLeftSaleGoodsListAdapter();
+
+    //最后加入销售的商品列表定位到可见
+    void LeftSaleGoodsListScrollToPosition();
+
+    //销售商品的总重量
+    void setTotalWeight();
+
+    //销售商品的总数量
+    void setTotalGoodNum(String totalGoodNum);
+
+    //销售商品的总价格
+    void setTotalPrice(String totalPrice);
+
+    //应收金额
+    void setReceivableMoney(String receivableMoney);
+
+    //找零
+    void setChangeMoney();
+
+    //选择支付方式
+    void selcetPayment();
 }
