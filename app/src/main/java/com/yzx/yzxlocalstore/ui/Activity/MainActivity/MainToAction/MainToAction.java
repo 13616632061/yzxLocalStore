@@ -13,11 +13,13 @@ import com.yzx.yzxlocalstore.constant.RouteMap;
 
 public class MainToAction {
 
-    public static void toAction(Context context,String name) {
-        if (context.getResources().getString(R.string.goodsManage).equals(name)){//商品管理
+    public static void toAction(Context context, String name) {
+        if (context.getResources().getString(R.string.goodsManage).equals(name)) {//商品管理
             ARouter.getInstance().build(RouteMap.ROUTE_GOODS_MANAGE_ACTIVITY).navigation();
-        } else if (context.getResources().getString(R.string.staffManage).equals(name)){//员工管理
+        } else if (context.getResources().getString(R.string.staffManage).equals(name)) {//员工管理
             ARouter.getInstance().build(RouteMap.ROUTE_STAFF_MANAGE_ACTIVITY).navigation();
+        } else if (context.getResources().getString(R.string.orderManage).equals(name)) {//订单管理
+            ARouter.getInstance().build(RouteMap.ROUTE_ORDER_MANAGE_ACTIVITY).navigation();
         }
     }
 }

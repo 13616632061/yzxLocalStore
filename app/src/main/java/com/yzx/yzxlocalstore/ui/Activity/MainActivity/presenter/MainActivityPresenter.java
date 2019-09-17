@@ -1,29 +1,26 @@
 package com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter;
 
+import android.util.Log;
 import android.widget.Toast;
 
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.blankj.utilcode.util.FileIOUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.cheng.channel.Channel;
-import com.google.gson.Gson;
+import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.Utils;
 import com.yzx.lib.util.ArithUtil;
 import com.yzx.yzxlocalstore.R;
-import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
-import com.yzx.yzxlocalstore.entity.ManageChannelType;
-import com.yzx.yzxlocalstore.entity.ManageType;
+import com.yzx.yzxlocalstore.entity.OrderInfo;
 import com.yzx.yzxlocalstore.entity.SaleGoodsInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
+import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.MainToAction.MainToAction;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.model.MainActivityModel;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.view.MainActivity;
 import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Administrator on 2019/6/28.
@@ -31,6 +28,7 @@ import java.util.List;
 
 public class MainActivityPresenter implements IMainActivityPresenterImp {
 
+    private static String TAG = MainActivityPresenter.class.getClass().getSimpleName();
     private MainActivity mView;
     private MainActivityModel mModel;
     private List<SaleGoodsInfo> saleGoodsInfoData = new ArrayList<>();
@@ -125,6 +123,8 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             removeSelectSaleGoodsInfoItem();
         } else if (mView.getResources().getString(R.string.retail).equals(name)) {
             addSaleGoodsInfo();
+        } else if (mView.getResources().getString(R.string.putOrder).equals(name)) {//挂单
+
         } else {
             MainToAction.toAction(mView, name);
         }
@@ -220,12 +220,14 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
      * 销售商品的总数量
      */
     @Override
-    public void setTotalGoodNum() {
+    public double setTotalGoodNum() {
         double totalNum = 0;
         for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
             totalNum += saleGoodsInfo.getNum();
         }
         mView.setTotalGoodNum(totalNum + "");
+
+        return totalNum;
     }
 
     /**
@@ -244,12 +246,65 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
      * 应收金额
      */
     @Override
-    public void setReceivableMoney() {
+    public double setReceivableMoney() {
         double totalPrice = 0;
         for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
             totalPrice += saleGoodsInfo.getSubtotalPrice();
         }
         mView.setReceivableMoney(ArithUtil.roundByScale(totalPrice + "", "#0.00"));
+        return totalPrice;
+    }
+
+    /**
+     * 创建订单
+     */
+    @Override
+    public void createOrder() {
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setOrderId(getOrderId());
+        List<GoodsInfo> goodsInfos = new ArrayList<>();
+        for (SaleGoodsInfo bean : saleGoodsInfoData) {
+            goodsInfos.add(bean.getGoodsInfo());
+        }
+        orderInfo.setGoodsInfos(goodsInfos);
+        orderInfo.setOrderCreatPerson(LoginUserUtil.getInstance().getLoginUser());
+        orderInfo.setGoodTotalNum(setTotalGoodNum());
+        orderInfo.setTotalMoney(setReceivableMoney());
+        orderInfo.setOrderProfit(getOrderProfit());
+        orderInfo.setOrderCreatTime(TimeUtils.getNowString());
+        mModel.createOrder(orderInfo);
+        mView.showMsg(1);
+    }
+
+    /**
+     * 获取订单id
+     *
+     * @return
+     */
+    @Override
+    public String getOrderId() {
+        Random rand = new Random();
+        int randNum = rand.nextInt(1000000);
+        String orderId = TimeUtils.getNowMills() + randNum + "";
+        Log.e("TAG", "orderId: " + orderId);
+        return orderId;
+    }
+
+    /**
+     * 获取订单利润
+     *
+     * @return
+     */
+    @Override
+    public double getOrderProfit() {
+        double orderProfit = 0;
+        for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
+            orderProfit += saleGoodsInfo.getGoodsInfo().getGoodProfit();
+        }
+        if (saleGoodsInfoData.size() > 0) {
+            orderProfit = ArithUtil.div(orderProfit + "", saleGoodsInfoData.size() + "");
+        }
+        return orderProfit;
     }
 
 }

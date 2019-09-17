@@ -215,6 +215,20 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
         });
     }
 
+    /**
+     * 显示提示msg
+     *
+     * @param type
+     */
+    @Override
+    public void showMsg(int type) {
+        switch (type) {
+            case 1://挂单成功
+                showToast(getResources().getString(R.string.put_order_success));
+                break;
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvenBus(Map<Object, Object> map) {
         if (map.containsKey("updateManageType")) {//更新底部管理分类

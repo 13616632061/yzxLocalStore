@@ -1,5 +1,6 @@
 package com.yzx.yzxlocalstore.ui.Activity.ManageActivity.adapter;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,9 +25,11 @@ public class ManageFragmentAdapter extends FragmentPagerAdapter implements TabAd
 
     private List<Fragment> fragmentList;
     private int type;//不同FragmentPager
+    private Context context;
 
-    public ManageFragmentAdapter(FragmentManager fm, List<Fragment> fragmentList, int type) {
+    public ManageFragmentAdapter(Context context, FragmentManager fm, List<Fragment> fragmentList, int type) {
         super(fm);
+        this.context = context;
         this.fragmentList = fragmentList;
         this.type = type;
     }
@@ -54,15 +57,29 @@ public class ManageFragmentAdapter extends FragmentPagerAdapter implements TabAd
     @Override
     public ITabView.TabTitle getTitle(int position) {
         QTabView.TabTitle.Builder tabView = new QTabView.TabTitle.Builder();
+        String[] tabTitle = null;
         switch (type) {
             case 0:
                 tabView.setContent(Constants.MANAGE_TYPE[position]);
                 break;
-            case 1:
-                tabView.setContent(Constants.STAFFER_MANAGE_TYPE[position]);
+            case 1://员工管理
+                tabTitle = new String[]{context.getResources().getString(R.string.staffManage),
+                        context.getResources().getString(R.string.sensitive_operational_record)
+                };
+                tabView.setContent(tabTitle[position]);
                 break;
-            case 2:
-                tabView.setContent(Constants.GOODS_MANAGE_TYPE[position]);
+            case 2://商品管理
+                tabTitle = new String[]{context.getResources().getString(R.string.goods_list),
+                        context.getResources().getString(R.string.goods_type)
+                };
+                tabView.setContent(tabTitle[position]);
+                break;
+            case 3://订单管理
+                tabTitle = new String[]{context.getResources().getString(R.string.today_order),
+                        context.getResources().getString(R.string.yesterday_order),
+                        context.getResources().getString(R.string.all_order)
+                };
+                tabView.setContent(tabTitle[position]);
                 break;
         }
         return tabView.setTextColor(0xFFf5260b, 0xFF757575)

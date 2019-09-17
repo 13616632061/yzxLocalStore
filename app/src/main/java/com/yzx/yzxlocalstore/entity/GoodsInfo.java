@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.JoinEntity;
 import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.annotation.Generated;
@@ -14,6 +15,8 @@ import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.greendao.DaoSession;
 import com.yzx.yzxlocalstore.greendao.GoodsTypeDao;
 import com.yzx.yzxlocalstore.greendao.GoodsInfoDao;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2019/7/8.

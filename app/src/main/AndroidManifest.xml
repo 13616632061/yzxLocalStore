@@ -77,6 +77,12 @@
             android:name=".ui.Activity.StaffManageActivity.view.StaffManageActivity"
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" />
+        <!--订单管理-->
+        <activity
+            android:name=".ui.Activity.OrderMagnageActivity.view.OrderMagnageActivity"
+            android:configChanges="keyboardHidden"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"></activity>
     </application>
 

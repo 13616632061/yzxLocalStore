@@ -9,6 +9,7 @@ import com.yzx.lib.util.FileUtil;
 import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
+import com.yzx.yzxlocalstore.entity.OrderInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.greendao.DaoSession;
@@ -74,6 +75,14 @@ public class MainActivityModel implements IMainActivityModelImp {
     public List<GoodsInfo> fromCodeQureGoodsinfo(String code) {
         List<GoodsInfo> list = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().where(GoodsInfoDao.Properties.GoodCode.eq(code)).list();
         return list;
+    }
+
+    /**
+     * 创建订单
+     */
+    @Override
+    public void createOrder(OrderInfo orderInfo) {
+        GreenDaoHelp.getDaoSession().getOrderInfoDao().insert(orderInfo);
     }
 
 

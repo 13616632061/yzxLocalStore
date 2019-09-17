@@ -47,11 +47,20 @@ public interface IMainActivityPresenterImp {
     void setTotalWeight();
 
     //销售商品的总数量
-    void setTotalGoodNum();
+    double setTotalGoodNum();
 
     //销售商品的总价格
     void setTotalPrice();
 
     //应收金额
-    void setReceivableMoney();
+    double setReceivableMoney();
+
+    //创建订单
+    void createOrder();
+
+    //获取订单id
+    String getOrderId();
+
+    //获取订单利润
+    double getOrderProfit();
 }

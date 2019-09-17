@@ -10,11 +10,13 @@ import org.greenrobot.greendao.internal.DaoConfig;
 
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.GoodsType;
+import com.yzx.yzxlocalstore.entity.OrderInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.entity.User;
 
 import com.yzx.yzxlocalstore.greendao.GoodsInfoDao;
 import com.yzx.yzxlocalstore.greendao.GoodsTypeDao;
+import com.yzx.yzxlocalstore.greendao.OrderInfoDao;
 import com.yzx.yzxlocalstore.greendao.TypeBeanDao;
 import com.yzx.yzxlocalstore.greendao.UserDao;
 
@@ -29,11 +31,13 @@ public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig goodsInfoDaoConfig;
     private final DaoConfig goodsTypeDaoConfig;
+    private final DaoConfig orderInfoDaoConfig;
     private final DaoConfig typeBeanDaoConfig;
     private final DaoConfig userDaoConfig;
 
     private final GoodsInfoDao goodsInfoDao;
     private final GoodsTypeDao goodsTypeDao;
+    private final OrderInfoDao orderInfoDao;
     private final TypeBeanDao typeBeanDao;
     private final UserDao userDao;
 
@@ -47,6 +51,9 @@ public class DaoSession extends AbstractDaoSession {
         goodsTypeDaoConfig = daoConfigMap.get(GoodsTypeDao.class).clone();
         goodsTypeDaoConfig.initIdentityScope(type);
 
+        orderInfoDaoConfig = daoConfigMap.get(OrderInfoDao.class).clone();
+        orderInfoDaoConfig.initIdentityScope(type);
+
         typeBeanDaoConfig = daoConfigMap.get(TypeBeanDao.class).clone();
         typeBeanDaoConfig.initIdentityScope(type);
 
@@ -55,11 +62,13 @@ public class DaoSession extends AbstractDaoSession {
 
         goodsInfoDao = new GoodsInfoDao(goodsInfoDaoConfig, this);
         goodsTypeDao = new GoodsTypeDao(goodsTypeDaoConfig, this);
+        orderInfoDao = new OrderInfoDao(orderInfoDaoConfig, this);
         typeBeanDao = new TypeBeanDao(typeBeanDaoConfig, this);
         userDao = new UserDao(userDaoConfig, this);
 
         registerDao(GoodsInfo.class, goodsInfoDao);
         registerDao(GoodsType.class, goodsTypeDao);
+        registerDao(OrderInfo.class, orderInfoDao);
         registerDao(TypeBean.class, typeBeanDao);
         registerDao(User.class, userDao);
     }
@@ -67,6 +76,7 @@ public class DaoSession extends AbstractDaoSession {
     public void clear() {
         goodsInfoDaoConfig.clearIdentityScope();
         goodsTypeDaoConfig.clearIdentityScope();
+        orderInfoDaoConfig.clearIdentityScope();
         typeBeanDaoConfig.clearIdentityScope();
         userDaoConfig.clearIdentityScope();
     }
@@ -77,6 +87,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public GoodsTypeDao getGoodsTypeDao() {
         return goodsTypeDao;
+    }
+
+    public OrderInfoDao getOrderInfoDao() {
+        return orderInfoDao;
     }
 
     public TypeBeanDao getTypeBeanDao() {

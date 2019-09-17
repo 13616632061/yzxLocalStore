@@ -50,4 +50,7 @@ public interface IMainActivityView {
 
     //选择支付方式
     void selcetPayment();
+
+    //显示提示msg
+    void showMsg(int type);
 }

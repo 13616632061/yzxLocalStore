@@ -58,7 +58,7 @@ public class StaffFragment extends BaseFragment implements IStaffFragmentView {
 
     @Override
     public void initStaffManageType(List<Fragment> fragmentList) {
-        adapter = new ManageFragmentAdapter(getChildFragmentManager(), fragmentList, 1);
+        adapter = new ManageFragmentAdapter(getActivity(),getChildFragmentManager(), fragmentList, 1);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 

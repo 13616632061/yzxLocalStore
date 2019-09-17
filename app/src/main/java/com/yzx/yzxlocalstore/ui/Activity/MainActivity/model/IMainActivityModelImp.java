@@ -3,6 +3,7 @@ package com.yzx.yzxlocalstore.ui.Activity.MainActivity.model;
 import android.content.Context;
 
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
+import com.yzx.yzxlocalstore.entity.OrderInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public interface IMainActivityModelImp {
 
     //根据条码查询商品
     List<GoodsInfo> fromCodeQureGoodsinfo(String code);
+
+    //创建订单
+    void createOrder(OrderInfo orderInfo);
 
 
 }

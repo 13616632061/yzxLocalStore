@@ -46,7 +46,7 @@ public class GoodsInfoManageActivity extends BaseActivity implements IGoodsInfoM
      */
     @Override
     public void initGoodsManageType(List<Fragment> fragmentList) {
-        adapter = new ManageFragmentAdapter(getSupportFragmentManager(), fragmentList, 2);
+        adapter = new ManageFragmentAdapter(this,getSupportFragmentManager(), fragmentList, 2);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }

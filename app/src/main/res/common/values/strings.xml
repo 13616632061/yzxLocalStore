@@ -50,6 +50,7 @@
     <string name="edit_success">编辑成功</string>
     <string name="staff_is_exite">员工编号已存在，请重新输入！</string>
     <string name="goods_manage">商品管理</string>
+    <string name="order_manage">订单管理</string>
     <string name="goods_type">商品分类</string>
     <string name="type_name">分类名</string>
     <string name="sort">排序</string>
@@ -103,6 +104,7 @@
     <string name="import_into">导入</string>
     <string name="export_out">导出</string>
     <string name="label_printing">标签打印</string>
+    <string name="ticket_printing">小票打印</string>
     <string name="home_page">首页</string>
     <string name="previous_page">上一页</string>
     <string name="next_page">下一页</string>
@@ -156,6 +158,27 @@
     <string name="weight_">重量：</string>
     <string name="num_">数量：</string>
     <string name="money_">金额：</string>
+    <string name="put_order_success">挂单成功</string>
+    <string name="today_order">今日订单</string>
+    <string name="yesterday_order">昨日订单</string>
+    <string name="all_order">全部订单</string>
+    <string name="sensitive_operational_record">敏感操作记录</string>
+    <string name="order_list">订单列表</string>
+    <string name="completed">已完成</string>
+    <string name="no_pay">未支付</string>
+    <string name="invalid">已作废</string>
+    <string name="order_invalid">订单作废</string>
+    <string name="put_order">挂单</string>
+    <string name="order_num">订单号</string>
+    <string name="order_create_time">下单时间</string>
+    <string name="order_status">订单状态</string>
+    <string name="order_pay_status">付款状态</string>
+    <string name="order_pay_type">支付方式</string>
+    <string name="order_total_money">订单总金额</string>
+    <string name="order_profit">利润</string>
+    <string name="order_type">订单类型</string>
+    <string name="order_create_person">下单人</string>
+
 
 
     <!--管理栏目-->
@@ -181,6 +204,7 @@
     <string name="inventory">盘点</string>
     <string name="vip">会员</string>
     <string name="set">设置</string>
+
 
 
 

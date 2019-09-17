@@ -57,7 +57,7 @@ public class ManageActivity extends BaseActivity implements IManageView {
             BottomBarItem barItem = mManageActivityPresenter.createTopBarItem(manageType);
             barLayout.addNoWeightItem(barItem);
         }
-        mManageFragmentAdapter = new ManageFragmentAdapter(getSupportFragmentManager(), fragmentList,0);
+        mManageFragmentAdapter = new ManageFragmentAdapter(this,getSupportFragmentManager(), fragmentList,0);
         viewPager.setAdapter(mManageFragmentAdapter);
         barLayout.setViewPager(viewPager);
     }
