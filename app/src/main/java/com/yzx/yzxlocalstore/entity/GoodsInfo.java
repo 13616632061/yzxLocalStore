@@ -16,6 +16,7 @@ import com.yzx.yzxlocalstore.greendao.DaoSession;
 import com.yzx.yzxlocalstore.greendao.GoodsTypeDao;
 import com.yzx.yzxlocalstore.greendao.GoodsInfoDao;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -23,8 +24,9 @@ import java.util.List;
  */
 
 @Entity
-public class GoodsInfo implements Parcelable {
+public class GoodsInfo implements Parcelable ,Serializable{
 
+    private static final long serialVersionUID = 5518784473903551250L;
     @Id(autoincrement = true)
     private Long id;
     private String goodName;//商品名字
@@ -283,4 +285,32 @@ public class GoodsInfo implements Parcelable {
         dest.writeByte((byte) (isAllSelect ? 1 : 0));
         dest.writeString(typeName);
     }
+
+    @Override
+    public String toString() {
+        return "GoodsInfo{" +
+                "id=" + id +
+                ", goodName='" + goodName + '\'' +
+                ", goodPrice=" + goodPrice +
+                ", goodOriginalPrice=" + goodOriginalPrice +
+                ", goodStore=" + goodStore +
+                ", goodStoreWarningNum=" + goodStoreWarningNum +
+                ", goodProfit=" + goodProfit +
+                ", goodStatus=" + goodStatus +
+                ", goodCode='" + goodCode + '\'' +
+                ", goodPinyinCode='" + goodPinyinCode + '\'' +
+                ", goodLoaction=" + goodLoaction +
+                ", vipLevelOnePrice=" + vipLevelOnePrice +
+                ", vipLevelTwoPrice=" + vipLevelTwoPrice +
+                ", vipLevelThreePrice=" + vipLevelThreePrice +
+                ", vipLevelFourthPrice=" + vipLevelFourthPrice +
+                ", vipLevelFivePrice=" + vipLevelFivePrice +
+                ", goodBriefIntroduction='" + goodBriefIntroduction + '\'' +
+                ", goodRemarks='" + goodRemarks + '\'' +
+                ", isSelect=" + isSelect +
+                ", isAllSelect=" + isAllSelect +
+                ", typeName='" + typeName + '\'' +
+                '}';
+    }
+
 }

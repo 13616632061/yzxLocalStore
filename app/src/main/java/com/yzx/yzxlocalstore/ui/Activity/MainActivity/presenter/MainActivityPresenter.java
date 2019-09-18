@@ -124,7 +124,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         } else if (mView.getResources().getString(R.string.retail).equals(name)) {
             addSaleGoodsInfo();
         } else if (mView.getResources().getString(R.string.putOrder).equals(name)) {//挂单
-
+            createOrder();
         } else {
             MainToAction.toAction(mView, name);
         }
@@ -263,6 +263,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderId(getOrderId());
         List<GoodsInfo> goodsInfos = new ArrayList<>();
+        Log.e("创建订单","saleGoodsInfoData: "+saleGoodsInfoData.toString());
         for (SaleGoodsInfo bean : saleGoodsInfoData) {
             goodsInfos.add(bean.getGoodsInfo());
         }

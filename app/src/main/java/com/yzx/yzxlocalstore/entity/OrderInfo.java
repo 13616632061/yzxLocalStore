@@ -30,12 +30,14 @@ public class OrderInfo {
     private String orderCompleteTime;
     private int orderPayType;
     private double orderProfit;
-    @Generated(hash = 358644817)
+    private boolean isSelect;
+    private int orderType;
+    @Generated(hash = 1811101871)
     public OrderInfo(String orderId, List<GoodsInfo> goodsInfos,
             double goodTotalNum, double totalMoney, double freeMoney,
             double orderWeight, String orderCreatTime, int orderStatus,
             int orderPaySatus, User orderCreatPerson, String orderCompleteTime,
-            int orderPayType, double orderProfit) {
+            int orderPayType, double orderProfit, boolean isSelect, int orderType) {
         this.orderId = orderId;
         this.goodsInfos = goodsInfos;
         this.goodTotalNum = goodTotalNum;
@@ -49,6 +51,8 @@ public class OrderInfo {
         this.orderCompleteTime = orderCompleteTime;
         this.orderPayType = orderPayType;
         this.orderProfit = orderProfit;
+        this.isSelect = isSelect;
+        this.orderType = orderType;
     }
     @Generated(hash = 1695813404)
     public OrderInfo() {
@@ -131,6 +135,18 @@ public class OrderInfo {
     }
     public void setOrderProfit(double orderProfit) {
         this.orderProfit = orderProfit;
+    }
+    public boolean getIsSelect() {
+        return this.isSelect;
+    }
+    public void setIsSelect(boolean isSelect) {
+        this.isSelect = isSelect;
+    }
+    public int getOrderType() {
+        return this.orderType;
+    }
+    public void setOrderType(int orderType) {
+        this.orderType = orderType;
     }
 
 

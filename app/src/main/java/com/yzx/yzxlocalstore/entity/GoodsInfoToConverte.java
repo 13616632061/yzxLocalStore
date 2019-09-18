@@ -1,6 +1,9 @@
 package com.yzx.yzxlocalstore.entity;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.greendao.converter.PropertyConverter;
 
@@ -18,26 +21,20 @@ public class GoodsInfoToConverte  implements PropertyConverter<List<GoodsInfo>, 
         if (databaseValue == null) {
             return null;
         }
-        List<String> list_str = Arrays.asList(databaseValue.split(","));
-        List<GoodsInfo> list_transport = new ArrayList<>();
-        for (String s : list_str) {
-            list_transport.add(new Gson().fromJson(s, GoodsInfo.class));
-        }
-        return list_transport;
+        // 先得获得这个，然后再typeToken.getType()，否则会异常
+        Log.e("创建订单","databaseValue: "+databaseValue);
+
+        TypeToken<List<GoodsInfo>> typeToken = new TypeToken<List<GoodsInfo>>(){};
+        return new Gson().fromJson(databaseValue, typeToken.getType());
     }
 
     @Override
     public String convertToDatabaseValue(List<GoodsInfo> arrays) {
-        if (arrays == null) {
+        if (arrays == null||arrays.size()==0) {
             return null;
         } else {
-            StringBuilder sb = new StringBuilder();
-            for (GoodsInfo array : arrays) {
-                String str = new Gson().toJson(array);
-                sb.append(str);
-                sb.append(",");
-            }
-            return sb.toString();
+            String sb = new Gson().toJson(arrays);
+            return sb;
 
         }
     }

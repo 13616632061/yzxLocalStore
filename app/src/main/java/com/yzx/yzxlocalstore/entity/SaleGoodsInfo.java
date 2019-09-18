@@ -42,4 +42,14 @@ public class SaleGoodsInfo {
     public void setSelectItem(boolean selectItem) {
         isSelectItem = selectItem;
     }
+
+    @Override
+    public String toString() {
+        return "SaleGoodsInfo{" +
+                "goodsInfo=" + goodsInfo +
+                ", num=" + num +
+                ", subtotalPrice=" + subtotalPrice +
+                ", isSelectItem=" + isSelectItem +
+                '}';
+    }
 }

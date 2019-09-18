@@ -165,6 +165,8 @@
     <string name="sensitive_operational_record">敏感操作记录</string>
     <string name="order_list">订单列表</string>
     <string name="completed">已完成</string>
+    <string name="no_completed">未完成</string>
+    <string name="payed">已支付</string>
     <string name="no_pay">未支付</string>
     <string name="invalid">已作废</string>
     <string name="order_invalid">订单作废</string>
@@ -178,6 +180,13 @@
     <string name="order_profit">利润</string>
     <string name="order_type">订单类型</string>
     <string name="order_create_person">下单人</string>
+    <string name="detail">详情</string>
+    <string name="nothing">--</string>
+    <string name="cash_pay">现金支付</string>
+    <string name="wx_pay">微信支付</string>
+    <string name="zfb_pay">支付宝支付</string>
+    <string name="nomal_order">正常订单</string>
+
 
 
 
