@@ -35,7 +35,7 @@ public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
         public final static Property TotalMoney = new Property(3, double.class, "totalMoney", false, "TOTAL_MONEY");
         public final static Property FreeMoney = new Property(4, double.class, "freeMoney", false, "FREE_MONEY");
         public final static Property OrderWeight = new Property(5, double.class, "orderWeight", false, "ORDER_WEIGHT");
-        public final static Property OrderCreatTime = new Property(6, String.class, "orderCreatTime", false, "ORDER_CREAT_TIME");
+        public final static Property OrderCreatTime = new Property(6, long.class, "orderCreatTime", false, "ORDER_CREAT_TIME");
         public final static Property OrderStatus = new Property(7, int.class, "orderStatus", false, "ORDER_STATUS");
         public final static Property OrderPaySatus = new Property(8, int.class, "orderPaySatus", false, "ORDER_PAY_SATUS");
         public final static Property OrderCreatPerson = new Property(9, String.class, "orderCreatPerson", false, "ORDER_CREAT_PERSON");
@@ -67,7 +67,7 @@ public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
                 "\"TOTAL_MONEY\" REAL NOT NULL ," + // 3: totalMoney
                 "\"FREE_MONEY\" REAL NOT NULL ," + // 4: freeMoney
                 "\"ORDER_WEIGHT\" REAL NOT NULL ," + // 5: orderWeight
-                "\"ORDER_CREAT_TIME\" TEXT," + // 6: orderCreatTime
+                "\"ORDER_CREAT_TIME\" INTEGER NOT NULL ," + // 6: orderCreatTime
                 "\"ORDER_STATUS\" INTEGER NOT NULL ," + // 7: orderStatus
                 "\"ORDER_PAY_SATUS\" INTEGER NOT NULL ," + // 8: orderPaySatus
                 "\"ORDER_CREAT_PERSON\" TEXT," + // 9: orderCreatPerson
@@ -101,11 +101,7 @@ public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
         stmt.bindDouble(4, entity.getTotalMoney());
         stmt.bindDouble(5, entity.getFreeMoney());
         stmt.bindDouble(6, entity.getOrderWeight());
- 
-        String orderCreatTime = entity.getOrderCreatTime();
-        if (orderCreatTime != null) {
-            stmt.bindString(7, orderCreatTime);
-        }
+        stmt.bindLong(7, entity.getOrderCreatTime());
         stmt.bindLong(8, entity.getOrderStatus());
         stmt.bindLong(9, entity.getOrderPaySatus());
  
@@ -141,11 +137,7 @@ public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
         stmt.bindDouble(4, entity.getTotalMoney());
         stmt.bindDouble(5, entity.getFreeMoney());
         stmt.bindDouble(6, entity.getOrderWeight());
- 
-        String orderCreatTime = entity.getOrderCreatTime();
-        if (orderCreatTime != null) {
-            stmt.bindString(7, orderCreatTime);
-        }
+        stmt.bindLong(7, entity.getOrderCreatTime());
         stmt.bindLong(8, entity.getOrderStatus());
         stmt.bindLong(9, entity.getOrderPaySatus());
  
@@ -178,7 +170,7 @@ public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
             cursor.getDouble(offset + 3), // totalMoney
             cursor.getDouble(offset + 4), // freeMoney
             cursor.getDouble(offset + 5), // orderWeight
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // orderCreatTime
+            cursor.getLong(offset + 6), // orderCreatTime
             cursor.getInt(offset + 7), // orderStatus
             cursor.getInt(offset + 8), // orderPaySatus
             cursor.isNull(offset + 9) ? null : orderCreatPersonConverter.convertToEntityProperty(cursor.getString(offset + 9)), // orderCreatPerson
@@ -199,7 +191,7 @@ public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
         entity.setTotalMoney(cursor.getDouble(offset + 3));
         entity.setFreeMoney(cursor.getDouble(offset + 4));
         entity.setOrderWeight(cursor.getDouble(offset + 5));
-        entity.setOrderCreatTime(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setOrderCreatTime(cursor.getLong(offset + 6));
         entity.setOrderStatus(cursor.getInt(offset + 7));
         entity.setOrderPaySatus(cursor.getInt(offset + 8));
         entity.setOrderCreatPerson(cursor.isNull(offset + 9) ? null : orderCreatPersonConverter.convertToEntityProperty(cursor.getString(offset + 9)));

@@ -72,12 +72,14 @@ public class OrderListFragment extends BaseFragment implements IOrderListFragmen
     public void initView(View rootView) {
         super.initView(rootView);
         mPresenter = new OrderListFragmentPresenter(this);
+        mPresenter.setOrderListType(getArguments().getInt("type"));
         mPresenter.initOrderListFragmentAdapter();
     }
 
     @Override
     protected void loadData() {
         mPresenter.getOrderListInfo(1, 0);
+        mPresenter.updateOrderNum();
     }
 
     @OnClick({R.id.tv_all_order,R.id.tv_no_pay_order,R.id.tv_completed_order,R.id.tv_put_order,R.id.tv_invalid_order})

@@ -1,5 +1,6 @@
 package com.yzx.yzxlocalstore.ui.Activity.OrderMagnageActivity.model;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.view.GoodsListFragment;
@@ -17,8 +18,12 @@ public class OrderMagnageActivityModel implements IOrderMagnageActivityModelImp 
     @Override
     public List<Fragment> initOrderManage() {
         List<Fragment> fragments = new ArrayList<>();
-        for (int i=0;i<3;i++){
-            fragments.add(new OrderListFragment());
+        for (int i = 0; i < 3; i++) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", i);
+            OrderListFragment orderListFragment = new OrderListFragment();
+            orderListFragment.setArguments(bundle);
+            fragments.add(orderListFragment);
         }
         return fragments;
     }

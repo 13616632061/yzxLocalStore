@@ -22,7 +22,7 @@ public class OrderInfo {
     private double totalMoney;
     private double freeMoney;
     private double orderWeight;
-    private String orderCreatTime;
+    private long orderCreatTime;
     private int orderStatus;
     private int orderPaySatus;
     @Convert(columnType = String.class, converter = UserToConverte.class)
@@ -32,10 +32,10 @@ public class OrderInfo {
     private double orderProfit;
     private boolean isSelect;
     private int orderType;
-    @Generated(hash = 1811101871)
+    @Generated(hash = 1110879811)
     public OrderInfo(String orderId, List<GoodsInfo> goodsInfos,
             double goodTotalNum, double totalMoney, double freeMoney,
-            double orderWeight, String orderCreatTime, int orderStatus,
+            double orderWeight, long orderCreatTime, int orderStatus,
             int orderPaySatus, User orderCreatPerson, String orderCompleteTime,
             int orderPayType, double orderProfit, boolean isSelect, int orderType) {
         this.orderId = orderId;
@@ -88,10 +88,10 @@ public class OrderInfo {
     public void setOrderWeight(double orderWeight) {
         this.orderWeight = orderWeight;
     }
-    public String getOrderCreatTime() {
+    public long getOrderCreatTime() {
         return this.orderCreatTime;
     }
-    public void setOrderCreatTime(String orderCreatTime) {
+    public void setOrderCreatTime(long orderCreatTime) {
         this.orderCreatTime = orderCreatTime;
     }
     public int getOrderStatus() {
@@ -149,5 +149,24 @@ public class OrderInfo {
         this.orderType = orderType;
     }
 
-
+    @Override
+    public String toString() {
+        return "OrderInfo{" +
+                "orderId='" + orderId + '\'' +
+                ", goodsInfos=" + goodsInfos +
+                ", goodTotalNum=" + goodTotalNum +
+                ", totalMoney=" + totalMoney +
+                ", freeMoney=" + freeMoney +
+                ", orderWeight=" + orderWeight +
+                ", orderCreatTime=" + orderCreatTime +
+                ", orderStatus=" + orderStatus +
+                ", orderPaySatus=" + orderPaySatus +
+                ", orderCreatPerson=" + orderCreatPerson +
+                ", orderCompleteTime='" + orderCompleteTime + '\'' +
+                ", orderPayType=" + orderPayType +
+                ", orderProfit=" + orderProfit +
+                ", isSelect=" + isSelect +
+                ", orderType=" + orderType +
+                '}';
+    }
 }

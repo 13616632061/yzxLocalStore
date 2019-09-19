@@ -3,6 +3,7 @@ package com.yzx.yzxlocalstore.ui.Adapter;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yzx.lib.util.ArithUtil;
@@ -41,7 +42,7 @@ public class OrderListFragmentAdapter extends BaseQuickAdapter<OrderInfo, BaseVi
         //订单号
         helper.setText(R.id.tv_order_num, item.getOrderId());
         //下单时间
-        helper.setText(R.id.tv_create_time, item.getOrderCreatTime());
+        helper.setText(R.id.tv_create_time, TimeUtils.millis2String(item.getOrderCreatTime()));
         //订单状态
         switch (item.getOrderStatus()) {
             case 0://未完成

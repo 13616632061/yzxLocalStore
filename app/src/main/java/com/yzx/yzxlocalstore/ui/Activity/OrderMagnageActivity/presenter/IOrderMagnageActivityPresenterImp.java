@@ -13,5 +13,7 @@ public interface IOrderMagnageActivityPresenterImp {
     /**
      * 初始化商品管理分类
      */
-    void initOrderManage ();
+    void initOrderManage();
+
+
 }

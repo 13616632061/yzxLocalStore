@@ -15,6 +15,9 @@ public interface IOrderListFragmentPresenterImp {
     //初始化订单列表
     void initOrderListFragmentAdapter();
 
+    //获取订单类别类型
+    void setOrderListType(int type);
+
     //获取订单数据
     List<OrderInfo> getData();
 
@@ -23,4 +26,7 @@ public interface IOrderListFragmentPresenterImp {
 
     //订单类型选中状态
     void setSelectOrderType(int allOrderStatus, int noPayOrderStatus, int completedOrderStatus, int putOrderStatus, int invalidOrderStatus);
+
+    //更新订单数量
+    void updateOrderNum();
 }

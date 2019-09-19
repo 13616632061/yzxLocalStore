@@ -272,7 +272,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         orderInfo.setGoodTotalNum(setTotalGoodNum());
         orderInfo.setTotalMoney(setReceivableMoney());
         orderInfo.setOrderProfit(getOrderProfit());
-        orderInfo.setOrderCreatTime(TimeUtils.getNowString());
+        orderInfo.setOrderCreatTime(TimeUtils.getNowMills());
         mModel.createOrder(orderInfo);
         mView.showMsg(1);
     }
