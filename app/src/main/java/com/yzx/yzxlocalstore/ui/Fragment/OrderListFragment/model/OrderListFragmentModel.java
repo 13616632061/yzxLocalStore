@@ -98,41 +98,40 @@ public class OrderListFragmentModel implements IOrderListFragmentModelImp {
         if (whereConditions != null) {//条件查询
             switch (type) {
                 case 0://全部订单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1)).offset((page - 1) * 20).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1)).offset((page - 1) * 20).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
                 case 1://未支付订单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1), OrderInfoDao.Properties.OrderStatus.eq(0)).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1), OrderInfoDao.Properties.OrderStatus.eq(0)).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
                 case 2://已完成订单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1), OrderInfoDao.Properties.OrderStatus.eq(1)).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1), OrderInfoDao.Properties.OrderStatus.eq(1)).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
                 case 3://挂单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1), OrderInfoDao.Properties.OrderType.eq(1)).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1), OrderInfoDao.Properties.OrderType.eq(1)).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
                 case 4://已作废订单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1), OrderInfoDao.Properties.OrderType.eq(2)).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0), whereConditions.get(1), OrderInfoDao.Properties.OrderType.eq(2)).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
             }
         } else {
             switch (type) {
                 case 0://全部订单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().offset((page - 1) * 20).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().offset((page - 1) * 20).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
                 case 1://未支付订单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(OrderInfoDao.Properties.OrderStatus.eq(0)).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(OrderInfoDao.Properties.OrderStatus.eq(0)).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
                 case 2://已完成订单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(OrderInfoDao.Properties.OrderStatus.eq(1)).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(OrderInfoDao.Properties.OrderStatus.eq(1)).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
                 case 3://挂单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(OrderInfoDao.Properties.OrderType.eq(1)).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(OrderInfoDao.Properties.OrderType.eq(1)).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
                 case 4://已作废订单
-                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(OrderInfoDao.Properties.OrderType.eq(2)).offset((page - 1) * 20).limit(20).list();
+                    orderInfoList = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(OrderInfoDao.Properties.OrderType.eq(2)).offset((page - 1) * 20).limit(20).orderDesc(OrderInfoDao.Properties.OrderCreatTime).list();
                     break;
             }
         }
-        Log.e(TAG, "orderInfoList: " + orderInfoList.toString());
         return orderInfoList;
     }
 
@@ -171,7 +170,7 @@ public class OrderListFragmentModel implements IOrderListFragmentModelImp {
         if (whereConditions!=null){
             switch (type) {
                 case 0://全部订单
-                    num = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().count();
+                    num = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0),whereConditions.get(1)).count();
                     break;
                 case 1://未支付订单
                     num = GreenDaoHelp.getDaoSession().getOrderInfoDao().queryBuilder().where(whereConditions.get(0),whereConditions.get(1),OrderInfoDao.Properties.OrderStatus.eq(0)).count();
@@ -207,5 +206,13 @@ public class OrderListFragmentModel implements IOrderListFragmentModelImp {
         }
 
         return num;
+    }
+
+    /**
+     * 订单信息更细
+     */
+    @Override
+    public void orderUpdate(OrderInfo orderInfo) {
+        GreenDaoHelp.getDaoSession().getOrderInfoDao().update(orderInfo);
     }
 }

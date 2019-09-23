@@ -25,10 +25,8 @@ public interface IMainActivityView {
     List<TypeBean> mBottomTypeData();
 
     //要销售的商品列表
-    void setLeftSaleGoodsListView();
+    MainLeftSaleGoodsListAdapter setLeftSaleGoodsListView();
 
-    //销售的商品列表的Adapter
-    MainLeftSaleGoodsListAdapter mainLeftSaleGoodsListAdapter();
 
     //最后加入销售的商品列表定位到可见
     void LeftSaleGoodsListScrollToPosition();
@@ -47,6 +45,8 @@ public interface IMainActivityView {
 
     //找零
     void setChangeMoney();
+
+    double getChangeMoney();
 
     //选择支付方式
     void selcetPayment();

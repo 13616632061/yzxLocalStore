@@ -3,11 +3,13 @@ package com.yzx.yzxlocalstore.ui.Fragment.OrderListFragment.view;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,6 +17,7 @@ import com.yzx.lib.base.BaseFragment;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.ui.Adapter.OrderListFragmentAdapter;
 import com.yzx.yzxlocalstore.ui.Fragment.OrderListFragment.presenter.OrderListFragmentPresenter;
+import com.yzx.yzxlocalstore.ui.PopWindow.TipsPopWindow;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -59,6 +62,8 @@ public class OrderListFragment extends BaseFragment implements IOrderListFragmen
     TextView tvNextPage;
     @InjectView(R.id.tv_last_page)
     TextView tvLastPage;
+    @InjectView(R.id.layout_root)
+    RelativeLayout layoutRoot;
 
 
     private OrderListFragmentPresenter mPresenter;
@@ -80,28 +85,36 @@ public class OrderListFragment extends BaseFragment implements IOrderListFragmen
     protected void loadData() {
         mPresenter.getOrderListInfo(1, 0);
         mPresenter.updateOrderNum();
+        mPresenter.getOrderAllSelectStatus();
     }
 
-    @OnClick({R.id.tv_all_order,R.id.tv_no_pay_order,R.id.tv_completed_order,R.id.tv_put_order,R.id.tv_invalid_order})
-    public void setOnClick(View view){
-        switch (view.getId()){
-            case R.id.tv_all_order:
+    @OnClick({R.id.tv_all_order, R.id.tv_no_pay_order, R.id.tv_completed_order, R.id.tv_put_order, R.id.tv_invalid_order, R.id.iv_all_select, R.id.btn_order_invalid})
+    public void setOnClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_all_order://全部订单
                 mPresenter.getOrderListInfo(1, 0);
                 break;
-            case R.id.tv_no_pay_order:
+            case R.id.tv_no_pay_order://未支付订单
                 mPresenter.getOrderListInfo(1, 1);
                 break;
-            case R.id.tv_completed_order:
+            case R.id.tv_completed_order://已完成订单
                 mPresenter.getOrderListInfo(1, 2);
                 break;
-            case R.id.tv_put_order:
+            case R.id.tv_put_order://挂单
                 mPresenter.getOrderListInfo(1, 3);
                 break;
-            case R.id.tv_invalid_order:
+            case R.id.tv_invalid_order://已作废订单
                 mPresenter.getOrderListInfo(1, 4);
+                break;
+            case R.id.iv_all_select://全选
+                mPresenter.setOrderAllSelectStatus();
+                break;
+            case R.id.btn_order_invalid://作废订单
+                mPresenter.setOrderInvalidLinstener();
                 break;
         }
     }
+
     /**
      * 初始化订单列表
      *
@@ -117,6 +130,7 @@ public class OrderListFragment extends BaseFragment implements IOrderListFragmen
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.iv_select://选中
+                        mPresenter.setItemOrderSelectStatus(position);
                         break;
                     case R.id.tv_handle://查看详情
                         break;
@@ -261,4 +275,44 @@ public class OrderListFragment extends BaseFragment implements IOrderListFragmen
                 break;
         }
     }
+
+    /**
+     * 订单全选状态
+     */
+    @Override
+    public void orderAllSelectStatus(boolean allSelectStatus) {
+        if (allSelectStatus) {
+            ivAllSelect.setImageResource(R.drawable.select);
+        } else {
+            ivAllSelect.setImageResource(R.drawable.unselect);
+        }
+    }
+
+    /**
+     * 显示提示信息
+     *
+     * @param type
+     */
+    @Override
+    public void showMsg(int type) {
+        switch (type) {
+            case 1://选择的作废订单为0
+                showToast(getResources().getString(R.string.select_invalid_order));
+                break;
+            case 2://作废成功
+                showToast(getResources().getString(R.string.invalid_order_success));
+                break;
+        }
+    }
+
+    /**
+     * 作废订单
+     */
+    @Override
+    public void InvalidOrder() {
+        TipsPopWindow tipsPopWindow = new TipsPopWindow(getActivity(), getResources().getString(R.string.reminder), getResources().getString(R.string.sure_invalid_item_order), mPresenter, 5);
+        tipsPopWindow.showAsDropDown(layoutRoot, Gravity.NO_GRAVITY, 0, 0);
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.yzx.yzxlocalstore.entity;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.JoinEntity;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
@@ -15,6 +16,8 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class OrderInfo {
 
+    @Id(autoincrement = true)
+    private Long id;
     private String orderId;
     @Convert(columnType = String.class, converter = GoodsInfoToConverte.class)
     private List<GoodsInfo> goodsInfos;
@@ -32,12 +35,13 @@ public class OrderInfo {
     private double orderProfit;
     private boolean isSelect;
     private int orderType;
-    @Generated(hash = 1110879811)
-    public OrderInfo(String orderId, List<GoodsInfo> goodsInfos,
+    @Generated(hash = 385307930)
+    public OrderInfo(Long id, String orderId, List<GoodsInfo> goodsInfos,
             double goodTotalNum, double totalMoney, double freeMoney,
             double orderWeight, long orderCreatTime, int orderStatus,
             int orderPaySatus, User orderCreatPerson, String orderCompleteTime,
             int orderPayType, double orderProfit, boolean isSelect, int orderType) {
+        this.id = id;
         this.orderId = orderId;
         this.goodsInfos = goodsInfos;
         this.goodTotalNum = goodTotalNum;
@@ -168,5 +172,11 @@ public class OrderInfo {
                 ", isSelect=" + isSelect +
                 ", orderType=" + orderType +
                 '}';
+    }
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 }

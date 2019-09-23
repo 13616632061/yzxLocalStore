@@ -24,9 +24,10 @@ public class OrderListFragmentPresenter implements IOrderListFragmentPresenterIm
     private List<OrderInfo> mData = new ArrayList<>();
 
     private int mType;
-    private long mPage = 1;
+    private int mPage = 1;
     private int mLimitPageNum = 20;
     private int mOrderType;//订单类型
+    private boolean allSelectStatus = true;//是否全选
 
 
     public OrderListFragmentPresenter(OrderListFragment mView) {
@@ -81,23 +82,23 @@ public class OrderListFragmentPresenter implements IOrderListFragmentPresenterIm
         mAdapter.notifyDataSetChanged();
         switch (type) {
             case 0://全部订单
-                mView.setAllOrderNum(mModel.getOrderNum(0,mOrderType) + "");
+                mView.setAllOrderNum(mModel.getOrderNum(0, mOrderType) + "");
                 setSelectOrderType(1, 0, 0, 0, 0);
                 break;
             case 1://未支付订单
-                mView.setNoPayOrder(mModel.getOrderNum(1,mOrderType) + "");
+                mView.setNoPayOrder(mModel.getOrderNum(1, mOrderType) + "");
                 setSelectOrderType(0, 1, 0, 0, 0);
                 break;
             case 2://已完成订单
-                mView.setCompletedOrder(mModel.getOrderNum(2,mOrderType) + "");
+                mView.setCompletedOrder(mModel.getOrderNum(2, mOrderType) + "");
                 setSelectOrderType(0, 0, 1, 0, 0);
                 break;
             case 3://挂单
-                mView.setPutOrder(mModel.getOrderNum(3,mOrderType) + "");
+                mView.setPutOrder(mModel.getOrderNum(3, mOrderType) + "");
                 setSelectOrderType(0, 0, 0, 1, 0);
                 break;
             case 4://已作废订单
-                mView.setInvalidOrder(mModel.getOrderNum(4,mOrderType) + "");
+                mView.setInvalidOrder(mModel.getOrderNum(4, mOrderType) + "");
                 setSelectOrderType(0, 0, 0, 0, 1);
                 break;
         }
@@ -120,6 +121,8 @@ public class OrderListFragmentPresenter implements IOrderListFragmentPresenterIm
         mView.isSelectCompletedOrder(completedOrderStatus);
         mView.isSelectPutOrder(putOrderStatus);
         mView.isSelectInvalidOrder(invalidOrderStatus);
+        allSelectStatus = true;
+        setOrderAllSelectStatus();
     }
 
     /**
@@ -127,12 +130,102 @@ public class OrderListFragmentPresenter implements IOrderListFragmentPresenterIm
      */
     @Override
     public void updateOrderNum() {
-        mView.setAllOrderNum(mModel.getOrderNum(0,mOrderType) + "");
-        mView.setNoPayOrder(mModel.getOrderNum(1,mOrderType) + "");
-        mView.setCompletedOrder(mModel.getOrderNum(2,mOrderType) + "");
-        mView.setPutOrder(mModel.getOrderNum(3,mOrderType) + "");
-        mView.setInvalidOrder(mModel.getOrderNum(4,mOrderType) + "");
+        mView.setAllOrderNum(mModel.getOrderNum(0, mOrderType) + "");
+        mView.setNoPayOrder(mModel.getOrderNum(1, mOrderType) + "");
+        mView.setCompletedOrder(mModel.getOrderNum(2, mOrderType) + "");
+        mView.setPutOrder(mModel.getOrderNum(3, mOrderType) + "");
+        mView.setInvalidOrder(mModel.getOrderNum(4, mOrderType) + "");
     }
 
+    /**
+     * 设置订单选中状态
+     *
+     * @param position 选中的订单position
+     */
+    @Override
+    public void setItemOrderSelectStatus(int position) {
+        if (mData.get(position).getIsSelect()) {
+            mData.get(position).setIsSelect(false);
+        } else {
+            mData.get(position).setIsSelect(true);
+        }
+        getOrderAllSelectStatus();
+    }
+
+    /**
+     * 获取订单全选状态
+     */
+    @Override
+    public void getOrderAllSelectStatus() {
+        if (mData.size() > 0) {
+            allSelectStatus = true;
+        } else {
+            allSelectStatus = false;
+        }
+        for (int i = 0; i < mData.size(); i++) {
+            if (!mData.get(i).getIsSelect()) {
+                allSelectStatus = false;
+                break;
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+        mView.orderAllSelectStatus(allSelectStatus);
+    }
+
+    /**
+     * 设置订单全选状态
+     */
+    @Override
+    public void setOrderAllSelectStatus() {
+        if (allSelectStatus) {
+            allSelectStatus = false;
+            for (int i = 0; i < mData.size(); i++) {
+                mData.get(i).setIsSelect(false);
+            }
+        } else {
+            allSelectStatus = true;
+            for (int i = 0; i < mData.size(); i++) {
+                mData.get(i).setIsSelect(true);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+        mView.orderAllSelectStatus(allSelectStatus);
+
+    }
+
+    /**
+     * 作废订单监听
+     */
+    @Override
+    public void setOrderInvalidLinstener() {
+        boolean isHasSelectOrder = false;
+        for (int i = 0; i < mData.size(); i++) {
+            if (mData.get(i).getIsSelect()) {
+                isHasSelectOrder = true;
+                break;
+            }
+        }
+        if (!isHasSelectOrder) {
+            mView.showMsg(1);
+            return;
+        }
+        mView.InvalidOrder();
+    }
+
+    /**
+     * 作废订单
+     */
+    @Override
+    public void toOrderInvalid() {
+        for (OrderInfo bean : mData) {
+            if (bean.getIsSelect()) {
+                bean.setOrderType(2);
+                mModel.orderUpdate(bean);
+            }
+        }
+        getOrderListInfo(mPage, mType);
+        updateOrderNum();
+        mView.showMsg(2);
+    }
 
 }

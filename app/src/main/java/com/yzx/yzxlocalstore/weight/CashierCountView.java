@@ -168,10 +168,17 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
      * 找零
      */
     public void setChangeMoney() {
+        tv_change.setText(ArithUtil.roundByScale(getChangeMoney()+ "", "#0.00"));
+    }
+
+    /**
+     * 找零金额
+     * @return
+     */
+    public double getChangeMoney() {
         String receivableMoney = tv_receivable.getText().toString().trim();
         String receiptsMoney = tv_receipts.getText().toString().trim();
-        double changeMoney = ArithUtil.sub(receiptsMoney, receivableMoney);
-        tv_change.setText(ArithUtil.roundByScale(changeMoney + "", "#0.00"));
+        return ArithUtil.sub(receiptsMoney, receivableMoney);
     }
 
     /**

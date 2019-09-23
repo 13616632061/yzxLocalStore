@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.TimeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yzx.lib.util.ArithUtil;
+import com.yzx.lib.util.TimeUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.entity.OrderInfo;
 
@@ -42,7 +43,7 @@ public class OrderListFragmentAdapter extends BaseQuickAdapter<OrderInfo, BaseVi
         //订单号
         helper.setText(R.id.tv_order_num, item.getOrderId());
         //下单时间
-        helper.setText(R.id.tv_create_time, TimeUtils.millis2String(item.getOrderCreatTime()));
+        helper.setText(R.id.tv_create_time, TimeUtil.millis2String(item.getOrderCreatTime()));
         //订单状态
         switch (item.getOrderStatus()) {
             case 0://未完成
@@ -69,13 +70,10 @@ public class OrderListFragmentAdapter extends BaseQuickAdapter<OrderInfo, BaseVi
             case 1://现金支付
                 helper.setText(R.id.tv_pay_type, mContext.getResources().getString(R.string.cash_pay));
                 break;
-            case 2://微信支付
-                helper.setText(R.id.tv_pay_type, mContext.getResources().getString(R.string.wx_pay));
+            case 2://移动支付
+                helper.setText(R.id.tv_pay_type, mContext.getResources().getString(R.string.mobile_payment));
                 break;
-            case 3://支付宝支付
-                helper.setText(R.id.tv_pay_type, mContext.getResources().getString(R.string.zfb_pay));
-                break;
-            case 4://会员支付
+            case 3://会员支付
                 helper.setText(R.id.tv_pay_type, mContext.getResources().getString(R.string.membership_payment));
                 break;
         }

@@ -20,7 +20,7 @@ import com.yzx.yzxlocalstore.entity.OrderInfo;
 /** 
  * DAO for table "ORDER_INFO".
 */
-public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
+public class OrderInfoDao extends AbstractDao<OrderInfo, Long> {
 
     public static final String TABLENAME = "ORDER_INFO";
 
@@ -29,21 +29,22 @@ public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property OrderId = new Property(0, String.class, "orderId", false, "ORDER_ID");
-        public final static Property GoodsInfos = new Property(1, String.class, "goodsInfos", false, "GOODS_INFOS");
-        public final static Property GoodTotalNum = new Property(2, double.class, "goodTotalNum", false, "GOOD_TOTAL_NUM");
-        public final static Property TotalMoney = new Property(3, double.class, "totalMoney", false, "TOTAL_MONEY");
-        public final static Property FreeMoney = new Property(4, double.class, "freeMoney", false, "FREE_MONEY");
-        public final static Property OrderWeight = new Property(5, double.class, "orderWeight", false, "ORDER_WEIGHT");
-        public final static Property OrderCreatTime = new Property(6, long.class, "orderCreatTime", false, "ORDER_CREAT_TIME");
-        public final static Property OrderStatus = new Property(7, int.class, "orderStatus", false, "ORDER_STATUS");
-        public final static Property OrderPaySatus = new Property(8, int.class, "orderPaySatus", false, "ORDER_PAY_SATUS");
-        public final static Property OrderCreatPerson = new Property(9, String.class, "orderCreatPerson", false, "ORDER_CREAT_PERSON");
-        public final static Property OrderCompleteTime = new Property(10, String.class, "orderCompleteTime", false, "ORDER_COMPLETE_TIME");
-        public final static Property OrderPayType = new Property(11, int.class, "orderPayType", false, "ORDER_PAY_TYPE");
-        public final static Property OrderProfit = new Property(12, double.class, "orderProfit", false, "ORDER_PROFIT");
-        public final static Property IsSelect = new Property(13, boolean.class, "isSelect", false, "IS_SELECT");
-        public final static Property OrderType = new Property(14, int.class, "orderType", false, "ORDER_TYPE");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property OrderId = new Property(1, String.class, "orderId", false, "ORDER_ID");
+        public final static Property GoodsInfos = new Property(2, String.class, "goodsInfos", false, "GOODS_INFOS");
+        public final static Property GoodTotalNum = new Property(3, double.class, "goodTotalNum", false, "GOOD_TOTAL_NUM");
+        public final static Property TotalMoney = new Property(4, double.class, "totalMoney", false, "TOTAL_MONEY");
+        public final static Property FreeMoney = new Property(5, double.class, "freeMoney", false, "FREE_MONEY");
+        public final static Property OrderWeight = new Property(6, double.class, "orderWeight", false, "ORDER_WEIGHT");
+        public final static Property OrderCreatTime = new Property(7, long.class, "orderCreatTime", false, "ORDER_CREAT_TIME");
+        public final static Property OrderStatus = new Property(8, int.class, "orderStatus", false, "ORDER_STATUS");
+        public final static Property OrderPaySatus = new Property(9, int.class, "orderPaySatus", false, "ORDER_PAY_SATUS");
+        public final static Property OrderCreatPerson = new Property(10, String.class, "orderCreatPerson", false, "ORDER_CREAT_PERSON");
+        public final static Property OrderCompleteTime = new Property(11, String.class, "orderCompleteTime", false, "ORDER_COMPLETE_TIME");
+        public final static Property OrderPayType = new Property(12, int.class, "orderPayType", false, "ORDER_PAY_TYPE");
+        public final static Property OrderProfit = new Property(13, double.class, "orderProfit", false, "ORDER_PROFIT");
+        public final static Property IsSelect = new Property(14, boolean.class, "isSelect", false, "IS_SELECT");
+        public final static Property OrderType = new Property(15, int.class, "orderType", false, "ORDER_TYPE");
     }
 
     private final GoodsInfoToConverte goodsInfosConverter = new GoodsInfoToConverte();
@@ -61,21 +62,22 @@ public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"ORDER_INFO\" (" + //
-                "\"ORDER_ID\" TEXT," + // 0: orderId
-                "\"GOODS_INFOS\" TEXT," + // 1: goodsInfos
-                "\"GOOD_TOTAL_NUM\" REAL NOT NULL ," + // 2: goodTotalNum
-                "\"TOTAL_MONEY\" REAL NOT NULL ," + // 3: totalMoney
-                "\"FREE_MONEY\" REAL NOT NULL ," + // 4: freeMoney
-                "\"ORDER_WEIGHT\" REAL NOT NULL ," + // 5: orderWeight
-                "\"ORDER_CREAT_TIME\" INTEGER NOT NULL ," + // 6: orderCreatTime
-                "\"ORDER_STATUS\" INTEGER NOT NULL ," + // 7: orderStatus
-                "\"ORDER_PAY_SATUS\" INTEGER NOT NULL ," + // 8: orderPaySatus
-                "\"ORDER_CREAT_PERSON\" TEXT," + // 9: orderCreatPerson
-                "\"ORDER_COMPLETE_TIME\" TEXT," + // 10: orderCompleteTime
-                "\"ORDER_PAY_TYPE\" INTEGER NOT NULL ," + // 11: orderPayType
-                "\"ORDER_PROFIT\" REAL NOT NULL ," + // 12: orderProfit
-                "\"IS_SELECT\" INTEGER NOT NULL ," + // 13: isSelect
-                "\"ORDER_TYPE\" INTEGER NOT NULL );"); // 14: orderType
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"ORDER_ID\" TEXT," + // 1: orderId
+                "\"GOODS_INFOS\" TEXT," + // 2: goodsInfos
+                "\"GOOD_TOTAL_NUM\" REAL NOT NULL ," + // 3: goodTotalNum
+                "\"TOTAL_MONEY\" REAL NOT NULL ," + // 4: totalMoney
+                "\"FREE_MONEY\" REAL NOT NULL ," + // 5: freeMoney
+                "\"ORDER_WEIGHT\" REAL NOT NULL ," + // 6: orderWeight
+                "\"ORDER_CREAT_TIME\" INTEGER NOT NULL ," + // 7: orderCreatTime
+                "\"ORDER_STATUS\" INTEGER NOT NULL ," + // 8: orderStatus
+                "\"ORDER_PAY_SATUS\" INTEGER NOT NULL ," + // 9: orderPaySatus
+                "\"ORDER_CREAT_PERSON\" TEXT," + // 10: orderCreatPerson
+                "\"ORDER_COMPLETE_TIME\" TEXT," + // 11: orderCompleteTime
+                "\"ORDER_PAY_TYPE\" INTEGER NOT NULL ," + // 12: orderPayType
+                "\"ORDER_PROFIT\" REAL NOT NULL ," + // 13: orderProfit
+                "\"IS_SELECT\" INTEGER NOT NULL ," + // 14: isSelect
+                "\"ORDER_TYPE\" INTEGER NOT NULL );"); // 15: orderType
     }
 
     /** Drops the underlying database table. */
@@ -88,135 +90,150 @@ public class OrderInfoDao extends AbstractDao<OrderInfo, Void> {
     protected final void bindValues(DatabaseStatement stmt, OrderInfo entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         String orderId = entity.getOrderId();
         if (orderId != null) {
-            stmt.bindString(1, orderId);
+            stmt.bindString(2, orderId);
         }
  
         List goodsInfos = entity.getGoodsInfos();
         if (goodsInfos != null) {
-            stmt.bindString(2, goodsInfosConverter.convertToDatabaseValue(goodsInfos));
+            stmt.bindString(3, goodsInfosConverter.convertToDatabaseValue(goodsInfos));
         }
-        stmt.bindDouble(3, entity.getGoodTotalNum());
-        stmt.bindDouble(4, entity.getTotalMoney());
-        stmt.bindDouble(5, entity.getFreeMoney());
-        stmt.bindDouble(6, entity.getOrderWeight());
-        stmt.bindLong(7, entity.getOrderCreatTime());
-        stmt.bindLong(8, entity.getOrderStatus());
-        stmt.bindLong(9, entity.getOrderPaySatus());
+        stmt.bindDouble(4, entity.getGoodTotalNum());
+        stmt.bindDouble(5, entity.getTotalMoney());
+        stmt.bindDouble(6, entity.getFreeMoney());
+        stmt.bindDouble(7, entity.getOrderWeight());
+        stmt.bindLong(8, entity.getOrderCreatTime());
+        stmt.bindLong(9, entity.getOrderStatus());
+        stmt.bindLong(10, entity.getOrderPaySatus());
  
         User orderCreatPerson = entity.getOrderCreatPerson();
         if (orderCreatPerson != null) {
-            stmt.bindString(10, orderCreatPersonConverter.convertToDatabaseValue(orderCreatPerson));
+            stmt.bindString(11, orderCreatPersonConverter.convertToDatabaseValue(orderCreatPerson));
         }
  
         String orderCompleteTime = entity.getOrderCompleteTime();
         if (orderCompleteTime != null) {
-            stmt.bindString(11, orderCompleteTime);
+            stmt.bindString(12, orderCompleteTime);
         }
-        stmt.bindLong(12, entity.getOrderPayType());
-        stmt.bindDouble(13, entity.getOrderProfit());
-        stmt.bindLong(14, entity.getIsSelect() ? 1L: 0L);
-        stmt.bindLong(15, entity.getOrderType());
+        stmt.bindLong(13, entity.getOrderPayType());
+        stmt.bindDouble(14, entity.getOrderProfit());
+        stmt.bindLong(15, entity.getIsSelect() ? 1L: 0L);
+        stmt.bindLong(16, entity.getOrderType());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, OrderInfo entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         String orderId = entity.getOrderId();
         if (orderId != null) {
-            stmt.bindString(1, orderId);
+            stmt.bindString(2, orderId);
         }
  
         List goodsInfos = entity.getGoodsInfos();
         if (goodsInfos != null) {
-            stmt.bindString(2, goodsInfosConverter.convertToDatabaseValue(goodsInfos));
+            stmt.bindString(3, goodsInfosConverter.convertToDatabaseValue(goodsInfos));
         }
-        stmt.bindDouble(3, entity.getGoodTotalNum());
-        stmt.bindDouble(4, entity.getTotalMoney());
-        stmt.bindDouble(5, entity.getFreeMoney());
-        stmt.bindDouble(6, entity.getOrderWeight());
-        stmt.bindLong(7, entity.getOrderCreatTime());
-        stmt.bindLong(8, entity.getOrderStatus());
-        stmt.bindLong(9, entity.getOrderPaySatus());
+        stmt.bindDouble(4, entity.getGoodTotalNum());
+        stmt.bindDouble(5, entity.getTotalMoney());
+        stmt.bindDouble(6, entity.getFreeMoney());
+        stmt.bindDouble(7, entity.getOrderWeight());
+        stmt.bindLong(8, entity.getOrderCreatTime());
+        stmt.bindLong(9, entity.getOrderStatus());
+        stmt.bindLong(10, entity.getOrderPaySatus());
  
         User orderCreatPerson = entity.getOrderCreatPerson();
         if (orderCreatPerson != null) {
-            stmt.bindString(10, orderCreatPersonConverter.convertToDatabaseValue(orderCreatPerson));
+            stmt.bindString(11, orderCreatPersonConverter.convertToDatabaseValue(orderCreatPerson));
         }
  
         String orderCompleteTime = entity.getOrderCompleteTime();
         if (orderCompleteTime != null) {
-            stmt.bindString(11, orderCompleteTime);
+            stmt.bindString(12, orderCompleteTime);
         }
-        stmt.bindLong(12, entity.getOrderPayType());
-        stmt.bindDouble(13, entity.getOrderProfit());
-        stmt.bindLong(14, entity.getIsSelect() ? 1L: 0L);
-        stmt.bindLong(15, entity.getOrderType());
+        stmt.bindLong(13, entity.getOrderPayType());
+        stmt.bindDouble(14, entity.getOrderProfit());
+        stmt.bindLong(15, entity.getIsSelect() ? 1L: 0L);
+        stmt.bindLong(16, entity.getOrderType());
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public OrderInfo readEntity(Cursor cursor, int offset) {
         OrderInfo entity = new OrderInfo( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // orderId
-            cursor.isNull(offset + 1) ? null : goodsInfosConverter.convertToEntityProperty(cursor.getString(offset + 1)), // goodsInfos
-            cursor.getDouble(offset + 2), // goodTotalNum
-            cursor.getDouble(offset + 3), // totalMoney
-            cursor.getDouble(offset + 4), // freeMoney
-            cursor.getDouble(offset + 5), // orderWeight
-            cursor.getLong(offset + 6), // orderCreatTime
-            cursor.getInt(offset + 7), // orderStatus
-            cursor.getInt(offset + 8), // orderPaySatus
-            cursor.isNull(offset + 9) ? null : orderCreatPersonConverter.convertToEntityProperty(cursor.getString(offset + 9)), // orderCreatPerson
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // orderCompleteTime
-            cursor.getInt(offset + 11), // orderPayType
-            cursor.getDouble(offset + 12), // orderProfit
-            cursor.getShort(offset + 13) != 0, // isSelect
-            cursor.getInt(offset + 14) // orderType
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // orderId
+            cursor.isNull(offset + 2) ? null : goodsInfosConverter.convertToEntityProperty(cursor.getString(offset + 2)), // goodsInfos
+            cursor.getDouble(offset + 3), // goodTotalNum
+            cursor.getDouble(offset + 4), // totalMoney
+            cursor.getDouble(offset + 5), // freeMoney
+            cursor.getDouble(offset + 6), // orderWeight
+            cursor.getLong(offset + 7), // orderCreatTime
+            cursor.getInt(offset + 8), // orderStatus
+            cursor.getInt(offset + 9), // orderPaySatus
+            cursor.isNull(offset + 10) ? null : orderCreatPersonConverter.convertToEntityProperty(cursor.getString(offset + 10)), // orderCreatPerson
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // orderCompleteTime
+            cursor.getInt(offset + 12), // orderPayType
+            cursor.getDouble(offset + 13), // orderProfit
+            cursor.getShort(offset + 14) != 0, // isSelect
+            cursor.getInt(offset + 15) // orderType
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, OrderInfo entity, int offset) {
-        entity.setOrderId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setGoodsInfos(cursor.isNull(offset + 1) ? null : goodsInfosConverter.convertToEntityProperty(cursor.getString(offset + 1)));
-        entity.setGoodTotalNum(cursor.getDouble(offset + 2));
-        entity.setTotalMoney(cursor.getDouble(offset + 3));
-        entity.setFreeMoney(cursor.getDouble(offset + 4));
-        entity.setOrderWeight(cursor.getDouble(offset + 5));
-        entity.setOrderCreatTime(cursor.getLong(offset + 6));
-        entity.setOrderStatus(cursor.getInt(offset + 7));
-        entity.setOrderPaySatus(cursor.getInt(offset + 8));
-        entity.setOrderCreatPerson(cursor.isNull(offset + 9) ? null : orderCreatPersonConverter.convertToEntityProperty(cursor.getString(offset + 9)));
-        entity.setOrderCompleteTime(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setOrderPayType(cursor.getInt(offset + 11));
-        entity.setOrderProfit(cursor.getDouble(offset + 12));
-        entity.setIsSelect(cursor.getShort(offset + 13) != 0);
-        entity.setOrderType(cursor.getInt(offset + 14));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setOrderId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setGoodsInfos(cursor.isNull(offset + 2) ? null : goodsInfosConverter.convertToEntityProperty(cursor.getString(offset + 2)));
+        entity.setGoodTotalNum(cursor.getDouble(offset + 3));
+        entity.setTotalMoney(cursor.getDouble(offset + 4));
+        entity.setFreeMoney(cursor.getDouble(offset + 5));
+        entity.setOrderWeight(cursor.getDouble(offset + 6));
+        entity.setOrderCreatTime(cursor.getLong(offset + 7));
+        entity.setOrderStatus(cursor.getInt(offset + 8));
+        entity.setOrderPaySatus(cursor.getInt(offset + 9));
+        entity.setOrderCreatPerson(cursor.isNull(offset + 10) ? null : orderCreatPersonConverter.convertToEntityProperty(cursor.getString(offset + 10)));
+        entity.setOrderCompleteTime(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setOrderPayType(cursor.getInt(offset + 12));
+        entity.setOrderProfit(cursor.getDouble(offset + 13));
+        entity.setIsSelect(cursor.getShort(offset + 14) != 0);
+        entity.setOrderType(cursor.getInt(offset + 15));
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(OrderInfo entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final Long updateKeyAfterInsert(OrderInfo entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Void getKey(OrderInfo entity) {
-        return null;
+    public Long getKey(OrderInfo entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(OrderInfo entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override

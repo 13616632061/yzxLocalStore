@@ -84,6 +84,7 @@
     <string name="selete_delete_goods_item">请选择要删除的商品</string>
     <string name="selete_up_shelf_goods_item">请选择要上架的商品</string>
     <string name="selete_down_shelf_goods_item">请选择要下架的商品</string>
+    <string name="sure_invalid_item_order">确定作废选中订单？</string>
     <string name="input_search_content">请输入搜索内容！</string>
     <string name="goods_name">商品名称</string>
     <string name="goods_price">商品价格</string>
@@ -159,6 +160,7 @@
     <string name="num_">数量：</string>
     <string name="money_">金额：</string>
     <string name="put_order_success">挂单成功</string>
+    <string name="create_order_success">下单成功</string>
     <string name="today_order">今日订单</string>
     <string name="yesterday_order">昨日订单</string>
     <string name="all_order">全部订单</string>
@@ -186,6 +188,8 @@
     <string name="wx_pay">微信支付</string>
     <string name="zfb_pay">支付宝支付</string>
     <string name="nomal_order">正常订单</string>
+    <string name="select_invalid_order">请选择要作废的订单</string>
+    <string name="invalid_order_success">作废订单成功</string>
 
 
 

@@ -1,6 +1,11 @@
 package com.yzx.lib.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Administrator on 2019/9/19.
@@ -28,6 +33,9 @@ public class TimeUtil {
      */
     public static final int DAY  = 86400000;
 
+    private static final DateFormat DEFAULT_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+
     /**
      * 获取当天 00:00
      *
@@ -41,5 +49,26 @@ public class TimeUtil {
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTimeInMillis();
     }
-
+    /**
+     * 将时间戳转为时间字符串
+     * <p>格式为 yyyy-MM-dd HH:mm:ss</p>
+     *
+     * @param millis 毫秒时间戳
+     * @return 时间字符串
+     */
+    public static String millis2String(final long millis) {
+        DEFAULT_FORMAT.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        return millis2String(millis, DEFAULT_FORMAT);
+    }
+    /**
+     * 将时间戳转为时间字符串
+     * <p>格式为 format</p>
+     *
+     * @param millis 毫秒时间戳
+     * @param format 时间格式
+     * @return 时间字符串
+     */
+    public static String millis2String(final long millis, final DateFormat format) {
+        return format.format(new Date(millis));
+    }
 }

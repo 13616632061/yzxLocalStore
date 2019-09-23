@@ -31,4 +31,7 @@ public interface IOrderListFragmentModelImp {
 
     //查询订单数量公共部分
     long getOrderNumComment(int type,List<WhereCondition> whereConditions);
+
+    //订单信息更细
+    void orderUpdate(OrderInfo orderInfo);
 }

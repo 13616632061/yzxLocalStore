@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.presenter.GoodsListFragmentPresenter;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsTypeFragment.presenter.GoodsTypeFragmentPresenter;
+import com.yzx.yzxlocalstore.ui.Fragment.OrderListFragment.presenter.OrderListFragmentPresenter;
 
 /**
  * Created by Administrator on 2019/7/4.
@@ -71,20 +72,20 @@ public class TipsPopWindow extends BasePopupWindow implements View.OnClickListen
         switch (type) {
             case 1://删除分类操作
                 ((GoodsTypeFragmentPresenter) mPresenter).deleteGoodsType();
-                dismiss();
                 break;
             case 2://删除商品信息操作
                 ((GoodsListFragmentPresenter) mPresenter).deteleGoodsInfo();
-                dismiss();
                 break;
             case 3://上架商品信息操作
                 ((GoodsListFragmentPresenter) mPresenter).upShelfGoodsInfo();
-                dismiss();
                 break;
             case 4://下架商品信息操作
                 ((GoodsListFragmentPresenter) mPresenter).dowmShelfGoodsInfo();
-                dismiss();
+                break;
+            case 5://下架商品信息操作
+                ((OrderListFragmentPresenter) mPresenter).toOrderInvalid();
                 break;
         }
+        dismiss();
     }
 }

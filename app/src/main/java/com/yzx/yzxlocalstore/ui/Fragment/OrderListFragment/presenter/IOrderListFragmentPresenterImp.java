@@ -29,4 +29,19 @@ public interface IOrderListFragmentPresenterImp {
 
     //更新订单数量
     void updateOrderNum();
+
+    //设置订单选中状态
+    void setItemOrderSelectStatus(int position);
+
+    //获取订单全选状态
+    void getOrderAllSelectStatus();
+
+    //设置订单全选状态
+    void setOrderAllSelectStatus();
+
+    //作废订单监听
+    void setOrderInvalidLinstener();
+
+    //作废订单
+    void toOrderInvalid();
 }

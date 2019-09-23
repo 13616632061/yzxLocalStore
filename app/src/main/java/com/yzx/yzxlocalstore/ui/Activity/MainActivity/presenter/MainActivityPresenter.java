@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.Utils;
 import com.yzx.lib.util.ArithUtil;
+import com.yzx.lib.util.TimeUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.OrderInfo;
@@ -15,6 +16,7 @@ import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.MainToAction.MainToAction;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.model.MainActivityModel;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.view.MainActivity;
+import com.yzx.yzxlocalstore.ui.Adapter.MainLeftSaleGoodsListAdapter;
 import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 
 
@@ -32,6 +34,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     private MainActivity mView;
     private MainActivityModel mModel;
     private List<SaleGoodsInfo> saleGoodsInfoData = new ArrayList<>();
+    private MainLeftSaleGoodsListAdapter mainLeftSaleGoodsListAdapter;//左边商品销售列表
 
 
     public MainActivityPresenter(MainActivity mView) {
@@ -124,7 +127,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         } else if (mView.getResources().getString(R.string.retail).equals(name)) {
             addSaleGoodsInfo();
         } else if (mView.getResources().getString(R.string.putOrder).equals(name)) {//挂单
-            createOrder();
+            createOrder(0);
         } else {
             MainToAction.toAction(mView, name);
         }
@@ -135,7 +138,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
      */
     @Override
     public void setLeftSaleGoodsListView() {
-        mView.setLeftSaleGoodsListView();
+        mainLeftSaleGoodsListAdapter=mView.setLeftSaleGoodsListView();
     }
 
     /**
@@ -157,7 +160,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             saleGoodsInfoData.get(i).setSelectItem(false);
         }
         saleGoodsInfoData.get(position).setSelectItem(true);
-        mView.mainLeftSaleGoodsListAdapter().notifyDataSetChanged();
+        mainLeftSaleGoodsListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -174,7 +177,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             saleGoodsInfoData.add(saleGoodsInfo);
             mView.LeftSaleGoodsListScrollToPosition();
             setSelectSaleGoodsInfoItem(saleGoodsInfoData.size() - 1);
-            mView.mainLeftSaleGoodsListAdapter().notifyDataSetChanged();
+            mainLeftSaleGoodsListAdapter.notifyDataSetChanged();
 
             setTotalGoodNum();
             setTotalPrice();
@@ -201,7 +204,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             mView.LeftSaleGoodsListScrollToPosition();
             setSelectSaleGoodsInfoItem(saleGoodsInfoData.size() - 1);
         }
-        mView.mainLeftSaleGoodsListAdapter().notifyDataSetChanged();
+        mainLeftSaleGoodsListAdapter.notifyDataSetChanged();
         setTotalGoodNum();
         setTotalPrice();
         setReceivableMoney();
@@ -257,13 +260,18 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
 
     /**
      * 创建订单
+     *
+     * @param type
      */
     @Override
-    public void createOrder() {
+    public void createOrder(int type) {
+        if (saleGoodsInfoData.size() <= 0) {
+            return;
+        }
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderId(getOrderId());
         List<GoodsInfo> goodsInfos = new ArrayList<>();
-        Log.e("创建订单","saleGoodsInfoData: "+saleGoodsInfoData.toString());
+
         for (SaleGoodsInfo bean : saleGoodsInfoData) {
             goodsInfos.add(bean.getGoodsInfo());
         }
@@ -273,8 +281,36 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         orderInfo.setTotalMoney(setReceivableMoney());
         orderInfo.setOrderProfit(getOrderProfit());
         orderInfo.setOrderCreatTime(TimeUtils.getNowMills());
+        switch (type) {
+            case 0://挂单  正常订单:0,挂单:1,作废订单:2
+                orderInfo.setOrderType(1);
+                break;
+            case 1://现金支付：1，移动支付：2，会员支付：3，
+                if (mView.getChangeMoney() < 0) {
+                    mView.showMsg(3);
+                    return;
+                }
+                orderInfo.setOrderPayType(1);
+                break;
+            case 2://移动支付
+                orderInfo.setOrderPayType(2);
+                break;
+            case 3://会员支付
+                orderInfo.setOrderPayType(3);
+                break;
+        }
         mModel.createOrder(orderInfo);
-        mView.showMsg(1);
+        saleGoodsInfoData.clear();
+        mainLeftSaleGoodsListAdapter.notifyDataSetChanged();
+
+        switch (type) {
+            case 0:
+                mView.showMsg(1);
+                break;
+            default:
+                mView.showMsg(2);
+                break;
+        }
     }
 
     /**
@@ -306,6 +342,14 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             orderProfit = ArithUtil.div(orderProfit + "", saleGoodsInfoData.size() + "");
         }
         return orderProfit;
+    }
+
+    /**
+     * 选择支付方式
+     */
+    @Override
+    public void selcetPayment() {
+        mView.selcetPayment();
     }
 
 }

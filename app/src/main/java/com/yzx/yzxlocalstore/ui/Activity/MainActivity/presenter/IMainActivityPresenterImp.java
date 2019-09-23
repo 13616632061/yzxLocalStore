@@ -56,11 +56,14 @@ public interface IMainActivityPresenterImp {
     double setReceivableMoney();
 
     //创建订单
-    void createOrder();
+    void createOrder(int type);
 
     //获取订单id
     String getOrderId();
 
     //获取订单利润
     double getOrderProfit();
+
+    //选择支付方式
+    void selcetPayment();
 }

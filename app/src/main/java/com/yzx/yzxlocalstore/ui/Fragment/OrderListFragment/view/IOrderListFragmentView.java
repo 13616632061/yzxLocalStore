@@ -41,4 +41,13 @@ public interface IOrderListFragmentView {
     //是否选中废订单数量
     void isSelectInvalidOrder(int type);
 
+    //订单全选状态
+    void orderAllSelectStatus(boolean allSelectStatus);
+
+    //显示提示信息
+    void showMsg(int type);
+
+    //作废订单
+    void InvalidOrder();
+
 }

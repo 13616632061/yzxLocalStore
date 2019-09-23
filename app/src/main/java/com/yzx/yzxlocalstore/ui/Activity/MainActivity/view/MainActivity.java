@@ -51,7 +51,6 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     private MainBottomTypeAdapter mBottomTypeAdapter;
     private List<TypeBean> mBottomTypeData = new ArrayList<>();
 
-    private MainLeftSaleGoodsListAdapter mainLeftSaleGoodsListAdapter;
 
     @Override
     public int getContentView() {
@@ -68,6 +67,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
         mPresenter.getBottomType();
         //初始化左边要销售的商品信息
         mPresenter.setLeftSaleGoodsListView();
+        mPresenter.selcetPayment();
     }
 
 
@@ -120,8 +120,8 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
      * 要销售的商品列表
      */
     @Override
-    public void setLeftSaleGoodsListView() {
-        mainLeftSaleGoodsListAdapter = new MainLeftSaleGoodsListAdapter(this, R.layout.item_main_left_good_list, mPresenter.saleGoodsInfoData());
+    public MainLeftSaleGoodsListAdapter setLeftSaleGoodsListView() {
+        MainLeftSaleGoodsListAdapter  mainLeftSaleGoodsListAdapter = new MainLeftSaleGoodsListAdapter(this, R.layout.item_main_left_good_list, mPresenter.saleGoodsInfoData());
         listLeft.setAdapter(mainLeftSaleGoodsListAdapter);
         listLeft.setLayoutManager(new LinearLayoutManager(this));
         mainLeftSaleGoodsListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -130,17 +130,9 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
                 mPresenter.setSelectSaleGoodsInfoItem(position);
             }
         });
-    }
-
-    /**
-     * 销售的商品列表的Adapter
-     *
-     * @return
-     */
-    @Override
-    public MainLeftSaleGoodsListAdapter mainLeftSaleGoodsListAdapter() {
         return mainLeftSaleGoodsListAdapter;
     }
+
 
     /**
      * 最后加入销售的商品列表定位到可见
@@ -192,6 +184,12 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
         cashierCountView.setChangeMoney();
     }
 
+
+    @Override
+    public double getChangeMoney() {
+        return cashierCountView.getChangeMoney();
+    }
+
     /**
      * 选择支付方式
      */
@@ -200,17 +198,17 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
         cashierCountView.setPaymentType(new CashierCountView.paymentType() {
             @Override
             public void membershipPayment() {//会员支付
-                showToast("选择了会员支付");
+                mPresenter.createOrder(3);
             }
 
             @Override
             public void cashPayment() {//现金支付
-                showToast("选择了现金支付");
+                mPresenter.createOrder(1);
             }
 
             @Override
             public void mobilePayment() {//移动支付
-                showToast("选择了移动支付");
+                mPresenter.createOrder(2);
             }
         });
     }
@@ -226,6 +224,13 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
             case 1://挂单成功
                 showToast(getResources().getString(R.string.put_order_success));
                 break;
+            case 2://下单成功
+                showToast(getResources().getString(R.string.create_order_success));
+                break;
+            case 3:
+                showToast("实收金额小于应付金额");
+                break;
+
         }
     }
 
