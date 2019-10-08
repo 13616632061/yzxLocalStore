@@ -169,7 +169,7 @@ public class ChannelView extends ScrollView {
         channelFocusedTextColor = typedArray.getColor(R.styleable.ChannelView_channelFocusedTextColor, getResources().getColor(R.color.channelNormalTextColor));
         channelFixedCount = typedArray.getInteger(R.styleable.ChannelView_channelFixedCount, channelFixedCount);
         channelTextSize = typedArray.getDimensionPixelSize(R.styleable.ChannelView_channelTextSize, getResources().getDimensionPixelSize(R.dimen.channelTextSize));
-        tipEditBackground = typedArray.getResourceId(R.styleable.ChannelView_tipEditBackground, R.drawable.bg_channel_transparent);
+        tipEditBackground = typedArray.getResourceId(R.styleable.ChannelView_tipEditBackground, R.drawable.bg_channel_normal);
         platesTitleBackground = typedArray.getResourceId(R.styleable.ChannelView_platesTitleBackground, R.drawable.bg_channel_transparent);
         tipEditTextColor = typedArray.getColor(R.styleable.ChannelView_tipEditTextColor, getResources().getColor(R.color.channelNormalTextColor));
         platesTitleColor = typedArray.getColor(R.styleable.ChannelView_platesTitleColor, getResources().getColor(R.color.color_000000));

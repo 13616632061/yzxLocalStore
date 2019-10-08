@@ -1,11 +1,14 @@
 package com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter;
 
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.Utils;
 import com.yzx.lib.util.ArithUtil;
+import com.yzx.lib.util.ScanGunKeyEventHelper;
 import com.yzx.lib.util.TimeUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
@@ -17,6 +20,10 @@ import com.yzx.yzxlocalstore.ui.Activity.MainActivity.MainToAction.MainToAction;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.model.MainActivityModel;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.view.MainActivity;
 import com.yzx.yzxlocalstore.ui.Adapter.MainLeftSaleGoodsListAdapter;
+import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.view.GoodsListFragment;
+import com.yzx.yzxlocalstore.ui.Fragment.GoodsTypeFragment.view.GoodsTypeFragment;
+import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.ShortcutBarFragment.view.ShortcutBarFragment;
+import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.WeightBarFragment.view.WeightBarFragment;
 import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 
 
@@ -35,11 +42,13 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     private MainActivityModel mModel;
     private List<SaleGoodsInfo> saleGoodsInfoData = new ArrayList<>();
     private MainLeftSaleGoodsListAdapter mainLeftSaleGoodsListAdapter;//左边商品销售列表
+    private ScanGunKeyEventHelper mScanGunKeyEventHelper;//扫码枪工具类
 
 
     public MainActivityPresenter(MainActivity mView) {
         this.mView = mView;
         mModel = new MainActivityModel();
+        mScanGunKeyEventHelper = new ScanGunKeyEventHelper(mView);
     }
 
     /**
@@ -138,7 +147,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
      */
     @Override
     public void setLeftSaleGoodsListView() {
-        mainLeftSaleGoodsListAdapter=mView.setLeftSaleGoodsListView();
+        mainLeftSaleGoodsListAdapter = mView.setLeftSaleGoodsListView();
     }
 
     /**
@@ -351,5 +360,30 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public void selcetPayment() {
         mView.selcetPayment();
     }
+
+    /**
+     * 扫码枪事件解析
+     */
+    @Override
+    public void scanAnalysisKeyEvent(KeyEvent event) {
+        mScanGunKeyEventHelper.analysisKeyEvent(event);
+    }
+
+    /**
+     * 显示商品快捷栏，计重栏
+     */
+    @Override
+    public void showGoodBarPosition(int position) {
+        switch (position) {
+            case 0:
+                mView.showShortcutBarFragment();
+                break;
+            case 1:
+                mView.showWeightBarFragment();
+                break;
+        }
+        mView.setGoodBarColor(position);
+    }
+
 
 }

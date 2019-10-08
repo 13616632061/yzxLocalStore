@@ -7,6 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -46,6 +48,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnS
 
 //    private static List<Activity> mActivities = new LinkedList<>();
     private Handler mHandler;
+    private android.support.v4.app.FragmentManager fragmentManager;
+    //当前正在展示的Fragment
+    private BaseFragment showFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnS
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(this);
         //路由自动属性注入
         ARouter.getInstance().inject(this);
+        fragmentManager = getSupportFragmentManager();
 //        synchronized (mActivities) {
 //            mActivities.add(this);
 //        }
@@ -224,4 +230,26 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnS
             hideStatusBar();
         }
     };
+
+    /**
+     * 显示隐藏Fragment
+     * isRemove:处理每次点击都要加载的需求
+     */
+    protected void showFragment(int resid, BaseFragment fragment) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        //隐藏正在显示的Fragment
+        if (showFragment != null) {
+            fragmentTransaction.hide(showFragment);
+        }
+        //展示需要显示的Fragment对象
+        Fragment mFragment = fragmentManager.findFragmentByTag(fragment.getClass().getName());
+        if (mFragment != null) {
+            fragmentTransaction.show(mFragment);
+            showFragment = (BaseFragment) mFragment;
+        } else {
+            fragmentTransaction.add(resid, fragment, fragment.getClass().getName());
+            showFragment = fragment;
+        }
+        fragmentTransaction.commit();
+    }
 }

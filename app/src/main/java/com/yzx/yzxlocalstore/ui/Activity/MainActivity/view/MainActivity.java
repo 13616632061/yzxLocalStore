@@ -1,23 +1,30 @@
 package com.yzx.yzxlocalstore.ui.Activity.MainActivity.view;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.blankj.utilcode.util.ToastUtils;
+import com.apkfuns.logutils.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yzx.lib.base.BaseActivity;
+import com.yzx.lib.base.BaseFragment;
+import com.yzx.lib.util.ScanGunKeyEventHelper;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter.MainActivityPresenter;
+import com.yzx.yzxlocalstore.ui.Activity.ManageActivity.adapter.ManageFragmentAdapter;
 import com.yzx.yzxlocalstore.ui.Adapter.MainBottomTypeAdapter;
 import com.yzx.yzxlocalstore.ui.Adapter.MainLeftSaleGoodsListAdapter;
+import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.ShortcutBarFragment.view.ShortcutBarFragment;
+import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.WeightBarFragment.view.WeightBarFragment;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view.MainMenuPopWindow;
 import com.yzx.yzxlocalstore.weight.CashierCountView;
 
@@ -31,9 +38,10 @@ import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 @Route(path = RouteMap.ROUTE_MAIN_ACTIVITY)
-public class MainActivity extends BaseActivity implements IMainActivityView {
+public class MainActivity extends BaseActivity implements IMainActivityView, ScanGunKeyEventHelper.OnScanSuccessListener {
 
     @InjectView(R.id.list_bottom)
     RecyclerView listBottom;
@@ -47,6 +55,13 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     TextView tvTotalPrice;
     @InjectView(R.id.cashier_count_view)
     CashierCountView cashierCountView;
+    @InjectView(R.id.tv_shortcut_bar)
+    TextView tvShortcutBar;
+    @InjectView(R.id.tv_weight_bar)
+    TextView tvWeightBar;
+    @InjectView(R.id.bar_content)
+    FrameLayout barContent;
+
     private MainActivityPresenter mPresenter;
     private MainBottomTypeAdapter mBottomTypeAdapter;
     private List<TypeBean> mBottomTypeData = new ArrayList<>();
@@ -68,8 +83,20 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
         //初始化左边要销售的商品信息
         mPresenter.setLeftSaleGoodsListView();
         mPresenter.selcetPayment();
+        mPresenter.showGoodBarPosition(0);
     }
 
+    @OnClick({R.id.layout_shortcut_bar, R.id.layout_weight_bar})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.layout_shortcut_bar://快捷栏
+                mPresenter.showGoodBarPosition(0);
+                break;
+            case R.id.layout_weight_bar://计重栏
+                mPresenter.showGoodBarPosition(1);
+                break;
+        }
+    }
 
     //显示更多分类信息
     @Override
@@ -121,7 +148,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
      */
     @Override
     public MainLeftSaleGoodsListAdapter setLeftSaleGoodsListView() {
-        MainLeftSaleGoodsListAdapter  mainLeftSaleGoodsListAdapter = new MainLeftSaleGoodsListAdapter(this, R.layout.item_main_left_good_list, mPresenter.saleGoodsInfoData());
+        MainLeftSaleGoodsListAdapter mainLeftSaleGoodsListAdapter = new MainLeftSaleGoodsListAdapter(this, R.layout.item_main_left_good_list, mPresenter.saleGoodsInfoData());
         listLeft.setAdapter(mainLeftSaleGoodsListAdapter);
         listLeft.setLayoutManager(new LinearLayoutManager(this));
         mainLeftSaleGoodsListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -232,6 +259,64 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
                 break;
 
         }
+    }
+
+    /**
+     * 显示商品快捷栏
+     */
+    @Override
+    public void showShortcutBarFragment() {
+        showFragment(R.id.bar_content, new ShortcutBarFragment());
+    }
+
+    /**
+     * 显示计重栏
+     */
+    @Override
+    public void showWeightBarFragment() {
+        showFragment(R.id.bar_content, new WeightBarFragment());
+    }
+
+    /**
+     * 设置商品栏变化
+     *
+     * @param position
+     */
+    @Override
+    public void setGoodBarColor(int position) {
+        switch (position) {
+            case 0:
+                tvShortcutBar.setTextColor(getResources().getColor(R.color.color_f5260b));
+                tvWeightBar.setTextColor(getResources().getColor(R.color.color_000000));
+                break;
+            case 1:
+                tvWeightBar.setTextColor(getResources().getColor(R.color.color_f5260b));
+                tvShortcutBar.setTextColor(getResources().getColor(R.color.color_000000));
+                break;
+        }
+    }
+
+
+    /**
+     * 扫码枪条形码的拦截
+     *
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        mPresenter.scanAnalysisKeyEvent(event);
+        return true;
+    }
+
+    /**
+     * 扫码枪成功监听
+     *
+     * @param barcode
+     */
+    @Override
+    public void onScanSuccess(String barcode) {
+        LogUtils.e("barcode:  " + barcode);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

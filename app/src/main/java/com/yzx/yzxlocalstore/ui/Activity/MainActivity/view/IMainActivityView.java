@@ -1,5 +1,7 @@
 package com.yzx.yzxlocalstore.ui.Activity.MainActivity.view;
 
+import android.support.v4.app.Fragment;
+
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.ui.Adapter.MainBottomTypeAdapter;
 import com.yzx.yzxlocalstore.ui.Adapter.MainLeftSaleGoodsListAdapter;
@@ -53,4 +55,13 @@ public interface IMainActivityView {
 
     //显示提示msg
     void showMsg(int type);
+
+    //显示商品快捷栏
+    void showShortcutBarFragment();
+
+    //显示计重栏
+    void showWeightBarFragment();
+
+    //设置商品栏变化
+    void setGoodBarColor(int position);
 }

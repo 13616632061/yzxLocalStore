@@ -1,5 +1,8 @@
 package com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter;
 
+import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
+
 import com.cheng.channel.Channel;
 import com.yzx.yzxlocalstore.entity.SaleGoodsInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
@@ -66,4 +69,11 @@ public interface IMainActivityPresenterImp {
 
     //选择支付方式
     void selcetPayment();
+
+    //扫码枪事件解析
+    void scanAnalysisKeyEvent(KeyEvent event);
+
+    //显示商品快捷栏，计重栏
+    void showGoodBarPosition(int position);
+
 }
