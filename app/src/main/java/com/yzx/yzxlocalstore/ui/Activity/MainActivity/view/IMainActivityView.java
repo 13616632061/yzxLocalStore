@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.ui.Adapter.MainBottomTypeAdapter;
 import com.yzx.yzxlocalstore.ui.Adapter.MainLeftSaleGoodsListAdapter;
+import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.ShortcutBarFragment.view.ShortcutBarFragment;
+import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.WeightBarFragment.view.WeightBarFragment;
 
 import java.util.List;
 
@@ -31,7 +33,7 @@ public interface IMainActivityView {
 
 
     //最后加入销售的商品列表定位到可见
-    void LeftSaleGoodsListScrollToPosition();
+    void LeftSaleGoodsListScrollToPosition(int position);
 
     //销售商品的总重量
     void setTotalWeight();
@@ -57,11 +59,14 @@ public interface IMainActivityView {
     void showMsg(int type);
 
     //显示商品快捷栏
-    void showShortcutBarFragment();
+    void showShortcutBarFragment(ShortcutBarFragment barFragment);
 
     //显示计重栏
-    void showWeightBarFragment();
+    void showWeightBarFragment(WeightBarFragment barFragment);
 
     //设置商品栏变化
     void setGoodBarColor(int position);
+
+    //获取商品栏的宽度
+    int getLayoutMidelWidth();
 }

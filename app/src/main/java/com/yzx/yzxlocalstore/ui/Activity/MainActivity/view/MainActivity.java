@@ -1,26 +1,24 @@
 package com.yzx.yzxlocalstore.ui.Activity.MainActivity.view;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.apkfuns.logutils.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yzx.lib.base.BaseActivity;
-import com.yzx.lib.base.BaseFragment;
 import com.yzx.lib.util.ScanGunKeyEventHelper;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter.MainActivityPresenter;
-import com.yzx.yzxlocalstore.ui.Activity.ManageActivity.adapter.ManageFragmentAdapter;
 import com.yzx.yzxlocalstore.ui.Adapter.MainBottomTypeAdapter;
 import com.yzx.yzxlocalstore.ui.Adapter.MainLeftSaleGoodsListAdapter;
 import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.ShortcutBarFragment.view.ShortcutBarFragment;
@@ -61,6 +59,8 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
     TextView tvWeightBar;
     @InjectView(R.id.bar_content)
     FrameLayout barContent;
+    @InjectView(R.id.layout_midle)
+    RelativeLayout layoutMidle;
 
     private MainActivityPresenter mPresenter;
     private MainBottomTypeAdapter mBottomTypeAdapter;
@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
      * 最后加入销售的商品列表定位到可见
      */
     @Override
-    public void LeftSaleGoodsListScrollToPosition() {
+    public void LeftSaleGoodsListScrollToPosition(int position) {
         listLeft.scrollToPosition(mPresenter.saleGoodsInfoData().size() - 1);
     }
 
@@ -265,16 +265,16 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
      * 显示商品快捷栏
      */
     @Override
-    public void showShortcutBarFragment() {
-        showFragment(R.id.bar_content, new ShortcutBarFragment());
+    public void showShortcutBarFragment(ShortcutBarFragment barFragment) {
+        showFragment(R.id.bar_content, barFragment);
     }
 
     /**
      * 显示计重栏
      */
     @Override
-    public void showWeightBarFragment() {
-        showFragment(R.id.bar_content, new WeightBarFragment());
+    public void showWeightBarFragment(WeightBarFragment barFragment) {
+        showFragment(R.id.bar_content, barFragment);
     }
 
     /**
@@ -294,6 +294,20 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
                 tvShortcutBar.setTextColor(getResources().getColor(R.color.color_000000));
                 break;
         }
+    }
+
+    /**
+     * 获取商品栏的宽度
+     */
+    @Override
+    public int getLayoutMidelWidth() {
+        int w = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        layoutMidle.measure(w, h);
+        int width = layoutMidle.getMeasuredWidth();
+        return width;
     }
 
 
@@ -323,6 +337,9 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
     public void onEvenBus(Map<Object, Object> map) {
         if (map.containsKey("updateManageType")) {//更新底部管理分类
             mPresenter.getBottomType();
+        }else if (map.containsKey("addSaleGood")){//添加销售商品
+            String code= (String) map.get("addSaleGood");
+            mPresenter.addSaleGoodsInfo(code);
         }
     }
 

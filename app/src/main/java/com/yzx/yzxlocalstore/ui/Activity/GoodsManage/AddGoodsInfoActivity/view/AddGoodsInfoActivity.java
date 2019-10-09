@@ -259,7 +259,7 @@ public class AddGoodsInfoActivity extends BaseActivity implements IAddGoodsInfoA
     @Override
     public int getGoodLoaction() {
         int loaction = 0;
-        switch (rgStatus.getCheckedRadioButtonId()) {
+        switch (rgLocation.getCheckedRadioButtonId()) {
             case R.id.rbtn_no_location:
                 loaction = 0;
                 break;

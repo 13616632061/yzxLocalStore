@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_item"
+    android:layout_width="112dp"
+    android:layout_height="112dp"
+    android:background="@drawable/bg_select_whilte"
+    android:elevation="5dp"
+    android:padding="5dp">
+
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end"
+        android:text="水果首付款是否会拉丝法兰"
+        android:lines="2"
+        android:textColor="@color/color_000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="0.00"
+        android:textColor="@color/color_f5260b"
+        android:textSize="12sp" />
+</RelativeLayout>
+

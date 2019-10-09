@@ -4,6 +4,7 @@ import android.content.res.TypedArray;
 import android.nfc.tech.NfcV;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.apkfuns.logutils.LogUtils;
 import com.google.gson.Gson;

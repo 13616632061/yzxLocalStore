@@ -1,10 +1,12 @@
 package com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.apkfuns.logutils.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.Utils;
 import com.yzx.lib.util.ArithUtil;
@@ -134,7 +136,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         } else if (mView.getResources().getString(R.string.detele).equals(name)) {//删除
             removeSelectSaleGoodsInfoItem();
         } else if (mView.getResources().getString(R.string.retail).equals(name)) {
-            addSaleGoodsInfo();
+            addSaleGoodsInfo("123456");
         } else if (mView.getResources().getString(R.string.putOrder).equals(name)) {//挂单
             createOrder(0);
         } else {
@@ -176,16 +178,28 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
      * 添加销售商品
      */
     @Override
-    public void addSaleGoodsInfo() {
-        List<GoodsInfo> list = mModel.fromCodeQureGoodsinfo("123456");
+    public void addSaleGoodsInfo(String code) {
+        List<GoodsInfo> list = mModel.fromCodeQureGoodsinfo(code);
         if (list.size() > 0) {
             SaleGoodsInfo saleGoodsInfo = new SaleGoodsInfo();
             saleGoodsInfo.setGoodsInfo(list.get(0));
             saleGoodsInfo.setNum(1);
             saleGoodsInfo.setSubtotalPrice(list.get(0).getGoodPrice() * 1);
-            saleGoodsInfoData.add(saleGoodsInfo);
-            mView.LeftSaleGoodsListScrollToPosition();
-            setSelectSaleGoodsInfoItem(saleGoodsInfoData.size() - 1);
+            boolean isExit=false;
+            for (int i=0;i<saleGoodsInfoData.size();i++){
+                if (saleGoodsInfoData.get(i).getGoodsInfo().getId()==saleGoodsInfo.getGoodsInfo().getId()){
+                    double num=saleGoodsInfoData.get(i).getNum();
+                    saleGoodsInfoData.get(i).setNum(num+1);
+                    mView.LeftSaleGoodsListScrollToPosition(i);
+                    setSelectSaleGoodsInfoItem(i);
+                    isExit=true;
+                }
+            }
+            if (!isExit){
+                saleGoodsInfoData.add(saleGoodsInfo);
+                mView.LeftSaleGoodsListScrollToPosition(saleGoodsInfoData.size() - 1);
+                setSelectSaleGoodsInfoItem(saleGoodsInfoData.size() - 1);
+            }
             mainLeftSaleGoodsListAdapter.notifyDataSetChanged();
 
             setTotalGoodNum();
@@ -210,7 +224,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             }
         }
         if (saleGoodsInfoData.size() > 0) {
-            mView.LeftSaleGoodsListScrollToPosition();
+            mView.LeftSaleGoodsListScrollToPosition(saleGoodsInfoData.size() - 1);
             setSelectSaleGoodsInfoItem(saleGoodsInfoData.size() - 1);
         }
         mainLeftSaleGoodsListAdapter.notifyDataSetChanged();
@@ -249,7 +263,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public void setTotalPrice() {
         double totalPrice = 0;
         for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
-            totalPrice += saleGoodsInfo.getSubtotalPrice();
+            totalPrice += saleGoodsInfo.getSubtotalPrice()*saleGoodsInfo.getNum();
         }
         mView.setTotalPrice(ArithUtil.roundByScale(totalPrice + "", "#0.00"));
     }
@@ -261,7 +275,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public double setReceivableMoney() {
         double totalPrice = 0;
         for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
-            totalPrice += saleGoodsInfo.getSubtotalPrice();
+            totalPrice += saleGoodsInfo.getSubtotalPrice()*saleGoodsInfo.getNum();
         }
         mView.setReceivableMoney(ArithUtil.roundByScale(totalPrice + "", "#0.00"));
         return totalPrice;
@@ -374,12 +388,18 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
      */
     @Override
     public void showGoodBarPosition(int position) {
+        Bundle bundle=new Bundle();
+        bundle.putInt("width",mView.getLayoutMidelWidth());
         switch (position) {
             case 0:
-                mView.showShortcutBarFragment();
+                ShortcutBarFragment barFragment=new ShortcutBarFragment();
+                barFragment.setArguments(bundle);
+                mView.showShortcutBarFragment(barFragment);
                 break;
             case 1:
-                mView.showWeightBarFragment();
+                WeightBarFragment weightBarFragment=new WeightBarFragment();
+                weightBarFragment.setArguments(bundle);
+                mView.showWeightBarFragment(weightBarFragment);
                 break;
         }
         mView.setGoodBarColor(position);

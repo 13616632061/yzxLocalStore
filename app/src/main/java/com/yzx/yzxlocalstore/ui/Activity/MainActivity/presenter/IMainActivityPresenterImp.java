@@ -41,7 +41,7 @@ public interface IMainActivityPresenterImp {
     void setSelectSaleGoodsInfoItem(int position);
 
     //添加销售商品
-    void addSaleGoodsInfo();
+    void addSaleGoodsInfo(String code);
 
     //删除选中的item
     void removeSelectSaleGoodsInfoItem();
