@@ -24,6 +24,7 @@ import com.yzx.yzxlocalstore.ui.Adapter.MainLeftSaleGoodsListAdapter;
 import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.ShortcutBarFragment.view.ShortcutBarFragment;
 import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.WeightBarFragment.view.WeightBarFragment;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view.MainMenuPopWindow;
+import com.yzx.yzxlocalstore.ui.PopWindow.TakeOutOrderPopuWindow.view.TakeOutOrderPopuWindow;
 import com.yzx.yzxlocalstore.weight.CashierCountView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -204,6 +205,15 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
     }
 
     /**
+     * 实收金额
+     * @param money
+     */
+    @Override
+    public void setReceiptsMoney(String money) {
+        cashierCountView.setReceiptsMoney(money);
+    }
+
+    /**
      * 找零
      */
     @Override
@@ -308,6 +318,15 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
         layoutMidle.measure(w, h);
         int width = layoutMidle.getMeasuredWidth();
         return width;
+    }
+
+    /**
+     * 显示取单
+     */
+    @Override
+    public void showTakeOutOrder() {
+        TakeOutOrderPopuWindow takeOutOrderPopuWindow=new TakeOutOrderPopuWindow(this);
+        takeOutOrderPopuWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.RIGHT, 0, 0);
     }
 
 

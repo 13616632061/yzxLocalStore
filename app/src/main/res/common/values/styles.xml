@@ -17,4 +17,9 @@
         <item name="android:windowIsTranslucent">false</item>
     </style>
 
+    <style name="take_out_order_anim_style" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/take_out_order_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/take_out_order_exit_anim</item>
+    </style>
+
 </resources>

@@ -76,4 +76,7 @@ public interface IMainActivityPresenterImp {
     //显示商品快捷栏，计重栏
     void showGoodBarPosition(int position);
 
+    //初始化数据
+    void initData();
+
 }

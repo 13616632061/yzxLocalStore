@@ -26,12 +26,12 @@ public class OrderInfo {
     private double freeMoney;
     private double orderWeight;
     private long orderCreatTime;
-    private int orderStatus;
-    private int orderPaySatus;
+    private int orderStatus;//未完成：0，已完成：1
+    private int orderPaySatus;//未支付：0，已支付：1
     @Convert(columnType = String.class, converter = UserToConverte.class)
     private User orderCreatPerson;
     private String orderCompleteTime;
-    private int orderPayType;
+    private int orderPayType;//未支付：0，现金支付：1，移动支付：2，会员支付：3
     private double orderProfit;
     private boolean isSelect;
     private int orderType;

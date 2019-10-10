@@ -19,7 +19,10 @@ public interface IWeightBarFragmentPresenterImp {
     List<GoodsType> getDataType();
 
     //获取计重栏商品分类数据
-    void getWeightBarFragmentTypeData();
+    void getWeightBarFragmentTypeData(int type, int position);
+
+    //计重栏商品分类点击事件
+    void setWeightBarFragmentTypeListener(int type,int position);
 
     //初始化计重栏商品
     void initWeightBarFragmentAdapter();
@@ -28,7 +31,7 @@ public interface IWeightBarFragmentPresenterImp {
     List<GoodsInfo> getData();
 
     //获取计重栏商品数据
-    void getWeightBarData();
+    void getWeightBarData(int type,String typeName);
 
     //获取计重栏的宽度
     int getLayoutWidth();

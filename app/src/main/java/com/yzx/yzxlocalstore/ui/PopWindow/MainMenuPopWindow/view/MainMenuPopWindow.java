@@ -50,7 +50,7 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
 
     }
 
-    private void initView() {
+    public void initView() {
         iv_close = view.findViewById(R.id.iv_close);
         chanel_type = view.findViewById(R.id.chanel_type);
         tv_close = view.findViewById(R.id.tv_close);
@@ -76,6 +76,7 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
             }
         });
     }
+
 
     /**
      * 正常状态点击事件

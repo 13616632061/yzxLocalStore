@@ -182,6 +182,17 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
     }
 
     /**
+     * 实收金额
+     * @param money
+     */
+    public void setReceiptsMoney(String money){
+        String moneyStr = "0.00";
+        if (!TextUtils.isEmpty(money)) {
+            moneyStr = money;
+        }
+        tv_receipts.setText(ArithUtil.roundByScale(moneyStr, "#0.00"));
+    }
+    /**
      * 点击事件
      *
      * @param v

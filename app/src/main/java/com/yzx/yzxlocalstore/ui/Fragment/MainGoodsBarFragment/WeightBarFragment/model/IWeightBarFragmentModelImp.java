@@ -14,6 +14,9 @@ public interface IWeightBarFragmentModelImp {
     //计重栏商品分类数据
     List<GoodsType> getDataType();
 
-    //获取计重栏商品数据
-    List<GoodsInfo>  getWeightBarData();
+    //获取单个分类计重栏商品数据
+    List<GoodsInfo> getWeightBarData(String typeName);
+
+    //获取全部计重栏商品数据
+    List<GoodsInfo> getAllWeightBarData();
 }

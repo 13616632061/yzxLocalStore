@@ -47,6 +47,9 @@ public interface IMainActivityView {
     //应收金额
     void setReceivableMoney(String receivableMoney);
 
+    //实收金额
+    void setReceiptsMoney(String money);
+
     //找零
     void setChangeMoney();
 
@@ -69,4 +72,7 @@ public interface IMainActivityView {
 
     //获取商品栏的宽度
     int getLayoutMidelWidth();
+
+    //显示取单
+    void showTakeOutOrder();
 }

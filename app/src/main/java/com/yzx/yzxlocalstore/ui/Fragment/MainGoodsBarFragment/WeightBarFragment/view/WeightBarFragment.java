@@ -30,7 +30,7 @@ import butterknife.InjectView;
  * Created by Administrator on 2019/10/8.
  */
 
-public class WeightBarFragment extends BaseFragment implements IWeightBarFragmentView{
+public class WeightBarFragment extends BaseFragment implements IWeightBarFragmentView {
     @InjectView(R.id.left_list)
     RecyclerView leftList;
     @InjectView(R.id.right_list)
@@ -46,11 +46,12 @@ public class WeightBarFragment extends BaseFragment implements IWeightBarFragmen
     @Override
     protected void loadData() {
         EventBus.getDefault().register(this);
-        mPresenter=new WeightBarFragmentPresenter(this);
+        mPresenter = new WeightBarFragmentPresenter(this);
         mPresenter.initWeightBarFragmentTypeAdapter();
-        mPresenter.getWeightBarFragmentTypeData();
         mPresenter.initWeightBarFragmentAdapter();
-        mPresenter.getWeightBarData();
+        mPresenter.getWeightBarFragmentTypeData(0, 0);
+
+
     }
 
     /**
@@ -58,9 +59,23 @@ public class WeightBarFragment extends BaseFragment implements IWeightBarFragmen
      */
     @Override
     public WeightBarFragmentTypeAdapter initWeightBarFragmentTypeAdapter() {
-        WeightBarFragmentTypeAdapter adapter=new WeightBarFragmentTypeAdapter(R.layout.item_weight_bar_type,mPresenter.getDataType());
+        WeightBarFragmentTypeAdapter adapter = new WeightBarFragmentTypeAdapter(getActivity(),R.layout.item_weight_bar_type, mPresenter.getDataType());
         rightList.setLayoutManager(new LinearLayoutManager(getActivity()));
         rightList.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (position) {
+                    case 0:
+                        mPresenter.setWeightBarFragmentTypeListener(0, 0);
+                        break;
+                    default:
+                        mPresenter.setWeightBarFragmentTypeListener(1, position);
+
+                        break;
+                }
+            }
+        });
         return adapter;
     }
 
@@ -69,10 +84,10 @@ public class WeightBarFragment extends BaseFragment implements IWeightBarFragmen
      */
     @Override
     public ShortcutBarFragmentAdapter initWeightBarFragmentAdapter() {
-        ShortcutBarFragmentAdapter adapter=new ShortcutBarFragmentAdapter(R.layout.item_short_cut,mPresenter.getData(), mPresenter.getLayoutWidth(),4);
-        GridSpacingItemDecoration decoration=new GridSpacingItemDecoration(4, ConvertUtils.dp2px(10),true);
+        ShortcutBarFragmentAdapter adapter = new ShortcutBarFragmentAdapter(R.layout.item_short_cut, mPresenter.getData(), mPresenter.getLayoutWidth(), 4);
+        GridSpacingItemDecoration decoration = new GridSpacingItemDecoration(4, ConvertUtils.dp2px(10), true);
         leftList.addItemDecoration(decoration);
-        leftList.setLayoutManager(new GridLayoutManager(getActivity(),4));
+        leftList.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         leftList.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -82,13 +97,14 @@ public class WeightBarFragment extends BaseFragment implements IWeightBarFragmen
         });
         return adapter;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEven(MessageEvent msg) {
         if (msg.getKey().contains("addGoodsInfoSuccess")) {
-            mPresenter.getWeightBarFragmentTypeData();
-            mPresenter.getWeightBarData();
+            mPresenter.getWeightBarFragmentTypeData(0, 0);
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

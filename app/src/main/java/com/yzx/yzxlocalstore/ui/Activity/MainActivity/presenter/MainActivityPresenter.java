@@ -139,7 +139,10 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             addSaleGoodsInfo("123456");
         } else if (mView.getResources().getString(R.string.putOrder).equals(name)) {//挂单
             createOrder(0);
-        } else {
+        } else if (mView.getResources().getString(R.string.getOrder).equals(name)) {//取单单
+           mView.showTakeOutOrder();
+        }
+        else {
             MainToAction.toAction(mView, name);
         }
     }
@@ -185,17 +188,17 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             saleGoodsInfo.setGoodsInfo(list.get(0));
             saleGoodsInfo.setNum(1);
             saleGoodsInfo.setSubtotalPrice(list.get(0).getGoodPrice() * 1);
-            boolean isExit=false;
-            for (int i=0;i<saleGoodsInfoData.size();i++){
-                if (saleGoodsInfoData.get(i).getGoodsInfo().getId()==saleGoodsInfo.getGoodsInfo().getId()){
-                    double num=saleGoodsInfoData.get(i).getNum();
-                    saleGoodsInfoData.get(i).setNum(num+1);
+            boolean isExit = false;
+            for (int i = 0; i < saleGoodsInfoData.size(); i++) {
+                if (saleGoodsInfoData.get(i).getGoodsInfo().getId() == saleGoodsInfo.getGoodsInfo().getId()) {
+                    double num = saleGoodsInfoData.get(i).getNum();
+                    saleGoodsInfoData.get(i).setNum(num + 1);
                     mView.LeftSaleGoodsListScrollToPosition(i);
                     setSelectSaleGoodsInfoItem(i);
-                    isExit=true;
+                    isExit = true;
                 }
             }
-            if (!isExit){
+            if (!isExit) {
                 saleGoodsInfoData.add(saleGoodsInfo);
                 mView.LeftSaleGoodsListScrollToPosition(saleGoodsInfoData.size() - 1);
                 setSelectSaleGoodsInfoItem(saleGoodsInfoData.size() - 1);
@@ -263,7 +266,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public void setTotalPrice() {
         double totalPrice = 0;
         for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
-            totalPrice += saleGoodsInfo.getSubtotalPrice()*saleGoodsInfo.getNum();
+            totalPrice += saleGoodsInfo.getSubtotalPrice() * saleGoodsInfo.getNum();
         }
         mView.setTotalPrice(ArithUtil.roundByScale(totalPrice + "", "#0.00"));
     }
@@ -275,7 +278,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public double setReceivableMoney() {
         double totalPrice = 0;
         for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
-            totalPrice += saleGoodsInfo.getSubtotalPrice()*saleGoodsInfo.getNum();
+            totalPrice += saleGoodsInfo.getSubtotalPrice() * saleGoodsInfo.getNum();
         }
         mView.setReceivableMoney(ArithUtil.roundByScale(totalPrice + "", "#0.00"));
         return totalPrice;
@@ -314,6 +317,8 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
                     return;
                 }
                 orderInfo.setOrderPayType(1);
+                orderInfo.setOrderPaySatus(1);
+                orderInfo.setOrderStatus(1);
                 break;
             case 2://移动支付
                 orderInfo.setOrderPayType(2);
@@ -325,6 +330,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         mModel.createOrder(orderInfo);
         saleGoodsInfoData.clear();
         mainLeftSaleGoodsListAdapter.notifyDataSetChanged();
+        initData();
 
         switch (type) {
             case 0:
@@ -388,21 +394,33 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
      */
     @Override
     public void showGoodBarPosition(int position) {
-        Bundle bundle=new Bundle();
-        bundle.putInt("width",mView.getLayoutMidelWidth());
+        Bundle bundle = new Bundle();
+        bundle.putInt("width", mView.getLayoutMidelWidth());
         switch (position) {
             case 0:
-                ShortcutBarFragment barFragment=new ShortcutBarFragment();
+                ShortcutBarFragment barFragment = new ShortcutBarFragment();
                 barFragment.setArguments(bundle);
                 mView.showShortcutBarFragment(barFragment);
                 break;
             case 1:
-                WeightBarFragment weightBarFragment=new WeightBarFragment();
+                WeightBarFragment weightBarFragment = new WeightBarFragment();
                 weightBarFragment.setArguments(bundle);
                 mView.showWeightBarFragment(weightBarFragment);
                 break;
         }
         mView.setGoodBarColor(position);
+    }
+
+    /**
+     * 初始化数据
+     */
+    @Override
+    public void initData() {
+        mView.setTotalGoodNum("0.00");
+        mView.setTotalPrice("0.00");
+        mView.setReceivableMoney("0.00");
+        mView.setReceiptsMoney("0.00");
+        mView.setChangeMoney();
     }
 
 
