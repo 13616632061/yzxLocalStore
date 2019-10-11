@@ -85,5 +85,14 @@ public class MainActivityModel implements IMainActivityModelImp {
         GreenDaoHelp.getDaoSession().getOrderInfoDao().insert(orderInfo);
     }
 
+    /**
+     * 更新订单
+     * @param orderInfo
+     */
+    @Override
+    public void updateOrder(OrderInfo orderInfo) {
+        GreenDaoHelp.getDaoSession().getOrderInfoDao().update(orderInfo);
+    }
+
 
 }

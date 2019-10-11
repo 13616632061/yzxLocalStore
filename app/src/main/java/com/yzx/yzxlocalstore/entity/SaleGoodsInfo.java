@@ -10,6 +10,7 @@ public class SaleGoodsInfo {
     private double num;//数量
     private double subtotalPrice;//小计
     private boolean isSelectItem;//是否选中
+    private String orderId;//订单id
 
     public GoodsInfo getGoodsInfo() {
         return goodsInfo;
@@ -43,6 +44,14 @@ public class SaleGoodsInfo {
         isSelectItem = selectItem;
     }
 
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     @Override
     public String toString() {
         return "SaleGoodsInfo{" +
@@ -50,6 +59,7 @@ public class SaleGoodsInfo {
                 ", num=" + num +
                 ", subtotalPrice=" + subtotalPrice +
                 ", isSelectItem=" + isSelectItem +
+                ", orderId='" + orderId + '\'' +
                 '}';
     }
 }

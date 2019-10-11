@@ -28,12 +28,12 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Number = new Property(1, String.class, "number", false, "NUMBER");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
         public final static Property Phone = new Property(3, String.class, "phone", false, "PHONE");
-        public final static Property Level = new Property(4, int.class, "level", false, "LEVEL");
-        public final static Property Status = new Property(5, boolean.class, "status", false, "STATUS");
-        public final static Property SalesCommission = new Property(6, double.class, "salesCommission", false, "SALES_COMMISSION");
-        public final static Property IsShowBuyingPrice = new Property(7, boolean.class, "isShowBuyingPrice", false, "IS_SHOW_BUYING_PRICE");
-        public final static Property IsShowBuyingProfit = new Property(8, boolean.class, "isShowBuyingProfit", false, "IS_SHOW_BUYING_PROFIT");
-        public final static Property IsShowBuyingStore = new Property(9, boolean.class, "isShowBuyingStore", false, "IS_SHOW_BUYING_STORE");
+        public final static Property Level = new Property(4, Integer.class, "level", false, "LEVEL");
+        public final static Property Status = new Property(5, Boolean.class, "status", false, "STATUS");
+        public final static Property SalesCommission = new Property(6, Double.class, "salesCommission", false, "SALES_COMMISSION");
+        public final static Property IsShowBuyingPrice = new Property(7, Boolean.class, "isShowBuyingPrice", false, "IS_SHOW_BUYING_PRICE");
+        public final static Property IsShowBuyingProfit = new Property(8, Boolean.class, "isShowBuyingProfit", false, "IS_SHOW_BUYING_PROFIT");
+        public final static Property IsShowBuyingStore = new Property(9, Boolean.class, "isShowBuyingStore", false, "IS_SHOW_BUYING_STORE");
         public final static Property Pwd = new Property(10, String.class, "pwd", false, "PWD");
     }
 
@@ -54,12 +54,12 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"NUMBER\" TEXT UNIQUE ," + // 1: number
                 "\"NAME\" TEXT," + // 2: name
                 "\"PHONE\" TEXT," + // 3: phone
-                "\"LEVEL\" INTEGER NOT NULL ," + // 4: level
-                "\"STATUS\" INTEGER NOT NULL ," + // 5: status
-                "\"SALES_COMMISSION\" REAL NOT NULL ," + // 6: salesCommission
-                "\"IS_SHOW_BUYING_PRICE\" INTEGER NOT NULL ," + // 7: isShowBuyingPrice
-                "\"IS_SHOW_BUYING_PROFIT\" INTEGER NOT NULL ," + // 8: isShowBuyingProfit
-                "\"IS_SHOW_BUYING_STORE\" INTEGER NOT NULL ," + // 9: isShowBuyingStore
+                "\"LEVEL\" INTEGER," + // 4: level
+                "\"STATUS\" INTEGER," + // 5: status
+                "\"SALES_COMMISSION\" REAL," + // 6: salesCommission
+                "\"IS_SHOW_BUYING_PRICE\" INTEGER," + // 7: isShowBuyingPrice
+                "\"IS_SHOW_BUYING_PROFIT\" INTEGER," + // 8: isShowBuyingProfit
+                "\"IS_SHOW_BUYING_STORE\" INTEGER," + // 9: isShowBuyingStore
                 "\"PWD\" TEXT);"); // 10: pwd
     }
 
@@ -92,12 +92,36 @@ public class UserDao extends AbstractDao<User, Long> {
         if (phone != null) {
             stmt.bindString(4, phone);
         }
-        stmt.bindLong(5, entity.getLevel());
-        stmt.bindLong(6, entity.getStatus() ? 1L: 0L);
-        stmt.bindDouble(7, entity.getSalesCommission());
-        stmt.bindLong(8, entity.getIsShowBuyingPrice() ? 1L: 0L);
-        stmt.bindLong(9, entity.getIsShowBuyingProfit() ? 1L: 0L);
-        stmt.bindLong(10, entity.getIsShowBuyingStore() ? 1L: 0L);
+ 
+        Integer level = entity.getLevel();
+        if (level != null) {
+            stmt.bindLong(5, level);
+        }
+ 
+        Boolean status = entity.getStatus();
+        if (status != null) {
+            stmt.bindLong(6, status ? 1L: 0L);
+        }
+ 
+        Double salesCommission = entity.getSalesCommission();
+        if (salesCommission != null) {
+            stmt.bindDouble(7, salesCommission);
+        }
+ 
+        Boolean isShowBuyingPrice = entity.getIsShowBuyingPrice();
+        if (isShowBuyingPrice != null) {
+            stmt.bindLong(8, isShowBuyingPrice ? 1L: 0L);
+        }
+ 
+        Boolean isShowBuyingProfit = entity.getIsShowBuyingProfit();
+        if (isShowBuyingProfit != null) {
+            stmt.bindLong(9, isShowBuyingProfit ? 1L: 0L);
+        }
+ 
+        Boolean isShowBuyingStore = entity.getIsShowBuyingStore();
+        if (isShowBuyingStore != null) {
+            stmt.bindLong(10, isShowBuyingStore ? 1L: 0L);
+        }
  
         String pwd = entity.getPwd();
         if (pwd != null) {
@@ -128,12 +152,36 @@ public class UserDao extends AbstractDao<User, Long> {
         if (phone != null) {
             stmt.bindString(4, phone);
         }
-        stmt.bindLong(5, entity.getLevel());
-        stmt.bindLong(6, entity.getStatus() ? 1L: 0L);
-        stmt.bindDouble(7, entity.getSalesCommission());
-        stmt.bindLong(8, entity.getIsShowBuyingPrice() ? 1L: 0L);
-        stmt.bindLong(9, entity.getIsShowBuyingProfit() ? 1L: 0L);
-        stmt.bindLong(10, entity.getIsShowBuyingStore() ? 1L: 0L);
+ 
+        Integer level = entity.getLevel();
+        if (level != null) {
+            stmt.bindLong(5, level);
+        }
+ 
+        Boolean status = entity.getStatus();
+        if (status != null) {
+            stmt.bindLong(6, status ? 1L: 0L);
+        }
+ 
+        Double salesCommission = entity.getSalesCommission();
+        if (salesCommission != null) {
+            stmt.bindDouble(7, salesCommission);
+        }
+ 
+        Boolean isShowBuyingPrice = entity.getIsShowBuyingPrice();
+        if (isShowBuyingPrice != null) {
+            stmt.bindLong(8, isShowBuyingPrice ? 1L: 0L);
+        }
+ 
+        Boolean isShowBuyingProfit = entity.getIsShowBuyingProfit();
+        if (isShowBuyingProfit != null) {
+            stmt.bindLong(9, isShowBuyingProfit ? 1L: 0L);
+        }
+ 
+        Boolean isShowBuyingStore = entity.getIsShowBuyingStore();
+        if (isShowBuyingStore != null) {
+            stmt.bindLong(10, isShowBuyingStore ? 1L: 0L);
+        }
  
         String pwd = entity.getPwd();
         if (pwd != null) {
@@ -153,12 +201,12 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // number
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // phone
-            cursor.getInt(offset + 4), // level
-            cursor.getShort(offset + 5) != 0, // status
-            cursor.getDouble(offset + 6), // salesCommission
-            cursor.getShort(offset + 7) != 0, // isShowBuyingPrice
-            cursor.getShort(offset + 8) != 0, // isShowBuyingProfit
-            cursor.getShort(offset + 9) != 0, // isShowBuyingStore
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // level
+            cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0, // status
+            cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6), // salesCommission
+            cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0, // isShowBuyingPrice
+            cursor.isNull(offset + 8) ? null : cursor.getShort(offset + 8) != 0, // isShowBuyingProfit
+            cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0, // isShowBuyingStore
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // pwd
         );
         return entity;
@@ -170,12 +218,12 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setNumber(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setPhone(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setLevel(cursor.getInt(offset + 4));
-        entity.setStatus(cursor.getShort(offset + 5) != 0);
-        entity.setSalesCommission(cursor.getDouble(offset + 6));
-        entity.setIsShowBuyingPrice(cursor.getShort(offset + 7) != 0);
-        entity.setIsShowBuyingProfit(cursor.getShort(offset + 8) != 0);
-        entity.setIsShowBuyingStore(cursor.getShort(offset + 9) != 0);
+        entity.setLevel(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setStatus(cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0);
+        entity.setSalesCommission(cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6));
+        entity.setIsShowBuyingPrice(cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0);
+        entity.setIsShowBuyingProfit(cursor.isNull(offset + 8) ? null : cursor.getShort(offset + 8) != 0);
+        entity.setIsShowBuyingStore(cursor.isNull(offset + 9) ? null : cursor.getShort(offset + 9) != 0);
         entity.setPwd(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }
     

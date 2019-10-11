@@ -49,7 +49,7 @@ public class MainMenuPopWindowPresenter implements IMainMenuPopWindowPresenterIm
         List<TypeBean> typeList = mModel.getTypeInfo();
         LogUtils.e("TypeBean: " + typeList);
         for (TypeBean typeBean : typeList) {
-            if (typeBean.getTypeCode() == 1) {
+            if (typeBean.getTypeCode() != null && typeBean.getTypeCode() == 1) {
                 Channel channel = new Channel(typeBean.getName(), typeBean.getTypeCode(), null);
                 mChannelTypeList.add(channel);
             }
@@ -67,7 +67,7 @@ public class MainMenuPopWindowPresenter implements IMainMenuPopWindowPresenterIm
         List<Channel> mChannelTypeList = new ArrayList<>();
         List<TypeBean> typeList = mModel.getTypeInfo();
         for (TypeBean typeBean : typeList) {
-            if (typeBean.getTypeCode() != 1) {
+            if (typeBean.getTypeCode() != null && typeBean.getTypeCode() != 1) {
                 Channel channel = new Channel(typeBean.getName(), typeBean.getTypeCode(), null);
                 mChannelTypeList.add(channel);
             }

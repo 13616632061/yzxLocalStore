@@ -28,7 +28,7 @@ public class TypeBeanDao extends AbstractDao<TypeBean, Long> {
         public final static Property Id = new Property(1, Long.class, "id", false, "ID");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
         public final static Property ChannelTag = new Property(3, String.class, "channelTag", false, "CHANNEL_TAG");
-        public final static Property TypeCode = new Property(4, int.class, "typeCode", false, "TYPE_CODE");
+        public final static Property TypeCode = new Property(4, Integer.class, "typeCode", false, "TYPE_CODE");
     }
 
 
@@ -48,7 +48,7 @@ public class TypeBeanDao extends AbstractDao<TypeBean, Long> {
                 "\"ID\" INTEGER," + // 1: id
                 "\"NAME\" TEXT," + // 2: name
                 "\"CHANNEL_TAG\" TEXT," + // 3: channelTag
-                "\"TYPE_CODE\" INTEGER NOT NULL );"); // 4: typeCode
+                "\"TYPE_CODE\" INTEGER);"); // 4: typeCode
     }
 
     /** Drops the underlying database table. */
@@ -80,7 +80,11 @@ public class TypeBeanDao extends AbstractDao<TypeBean, Long> {
         if (channelTag != null) {
             stmt.bindString(4, channelTag);
         }
-        stmt.bindLong(5, entity.getTypeCode());
+ 
+        Integer typeCode = entity.getTypeCode();
+        if (typeCode != null) {
+            stmt.bindLong(5, typeCode);
+        }
     }
 
     @Override
@@ -106,7 +110,11 @@ public class TypeBeanDao extends AbstractDao<TypeBean, Long> {
         if (channelTag != null) {
             stmt.bindString(4, channelTag);
         }
-        stmt.bindLong(5, entity.getTypeCode());
+ 
+        Integer typeCode = entity.getTypeCode();
+        if (typeCode != null) {
+            stmt.bindLong(5, typeCode);
+        }
     }
 
     @Override
@@ -121,7 +129,7 @@ public class TypeBeanDao extends AbstractDao<TypeBean, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // id
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // channelTag
-            cursor.getInt(offset + 4) // typeCode
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4) // typeCode
         );
         return entity;
     }
@@ -132,7 +140,7 @@ public class TypeBeanDao extends AbstractDao<TypeBean, Long> {
         entity.setId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setChannelTag(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setTypeCode(cursor.getInt(offset + 4));
+        entity.setTypeCode(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
      }
     
     @Override

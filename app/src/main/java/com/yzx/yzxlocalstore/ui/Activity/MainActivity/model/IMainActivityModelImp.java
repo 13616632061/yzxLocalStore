@@ -28,5 +28,8 @@ public interface IMainActivityModelImp {
     //创建订单
     void createOrder(OrderInfo orderInfo);
 
+    //更新订单
+    void updateOrder(OrderInfo orderInfo);
+
 
 }

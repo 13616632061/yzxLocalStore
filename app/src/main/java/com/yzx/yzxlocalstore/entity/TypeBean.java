@@ -17,48 +17,20 @@ public class TypeBean {
     private Long id;//登录用户id
     private String name;
     private String channelTag;
-    private int typeCode;//1为常用栏目
-    @Generated(hash = 2094889216)
+    private Integer typeCode=0;//1为常用栏目
+
+    @Generated(hash = 1493979706)
     public TypeBean(Long typeId, Long id, String name, String channelTag,
-            int typeCode) {
+            Integer typeCode) {
         this.typeId = typeId;
         this.id = id;
         this.name = name;
         this.channelTag = channelTag;
         this.typeCode = typeCode;
     }
+
     @Generated(hash = 119682038)
     public TypeBean() {
-    }
-    public Long getTypeId() {
-        return this.typeId;
-    }
-    public void setTypeId(Long typeId) {
-        this.typeId = typeId;
-    }
-    public Long getId() {
-        return this.id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getName() {
-        return this.name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getChannelTag() {
-        return this.channelTag;
-    }
-    public void setChannelTag(String channelTag) {
-        this.channelTag = channelTag;
-    }
-    public int getTypeCode() {
-        return this.typeCode;
-    }
-    public void setTypeCode(int typeCode) {
-        this.typeCode = typeCode;
     }
 
     @Override
@@ -70,5 +42,45 @@ public class TypeBean {
                 ", channelTag='" + channelTag + '\'' +
                 ", typeCode=" + typeCode +
                 '}';
+    }
+
+    public Long getTypeId() {
+        return this.typeId;
+    }
+
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getChannelTag() {
+        return this.channelTag;
+    }
+
+    public void setChannelTag(String channelTag) {
+        this.channelTag = channelTag;
+    }
+
+    public Integer getTypeCode() {
+        return this.typeCode;
+    }
+
+    public void setTypeCode(Integer typeCode) {
+        this.typeCode = typeCode;
     }
 }

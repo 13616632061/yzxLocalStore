@@ -46,6 +46,8 @@ ext {
             "recyclertablayout"            : "com.nshmura:recyclertablayout:1.5.0",
             //数据库
             "greendao"                     : "org.greenrobot:greendao:3.2.2",
+            //数据库升级
+            "GreenDaoUpgradeHelper"        : 'io.github.yuweiguocn:GreenDaoUpgradeHelper:v2.2.1',
             //权限
             "permissiongen"                : "com.lovedise:permissiongen:0.0.6",
             //Gson数据解析

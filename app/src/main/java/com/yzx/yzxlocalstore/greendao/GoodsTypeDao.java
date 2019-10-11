@@ -26,9 +26,9 @@ public class GoodsTypeDao extends AbstractDao<GoodsType, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property TypeName = new Property(1, String.class, "typeName", false, "TYPE_NAME");
-        public final static Property Sort = new Property(2, int.class, "sort", false, "SORT");
-        public final static Property Status = new Property(3, boolean.class, "status", false, "STATUS");
-        public final static Property IsSelect = new Property(4, boolean.class, "isSelect", false, "IS_SELECT");
+        public final static Property Sort = new Property(2, Integer.class, "sort", false, "SORT");
+        public final static Property Status = new Property(3, Boolean.class, "status", false, "STATUS");
+        public final static Property IsSelect = new Property(4, Boolean.class, "isSelect", false, "IS_SELECT");
     }
 
 
@@ -46,9 +46,9 @@ public class GoodsTypeDao extends AbstractDao<GoodsType, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS_TYPE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"TYPE_NAME\" TEXT UNIQUE ," + // 1: typeName
-                "\"SORT\" INTEGER NOT NULL ," + // 2: sort
-                "\"STATUS\" INTEGER NOT NULL ," + // 3: status
-                "\"IS_SELECT\" INTEGER NOT NULL );"); // 4: isSelect
+                "\"SORT\" INTEGER," + // 2: sort
+                "\"STATUS\" INTEGER," + // 3: status
+                "\"IS_SELECT\" INTEGER);"); // 4: isSelect
     }
 
     /** Drops the underlying database table. */
@@ -70,9 +70,21 @@ public class GoodsTypeDao extends AbstractDao<GoodsType, Long> {
         if (typeName != null) {
             stmt.bindString(2, typeName);
         }
-        stmt.bindLong(3, entity.getSort());
-        stmt.bindLong(4, entity.getStatus() ? 1L: 0L);
-        stmt.bindLong(5, entity.getIsSelect() ? 1L: 0L);
+ 
+        Integer sort = entity.getSort();
+        if (sort != null) {
+            stmt.bindLong(3, sort);
+        }
+ 
+        Boolean status = entity.getStatus();
+        if (status != null) {
+            stmt.bindLong(4, status ? 1L: 0L);
+        }
+ 
+        Boolean isSelect = entity.getIsSelect();
+        if (isSelect != null) {
+            stmt.bindLong(5, isSelect ? 1L: 0L);
+        }
     }
 
     @Override
@@ -88,9 +100,21 @@ public class GoodsTypeDao extends AbstractDao<GoodsType, Long> {
         if (typeName != null) {
             stmt.bindString(2, typeName);
         }
-        stmt.bindLong(3, entity.getSort());
-        stmt.bindLong(4, entity.getStatus() ? 1L: 0L);
-        stmt.bindLong(5, entity.getIsSelect() ? 1L: 0L);
+ 
+        Integer sort = entity.getSort();
+        if (sort != null) {
+            stmt.bindLong(3, sort);
+        }
+ 
+        Boolean status = entity.getStatus();
+        if (status != null) {
+            stmt.bindLong(4, status ? 1L: 0L);
+        }
+ 
+        Boolean isSelect = entity.getIsSelect();
+        if (isSelect != null) {
+            stmt.bindLong(5, isSelect ? 1L: 0L);
+        }
     }
 
     @Override
@@ -103,9 +127,9 @@ public class GoodsTypeDao extends AbstractDao<GoodsType, Long> {
         GoodsType entity = new GoodsType( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // typeName
-            cursor.getInt(offset + 2), // sort
-            cursor.getShort(offset + 3) != 0, // status
-            cursor.getShort(offset + 4) != 0 // isSelect
+            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // sort
+            cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0, // status
+            cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0 // isSelect
         );
         return entity;
     }
@@ -114,9 +138,9 @@ public class GoodsTypeDao extends AbstractDao<GoodsType, Long> {
     public void readEntity(Cursor cursor, GoodsType entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setTypeName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setSort(cursor.getInt(offset + 2));
-        entity.setStatus(cursor.getShort(offset + 3) != 0);
-        entity.setIsSelect(cursor.getShort(offset + 4) != 0);
+        entity.setSort(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
+        entity.setStatus(cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0);
+        entity.setIsSelect(cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0);
      }
     
     @Override

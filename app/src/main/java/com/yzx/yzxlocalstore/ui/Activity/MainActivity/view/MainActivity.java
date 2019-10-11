@@ -17,6 +17,8 @@ import com.yzx.lib.base.BaseActivity;
 import com.yzx.lib.util.ScanGunKeyEventHelper;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
+import com.yzx.yzxlocalstore.entity.GoodsInfo;
+import com.yzx.yzxlocalstore.entity.OrderInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter.MainActivityPresenter;
 import com.yzx.yzxlocalstore.ui.Adapter.MainBottomTypeAdapter;
@@ -325,7 +327,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
      */
     @Override
     public void showTakeOutOrder() {
-        TakeOutOrderPopuWindow takeOutOrderPopuWindow=new TakeOutOrderPopuWindow(this);
+        TakeOutOrderPopuWindow takeOutOrderPopuWindow=TakeOutOrderPopuWindow.getInstance(this);
         takeOutOrderPopuWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.RIGHT, 0, 0);
     }
 
@@ -359,6 +361,9 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
         }else if (map.containsKey("addSaleGood")){//添加销售商品
             String code= (String) map.get("addSaleGood");
             mPresenter.addSaleGoodsInfo(code);
+        }else if (map.containsKey("takeOutOrderInfos")){//取单
+            OrderInfo orderInfos= (OrderInfo) map.get("takeOutOrderInfos");
+            mPresenter.takeOutOrder(orderInfos);
         }
     }
 

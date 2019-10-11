@@ -13,4 +13,7 @@ public interface ITakeOutOrderPopuWindowImp {
 
     //初始化数据列表
     TakeOutOrderPopuWindowAdapter initTakeOutOrderPopuWindowAdapter();
+
+    //退出
+    void exit();
 }

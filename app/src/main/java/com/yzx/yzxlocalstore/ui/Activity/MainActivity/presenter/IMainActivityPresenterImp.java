@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 
 import com.cheng.channel.Channel;
+import com.yzx.yzxlocalstore.entity.GoodsInfo;
+import com.yzx.yzxlocalstore.entity.OrderInfo;
 import com.yzx.yzxlocalstore.entity.SaleGoodsInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 
@@ -61,6 +63,12 @@ public interface IMainActivityPresenterImp {
     //创建订单
     void createOrder(int type);
 
+    //更新订单
+    void updateOrder(int type);
+
+    //支付类型
+    void orderPayType(OrderInfo orderInfo,int type);
+
     //获取订单id
     String getOrderId();
 
@@ -70,6 +78,7 @@ public interface IMainActivityPresenterImp {
     //选择支付方式
     void selcetPayment();
 
+
     //扫码枪事件解析
     void scanAnalysisKeyEvent(KeyEvent event);
 
@@ -78,5 +87,8 @@ public interface IMainActivityPresenterImp {
 
     //初始化数据
     void initData();
+
+    //取单
+    void takeOutOrder(OrderInfo orderInfos);
 
 }

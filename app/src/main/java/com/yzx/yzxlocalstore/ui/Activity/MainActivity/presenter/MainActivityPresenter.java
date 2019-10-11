@@ -2,6 +2,7 @@ package com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     private List<SaleGoodsInfo> saleGoodsInfoData = new ArrayList<>();
     private MainLeftSaleGoodsListAdapter mainLeftSaleGoodsListAdapter;//左边商品销售列表
     private ScanGunKeyEventHelper mScanGunKeyEventHelper;//扫码枪工具类
+    private OrderInfo mOrderInfos;//订单信息
 
 
     public MainActivityPresenter(MainActivity mView) {
@@ -92,6 +94,8 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             typeBean.setName(typeName);
             if (typeName.equals(mView.getResources().getString(R.string.moreType))) {
                 typeBean.setTypeCode(1);
+            } else {
+                typeBean.setTypeCode(0);
             }
             typeBeanList.add(typeBean);
         }
@@ -140,9 +144,8 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         } else if (mView.getResources().getString(R.string.putOrder).equals(name)) {//挂单
             createOrder(0);
         } else if (mView.getResources().getString(R.string.getOrder).equals(name)) {//取单单
-           mView.showTakeOutOrder();
-        }
-        else {
+            mView.showTakeOutOrder();
+        } else {
             MainToAction.toAction(mView, name);
         }
     }
@@ -186,19 +189,21 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         if (list.size() > 0) {
             SaleGoodsInfo saleGoodsInfo = new SaleGoodsInfo();
             saleGoodsInfo.setGoodsInfo(list.get(0));
-            saleGoodsInfo.setNum(1);
-            saleGoodsInfo.setSubtotalPrice(list.get(0).getGoodPrice() * 1);
             boolean isExit = false;
             for (int i = 0; i < saleGoodsInfoData.size(); i++) {
                 if (saleGoodsInfoData.get(i).getGoodsInfo().getId() == saleGoodsInfo.getGoodsInfo().getId()) {
                     double num = saleGoodsInfoData.get(i).getNum();
                     saleGoodsInfoData.get(i).setNum(num + 1);
+                    saleGoodsInfoData.get(i).setSubtotalPrice(list.get(0).getGoodPrice() * saleGoodsInfoData.get(i).getNum());
+                    saleGoodsInfoData.get(i).getGoodsInfo().setNum(num + 1);
                     mView.LeftSaleGoodsListScrollToPosition(i);
                     setSelectSaleGoodsInfoItem(i);
                     isExit = true;
                 }
             }
             if (!isExit) {
+                saleGoodsInfo.setNum(1);
+                saleGoodsInfo.setSubtotalPrice(list.get(0).getGoodPrice() * 1);
                 saleGoodsInfoData.add(saleGoodsInfo);
                 mView.LeftSaleGoodsListScrollToPosition(saleGoodsInfoData.size() - 1);
                 setSelectSaleGoodsInfoItem(saleGoodsInfoData.size() - 1);
@@ -266,7 +271,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public void setTotalPrice() {
         double totalPrice = 0;
         for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
-            totalPrice += saleGoodsInfo.getSubtotalPrice() * saleGoodsInfo.getNum();
+            totalPrice += saleGoodsInfo.getSubtotalPrice();
         }
         mView.setTotalPrice(ArithUtil.roundByScale(totalPrice + "", "#0.00"));
     }
@@ -278,7 +283,7 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public double setReceivableMoney() {
         double totalPrice = 0;
         for (SaleGoodsInfo saleGoodsInfo : saleGoodsInfoData) {
-            totalPrice += saleGoodsInfo.getSubtotalPrice() * saleGoodsInfo.getNum();
+            totalPrice += saleGoodsInfo.getSubtotalPrice();
         }
         mView.setReceivableMoney(ArithUtil.roundByScale(totalPrice + "", "#0.00"));
         return totalPrice;
@@ -294,6 +299,10 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         if (saleGoodsInfoData.size() <= 0) {
             return;
         }
+        if (type == 1 && mView.getChangeMoney() < 0) {
+            mView.showMsg(3);
+            return;
+        }
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderId(getOrderId());
         List<GoodsInfo> goodsInfos = new ArrayList<>();
@@ -307,27 +316,12 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         orderInfo.setTotalMoney(setReceivableMoney());
         orderInfo.setOrderProfit(getOrderProfit());
         orderInfo.setOrderCreatTime(TimeUtils.getNowMills());
-        switch (type) {
-            case 0://挂单  正常订单:0,挂单:1,作废订单:2
-                orderInfo.setOrderType(1);
-                break;
-            case 1://现金支付：1，移动支付：2，会员支付：3，
-                if (mView.getChangeMoney() < 0) {
-                    mView.showMsg(3);
-                    return;
-                }
-                orderInfo.setOrderPayType(1);
-                orderInfo.setOrderPaySatus(1);
-                orderInfo.setOrderStatus(1);
-                break;
-            case 2://移动支付
-                orderInfo.setOrderPayType(2);
-                break;
-            case 3://会员支付
-                orderInfo.setOrderPayType(3);
-                break;
+        orderPayType(orderInfo, type);
+        if (mOrderInfos == null) {
+            mModel.createOrder(orderInfo);
+        } else {
+            updateOrder(type);
         }
-        mModel.createOrder(orderInfo);
         saleGoodsInfoData.clear();
         mainLeftSaleGoodsListAdapter.notifyDataSetChanged();
         initData();
@@ -338,6 +332,53 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
                 break;
             default:
                 mView.showMsg(2);
+                break;
+        }
+    }
+
+    /**
+     * 更新订单
+     */
+    @Override
+    public void updateOrder(int type) {
+        for (int i = 0; i < mOrderInfos.getGoodsInfos().size(); i++) {
+            mOrderInfos.getGoodsInfos().clear();
+            for (SaleGoodsInfo bean : saleGoodsInfoData) {
+                mOrderInfos.getGoodsInfos().add(bean.getGoodsInfo());
+            }
+        }
+        mOrderInfos.setGoodTotalNum(setTotalGoodNum());
+        mOrderInfos.setTotalMoney(setReceivableMoney());
+        mOrderInfos.setOrderProfit(getOrderProfit());
+        orderPayType(mOrderInfos, type);
+        mModel.updateOrder(mOrderInfos);
+    }
+
+    /**
+     * 支付类型
+     *
+     * @param type
+     */
+    @Override
+    public void orderPayType(OrderInfo orderInfo, int type) {
+        switch (type) {
+            case 0://挂单  正常订单:0,挂单:1,作废订单:2
+                orderInfo.setOrderType(1);
+                break;
+            case 1://现金支付：1，移动支付：2，会员支付：3，
+                orderInfo.setOrderPayType(1);
+                orderInfo.setOrderPaySatus(1);
+                orderInfo.setOrderStatus(1);
+                break;
+            case 2://移动支付
+                orderInfo.setOrderPaySatus(1);
+                orderInfo.setOrderPayType(2);
+                orderInfo.setOrderStatus(1);
+                break;
+            case 3://会员支付
+                orderInfo.setOrderPaySatus(1);
+                orderInfo.setOrderPayType(3);
+                orderInfo.setOrderStatus(1);
                 break;
         }
     }
@@ -421,6 +462,33 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
         mView.setReceivableMoney("0.00");
         mView.setReceiptsMoney("0.00");
         mView.setChangeMoney();
+        mOrderInfos = null;
+    }
+
+    /**
+     * 取单
+     *
+     * @param orderInfos
+     */
+    @Override
+    public void takeOutOrder(OrderInfo orderInfos) {
+        mOrderInfos = orderInfos;
+        saleGoodsInfoData.clear();
+        if (orderInfos != null && orderInfos.getGoodsInfos() != null) {
+            for (GoodsInfo bean : orderInfos.getGoodsInfos()) {
+                SaleGoodsInfo saleGoodsInfo = new SaleGoodsInfo();
+                saleGoodsInfo.setGoodsInfo(bean);
+                saleGoodsInfo.setNum(bean.getNum());
+                saleGoodsInfo.setSubtotalPrice(bean.getGoodPrice() * bean.getNum());
+                saleGoodsInfo.setOrderId(orderInfos.getOrderId());
+                saleGoodsInfoData.add(saleGoodsInfo);
+            }
+            mainLeftSaleGoodsListAdapter.notifyDataSetChanged();
+            setTotalGoodNum();
+            setTotalPrice();
+            setReceivableMoney();
+            mView.setChangeMoney();
+        }
     }
 
 
