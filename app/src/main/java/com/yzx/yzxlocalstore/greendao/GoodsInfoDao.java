@@ -46,6 +46,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         public final static Property IsAllSelect = new Property(19, Boolean.class, "isAllSelect", false, "IS_ALL_SELECT");
         public final static Property Num = new Property(20, Double.class, "num", false, "NUM");
         public final static Property TypeName = new Property(21, String.class, "typeName", false, "TYPE_NAME");
+        public final static Property Sort = new Property(22, Integer.class, "sort", false, "SORT");
     }
 
 
@@ -82,7 +83,8 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
                 "\"IS_SELECT\" INTEGER," + // 18: isSelect
                 "\"IS_ALL_SELECT\" INTEGER," + // 19: isAllSelect
                 "\"NUM\" REAL," + // 20: num
-                "\"TYPE_NAME\" TEXT);"); // 21: typeName
+                "\"TYPE_NAME\" TEXT," + // 21: typeName
+                "\"SORT\" INTEGER);"); // 22: sort
     }
 
     /** Drops the underlying database table. */
@@ -204,6 +206,11 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         if (typeName != null) {
             stmt.bindString(22, typeName);
         }
+ 
+        Integer sort = entity.getSort();
+        if (sort != null) {
+            stmt.bindLong(23, sort);
+        }
     }
 
     @Override
@@ -319,6 +326,11 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         if (typeName != null) {
             stmt.bindString(22, typeName);
         }
+ 
+        Integer sort = entity.getSort();
+        if (sort != null) {
+            stmt.bindLong(23, sort);
+        }
     }
 
     @Override
@@ -350,7 +362,8 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
             cursor.isNull(offset + 18) ? null : cursor.getShort(offset + 18) != 0, // isSelect
             cursor.isNull(offset + 19) ? null : cursor.getShort(offset + 19) != 0, // isAllSelect
             cursor.isNull(offset + 20) ? null : cursor.getDouble(offset + 20), // num
-            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21) // typeName
+            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21), // typeName
+            cursor.isNull(offset + 22) ? null : cursor.getInt(offset + 22) // sort
         );
         return entity;
     }
@@ -379,6 +392,7 @@ public class GoodsInfoDao extends AbstractDao<GoodsInfo, Long> {
         entity.setIsAllSelect(cursor.isNull(offset + 19) ? null : cursor.getShort(offset + 19) != 0);
         entity.setNum(cursor.isNull(offset + 20) ? null : cursor.getDouble(offset + 20));
         entity.setTypeName(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
+        entity.setSort(cursor.isNull(offset + 22) ? null : cursor.getInt(offset + 22));
      }
     
     @Override

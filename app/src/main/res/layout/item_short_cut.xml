@@ -17,7 +17,7 @@
         android:text="水果首付款是否会拉丝法兰"
         android:lines="2"
         android:textColor="@color/color_000000"
-        android:textSize="16sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tv_price"

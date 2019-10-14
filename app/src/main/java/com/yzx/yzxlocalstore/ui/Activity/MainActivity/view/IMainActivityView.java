@@ -75,4 +75,7 @@ public interface IMainActivityView {
 
     //显示取单
     void showTakeOutOrder();
+
+    //登出
+    void outLogin();
 }

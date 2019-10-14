@@ -88,7 +88,7 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
         InputFilter[] filters = {new CashierInputFilter(10), new InputFilter.LengthFilter(10)};
         tv_receivable.setFilters(filters);
         tv_receipts.setFilters(filters);
-        tv_change.setFilters(filters);
+//        tv_change.setFilters(filters);
         tv_free_money.setFilters(filters);
     }
 
@@ -169,6 +169,8 @@ public class CashierCountView extends FrameLayout implements View.OnClickListene
      */
     public void setChangeMoney() {
         tv_change.setText(ArithUtil.roundByScale(getChangeMoney()+ "", "#0.00"));
+        LogUtils.e("找零: "+getChangeMoney());
+        LogUtils.e("找零1: "+ArithUtil.roundByScale(getChangeMoney()+ "", "#0.00"));
     }
 
     /**

@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.apkfuns.logutils.LogUtils;
 import com.yzx.yzxlocalstore.app.MyAplication;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
+import com.yzx.yzxlocalstore.entity.GoodsType;
 import com.yzx.yzxlocalstore.greendao.GoodsInfoDao;
 import com.yzx.yzxlocalstore.greendao.GoodsTypeDao;
 import com.yzx.yzxlocalstore.greendao.GreenDaoHelp;
@@ -143,5 +144,30 @@ public class GoodsListFragmentModel implements IGoodsListFragmentModelImp {
         List<GoodsInfo> goodsInfoList = GreenDaoHelp.getDaoSession().getGoodsInfoDao().queryBuilder().whereOr(GoodsInfoDao.Properties.GoodName.like("%" + content + "%"),
                 GoodsInfoDao.Properties.GoodCode.like("%" + content + "%"), GoodsInfoDao.Properties.GoodPinyinCode.like("%" + content + "%")).list();
         return goodsInfoList;
+    }
+
+    /**
+     * 分类名是否存在
+     * @param context
+     * @param typeName
+     * @return
+     */
+    @Override
+    public boolean isHasGoodsType(Context context, String typeName) {
+        List<GoodsType> list = GreenDaoHelp.getDaoSession().getGoodsTypeDao().queryBuilder().where(GoodsTypeDao.Properties.TypeName.eq(typeName)).list();
+        if (list.size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 添加分类
+     * @param goodsType
+     */
+    @Override
+    public void addGoodsType(GoodsType goodsType) {
+        GreenDaoHelp.getDaoSession().getGoodsTypeDao().insert(goodsType);
     }
 }

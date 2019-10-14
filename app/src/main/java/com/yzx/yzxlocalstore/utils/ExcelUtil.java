@@ -2,12 +2,14 @@ package com.yzx.yzxlocalstore.utils;
 
 import android.content.Context;
 import android.os.Environment;
+import android.system.ErrnoException;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.apkfuns.logutils.LogUtils;
 import com.google.gson.Gson;
+import com.yzx.lib.util.ArithUtil;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
 
 import java.io.File;
@@ -212,7 +214,6 @@ public class ExcelUtil {
                 if (li.size() > 0) {
                     readExcleToObject(datas, li);
                 }
-                li = null;
             }
             Gson gson = new Gson();
             LogUtils.e("ImportExcel: gson: " + gson.toJson(datas));
@@ -226,28 +227,51 @@ public class ExcelUtil {
 
     private static <T> void readExcleToObject(List<T> datas, List<String> li) {
         if (datas == null || li == null) return;
+        try {
         GoodsInfo goodsInfo = new GoodsInfo();
         goodsInfo.setGoodName(li.get(0));
-        goodsInfo.setGoodCode(li.get(1));
-        goodsInfo.setGoodPrice(parseDouble(li.get(2)));
-        goodsInfo.setGoodOriginalPrice(parseDouble(li.get(3)));
-        goodsInfo.setGoodStore(parseDouble(li.get(4)));
+        goodsInfo.setGoodPrice(parseDouble(li.get(1)));
+        goodsInfo.setGoodOriginalPrice(parseDouble(li.get(2)));
+        goodsInfo.setGoodStore(parseDouble(li.get(3)));
+        goodsInfo.setGoodStoreWarningNum(parseDouble(li.get(4)));
+        goodsInfo.setGoodProfit(parseDouble(getGoodProfit(li.get(1),li.get(2))));
         goodsInfo.setGoodStatus(parseBoolean(li.get(5)));
-        goodsInfo.setTypeName(li.get(6));
+        goodsInfo.setGoodCode(li.get(6));
+        goodsInfo.setGoodPinyinCode(li.get(7));
+        goodsInfo.setGoodLoaction(parseInteger(li.get(8)));
+        goodsInfo.setTypeName(li.get(9));
+        goodsInfo.setSort(parseInteger(li.get(10)));
         datas.add((T) goodsInfo);
+        }catch (Exception e){
+            LogUtils.e("ImportExcel: gson: " + "导入数据有问题，请检查数据格式: "+e.toString());
+        }
     }
-
+    public static String getGoodProfit(String price, String originalPrice) {
+        String profit = 0 + "";
+        if (!TextUtils.isEmpty(originalPrice) && !TextUtils.isEmpty(price)) {
+            //计算利润 （销售价-成本价）/成本价
+            profit = ArithUtil.roundByScale(ArithUtil.div(ArithUtil.sub(price.trim(), originalPrice.trim()) + "", originalPrice.trim()) + "", "#0.00");
+        }
+        return profit;
+    }
     private static double parseDouble(String str) {
         double strD = 0;
         if (!TextUtils.isEmpty(str)) {
-            strD = Double.parseDouble(str);
+            strD = Double.parseDouble(str.trim());
+        }
+        return strD;
+    }
+    private static int parseInteger(String str) {
+        int strD = -1;
+        if (!TextUtils.isEmpty(str)) {
+            strD = Integer.parseInt(str.trim());
         }
         return strD;
     }
 
     private static boolean parseBoolean(String str) {
         boolean strB = false;
-        if (!TextUtils.isEmpty(str)) {
+        if (!TextUtils.isEmpty(str.trim())) {
             strB = true;
         }
         return strB;

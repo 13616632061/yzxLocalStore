@@ -143,9 +143,12 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             addSaleGoodsInfo("123456");
         } else if (mView.getResources().getString(R.string.putOrder).equals(name)) {//挂单
             createOrder(0);
-        } else if (mView.getResources().getString(R.string.getOrder).equals(name)) {//取单单
+        } else if (mView.getResources().getString(R.string.getOrder).equals(name)) {//取单
             mView.showTakeOutOrder();
-        } else {
+        }else if (mView.getResources().getString(R.string.loginOut).equals(name)) {//登出
+           outLogin();
+        }
+        else {
             MainToAction.toAction(mView, name);
         }
     }
@@ -489,6 +492,15 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             setReceivableMoney();
             mView.setChangeMoney();
         }
+    }
+
+    /**
+     * 登出
+     */
+    @Override
+    public void outLogin() {
+        LoginUserUtil.getInstance().setLoginUser(null);
+        mView.outLogin();
     }
 
 

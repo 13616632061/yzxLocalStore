@@ -18,7 +18,12 @@ import java.util.List;
 
 public class GoodsTypeFragmentModel implements IGoodsTypeFragmentModelImp {
 
-
+    /**
+     * 分类名是否存在
+     * @param context
+     * @param typeName
+     * @return
+     */
     @Override
     public boolean isHasGoodsType(Context context, String typeName) {
         List<GoodsType> list = GreenDaoHelp.getDaoSession().getGoodsTypeDao().queryBuilder().where(GoodsTypeDao.Properties.TypeName.eq(typeName)).list();
@@ -30,23 +35,39 @@ public class GoodsTypeFragmentModel implements IGoodsTypeFragmentModelImp {
 
     }
 
+    /**
+     * 获取商品分类数据
+     * @param context
+     * @return
+     */
     @Override
     public List<GoodsType> getGoodsTypeInfo(Context context) {
         List<GoodsType> list =GreenDaoHelp.getDaoSession().getGoodsTypeDao().queryBuilder().list();
         return list;
     }
 
+    /**
+     * 添加分类
+     * @param goodsType
+     */
     @Override
     public void addGoodsType(GoodsType goodsType) {
        GreenDaoHelp.getDaoSession().getGoodsTypeDao().insert(goodsType);
     }
 
+    /**
+     * 编辑分类
+     * @param goodsType
+     */
     @Override
     public void editGoodsType(GoodsType goodsType) {
        GreenDaoHelp.getDaoSession().getGoodsTypeDao().update(goodsType);
     }
 
-    //删除分类
+    /**
+     * 删除分类
+     * @param goodsType
+     */
     @Override
     public void deleteGoodsType(GoodsType goodsType) {
        GreenDaoHelp.getDaoSession().getGoodsTypeDao().delete(goodsType);

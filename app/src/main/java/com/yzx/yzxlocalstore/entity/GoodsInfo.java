@@ -50,6 +50,7 @@ public class GoodsInfo implements Parcelable ,Serializable{
     private Boolean isAllSelect=false;//商品是否全选
     private Double num=1.0;//下单数量
     private String typeName;
+    private Integer sort=-1;
 
 
     protected GoodsInfo(Parcel in) {
@@ -130,9 +131,14 @@ public class GoodsInfo implements Parcelable ,Serializable{
             num = in.readDouble();
         }
         typeName = in.readString();
+        if (in.readByte() == 0) {
+            sort = null;
+        } else {
+            sort = in.readInt();
+        }
     }
 
-    @Generated(hash = 1466097988)
+    @Generated(hash = 794828065)
     public GoodsInfo(Long id, String goodName, Double goodPrice,
             Double goodOriginalPrice, Double goodStore, Double goodStoreWarningNum,
             Double goodProfit, Boolean goodStatus, String goodCode,
@@ -140,7 +146,7 @@ public class GoodsInfo implements Parcelable ,Serializable{
             Double vipLevelTwoPrice, Double vipLevelThreePrice,
             Double vipLevelFourthPrice, Double vipLevelFivePrice,
             String goodBriefIntroduction, String goodRemarks, Boolean isSelect,
-            Boolean isAllSelect, Double num, String typeName) {
+            Boolean isAllSelect, Double num, String typeName, Integer sort) {
         this.id = id;
         this.goodName = goodName;
         this.goodPrice = goodPrice;
@@ -163,6 +169,7 @@ public class GoodsInfo implements Parcelable ,Serializable{
         this.isAllSelect = isAllSelect;
         this.num = num;
         this.typeName = typeName;
+        this.sort = sort;
     }
 
     @Generated(hash = 1227172248)
@@ -275,6 +282,12 @@ public class GoodsInfo implements Parcelable ,Serializable{
             dest.writeDouble(num);
         }
         dest.writeString(typeName);
+        if (sort == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(sort);
+        }
     }
 
     public Long getId() {
@@ -452,4 +465,14 @@ public class GoodsInfo implements Parcelable ,Serializable{
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
+
+    public Integer getSort() {
+        return this.sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+
 }

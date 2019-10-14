@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.yzx.lib.weight.Loading;
+
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
@@ -22,6 +24,8 @@ public abstract class BaseFragment extends LazyLoadFragment {
 
     private View rootView;
     public Activity mActivity;
+    private Loading mloading;
+
 
     @Nullable
     @Override
@@ -87,11 +91,29 @@ public abstract class BaseFragment extends LazyLoadFragment {
     public void showToast(String msg) {
         Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
-
+    /**
+     * 加载动画显示
+     */
+    public void showLoading() {
+        if (mloading == null && !getActivity().isFinishing()) {
+            mloading = new Loading(getActivity());
+            mloading.show();
+        }
+    }
+    /**
+     * 取消加载动画
+     */
+    public void dismissLoading() {
+        if (mloading != null && mloading.isShowing()) {
+            mloading.dismiss();
+            mloading = null;
+        }
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
         mActivity = null;
+        dismissLoading();
         ButterKnife.reset(this);
     }
 }

@@ -1,6 +1,9 @@
 package com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.model;
 
+import android.content.Context;
+
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
+import com.yzx.yzxlocalstore.entity.GoodsType;
 
 import java.util.List;
 
@@ -40,4 +43,10 @@ public interface IGoodsListFragmentModelImp {
 
     //搜索
     List<GoodsInfo> qureyGoodsInfo(String content);
+
+    //分类名是否存在
+    boolean isHasGoodsType(Context context, String typeName);
+
+    //添加分类
+    void addGoodsType(GoodsType goodsType);
 }

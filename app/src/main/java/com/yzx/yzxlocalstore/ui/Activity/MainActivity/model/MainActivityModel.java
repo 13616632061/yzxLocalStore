@@ -61,7 +61,8 @@ public class MainActivityModel implements IMainActivityModelImp {
      */
     @Override
     public List<TypeBean> getBottomType() {
-        List<TypeBean> list = GreenDaoHelp.getDaoSession().getTypeBeanDao().queryBuilder().where(TypeBeanDao.Properties.TypeCode.eq(1)).list();
+        List<TypeBean> list = GreenDaoHelp.getDaoSession().getTypeBeanDao().queryBuilder().where(TypeBeanDao.Properties.Id.eq(LoginUserUtil.getInstance().getLoginUser().getId()),TypeBeanDao.Properties.TypeCode.eq(1)).list();
+        LogUtils.e("newTypeList: "+list.toString());
         return list;
     }
 

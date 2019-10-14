@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.apkfuns.logutils.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yzx.lib.base.BaseActivity;
@@ -27,6 +28,7 @@ import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.ShortcutBarFragmen
 import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.WeightBarFragment.view.WeightBarFragment;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view.MainMenuPopWindow;
 import com.yzx.yzxlocalstore.ui.PopWindow.TakeOutOrderPopuWindow.view.TakeOutOrderPopuWindow;
+import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 import com.yzx.yzxlocalstore.weight.CashierCountView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -331,6 +333,15 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
         takeOutOrderPopuWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.RIGHT, 0, 0);
     }
 
+    /**
+     * 登出
+     */
+    @Override
+    public void outLogin() {
+        ARouter.getInstance().build(RouteMap.ROUTE_LOGIN_ACTIVITY).navigation();
+        finish();
+    }
+
 
     /**
      * 扫码枪条形码的拦截
@@ -364,6 +375,8 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
         }else if (map.containsKey("takeOutOrderInfos")){//取单
             OrderInfo orderInfos= (OrderInfo) map.get("takeOutOrderInfos");
             mPresenter.takeOutOrder(orderInfos);
+        }else if (map.containsKey("loginOut")){//登出
+            mPresenter.outLogin();
         }
     }
 

@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.leon.lfilepickerlibrary.LFilePicker;
 import com.yzx.lib.entity.MessageEvent;
 import com.yzx.yzxlocalstore.entity.GoodsInfo;
+import com.yzx.yzxlocalstore.entity.GoodsType;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.model.GoodsListFragmentModel;
 import com.yzx.yzxlocalstore.ui.Fragment.GoodsListFragment.view.GoodsListFragment;
 import com.yzx.yzxlocalstore.utils.AsyncTaskQureUtils;
@@ -319,6 +320,9 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
         }
     }
 
+    /**
+     * 导入
+     */
     @Override
     public void selectimportGoodsInfoFile() {
         new LFilePicker()
@@ -341,7 +345,7 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
         new AsyncTaskQureUtils(new AsyncTaskQureUtils.preBefore() {
             @Override
             public void before() {
-
+                mView.showLoading();
             }
         }, new AsyncTaskQureUtils.QureData() {
             @Override
@@ -356,9 +360,19 @@ public class GoodsListFragmentPresenter implements IGoodsListFragmentPresenterIm
                 if (infoList != null && infoList.size() > 0) {
                     for (GoodsInfo goodsInfo : infoList) {
                         mModel.addGoodsInfo(goodsInfo);
+                        if (!TextUtils.isEmpty(goodsInfo.getTypeName())){
+                            if (!mModel.isHasGoodsType(mView.getActivity(),goodsInfo.getTypeName())){
+                                GoodsType goodsType = new GoodsType();
+                                goodsType.setTypeName(goodsInfo.getTypeName());
+                                goodsType.setSort(goodsInfo.getSort());
+                                mModel.addGoodsType(goodsType);
+                            }
+                        }
                     }
                     getGoodsInfo(1, 0);
+                    EventBus.getDefault().post(new MessageEvent("addGoodsInfoSuccess", ""));
                 }
+                mView.dismissLoading();
             }
         }).execute();
     }

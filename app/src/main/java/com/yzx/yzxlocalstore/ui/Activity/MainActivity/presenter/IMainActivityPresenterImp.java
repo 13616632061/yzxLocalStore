@@ -91,4 +91,7 @@ public interface IMainActivityPresenterImp {
     //取单
     void takeOutOrder(OrderInfo orderInfos);
 
+    //登出
+    void outLogin();
+
 }
