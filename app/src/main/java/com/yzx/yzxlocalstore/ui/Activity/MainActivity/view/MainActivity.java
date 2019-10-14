@@ -363,6 +363,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
     @Override
     public void onScanSuccess(String barcode) {
         LogUtils.e("barcode:  " + barcode);
+        mPresenter.addSaleGoodsInfo(barcode);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

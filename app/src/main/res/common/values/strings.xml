@@ -190,6 +190,9 @@
     <string name="nomal_order">正常订单</string>
     <string name="select_invalid_order">请选择要作废的订单</string>
     <string name="invalid_order_success">作废订单成功</string>
+    <string name="more_funcition">更多栏目</string>
+    <string name="more_funcition_tips">长按栏目或者点击编辑，进行拖动排序或删除</string>
+
 
 
 

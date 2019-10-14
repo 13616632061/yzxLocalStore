@@ -59,8 +59,8 @@ public class MainMenuPopWindow extends BasePopupWindow implements ChannelView.On
 
         chanel_type.setChannelFixedCount(1);
         chanel_type.addPlate(mContext.getResources().getString(R.string.common_columns), mPresenter.getCommonlyType());
-        chanel_type.addPlate("更多栏目", mPresenter.getMoreType());
-        chanel_type.setSubTitleName("长按栏目或者点击编辑，进行拖动排序或删除");
+        chanel_type.addPlate(mContext.getResources().getString(R.string.more_funcition), mPresenter.getMoreType());
+        chanel_type.setSubTitleName(mContext.getResources().getString(R.string.more_funcition_tips));
         chanel_type.setSubTitleTextColor(mContext.getResources().getColor(R.color.color_f5260b));
         chanel_type.inflateData();
         iv_close.setOnClickListener(new View.OnClickListener() {

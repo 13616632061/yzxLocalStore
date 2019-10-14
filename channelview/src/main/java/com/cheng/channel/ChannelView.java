@@ -72,6 +72,10 @@ public class ChannelView extends ScrollView {
 
     @DrawableRes
     private int channelNormalBackground;
+    @DrawableRes
+    private int tvTipFinishBackground;
+    @DrawableRes
+    private int tvTipeEditBackground;
 
     @DrawableRes
     private int channelEditBackground;
@@ -161,6 +165,8 @@ public class ChannelView extends ScrollView {
         channelHorizontalSpacing = typedArray.getDimensionPixelSize(R.styleable.ChannelView_channelHorizontalSpacing, getResources().getDimensionPixelSize(R.dimen.channelHorizontalSpacing));
         channelVerticalSpacing = typedArray.getDimensionPixelSize(R.styleable.ChannelView_channelVerticalSpacing, getResources().getDimensionPixelSize(R.dimen.channelVerticalSpacing));
         channelNormalBackground = typedArray.getResourceId(R.styleable.ChannelView_channelNormalBackground, R.drawable.bg_channel_normal);
+        tvTipFinishBackground = typedArray.getResourceId(R.styleable.ChannelView_channelNormalBackground, R.drawable.bg_channel_normal);
+        tvTipeEditBackground = typedArray.getResourceId(R.styleable.ChannelView_channelNormalBackground, R.drawable.bg_channel_normal);
         channelEditBackground = typedArray.getResourceId(R.styleable.ChannelView_channelEditBackground, R.drawable.bg_channel_edit);
         channelFocusedBackground = typedArray.getResourceId(R.styleable.ChannelView_channelFocusedBackground, R.drawable.bg_channel_focused);
         channelFixedBackground = typedArray.getResourceId(R.styleable.ChannelView_channelFixedBackground, R.drawable.bg_channel_normal);
@@ -172,7 +178,7 @@ public class ChannelView extends ScrollView {
         tipEditBackground = typedArray.getResourceId(R.styleable.ChannelView_tipEditBackground, R.drawable.bg_channel_normal);
         platesTitleBackground = typedArray.getResourceId(R.styleable.ChannelView_platesTitleBackground, R.drawable.bg_channel_transparent);
         tipEditTextColor = typedArray.getColor(R.styleable.ChannelView_tipEditTextColor, getResources().getColor(R.color.channelNormalTextColor));
-        platesTitleColor = typedArray.getColor(R.styleable.ChannelView_platesTitleColor, getResources().getColor(R.color.color_000000));
+        platesTitleColor = typedArray.getColor(R.styleable.ChannelView_platesTitleColor, getResources().getColor(R.color.subTitleTextColor));
         platesTitleBold = typedArray.getBoolean(R.styleable.ChannelView_platesTitleBold, false);
         platesTitleSize = typedArray.getDimensionPixelSize(R.styleable.ChannelView_platesTitleSize, getResources().getDimensionPixelSize(R.dimen.channelTextSize));
         tipEditTextSize = typedArray.getDimensionPixelSize(R.styleable.ChannelView_tipEditTextSize, getResources().getDimensionPixelSize(R.dimen.channelTextSize));
@@ -898,11 +904,12 @@ public class ChannelView extends ScrollView {
                         tipEdit = view.findViewById(R.id.tv_tip_edit);
                         tipEdit.setVisibility(VISIBLE);
                         tipEdit.setOnClickListener(this);
-                        tipEdit.setBackgroundResource(tipEditBackground);
+                        tipEdit.setBackgroundResource(tvTipeEditBackground);
                         tipEdit.setTextColor(tipEditTextColor);
                         tipEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, tipEditTextSize);
                         tipFinish = view.findViewById(R.id.tv_tip_finish);
                         tipFinish.setVisibility(INVISIBLE);
+                        tipFinish.setBackgroundResource(tvTipFinishBackground);
                         tipFinish.setOnClickListener(this);
                         tipFinish.setBackgroundResource(tipFinishBackground);
                         tipFinish.setTextColor(tipFinishTextColor);
