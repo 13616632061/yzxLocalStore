@@ -122,10 +122,6 @@ public class AddGoodsInfoActivityPresenter implements IAddGoodsInfoActivityPrese
                 } else {
                     mModel.addGoodsInfo(goodsInfo);
                 }
-//                if (mService==null){
-//                    Intent intent=new Intent(mView,SaveDataService.class);
-//                    mView.startService(intent);
-//                }
                 break;
             case 2://编辑
                 setGoodInfo(mGoodsInfo);

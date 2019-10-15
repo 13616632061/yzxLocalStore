@@ -33,6 +33,8 @@ import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Administrator on 2019/6/28.
@@ -116,7 +118,15 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     @Override
     public void getBottomType() {
         mView.mBottomTypeData().clear();
-        mView.mBottomTypeData().addAll(mModel.getBottomType());
+        if (LoginUserUtil.getInstance().getLoginUser().getTypeBeanList() == null) {
+            mView.mBottomTypeData().addAll(mModel.getBottomType());
+        } else {
+            for (TypeBean bean :LoginUserUtil.getInstance().getLoginUser().getTypeBeanList()){
+                if (bean.getTypeCode()==1){
+                    mView.mBottomTypeData().add(bean);
+                }
+            }
+        }
         mView.mainBottomTypeAdapter().notifyDataSetChanged();
     }
 
@@ -145,10 +155,9 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
             createOrder(0);
         } else if (mView.getResources().getString(R.string.getOrder).equals(name)) {//取单
             mView.showTakeOutOrder();
-        }else if (mView.getResources().getString(R.string.loginOut).equals(name)) {//登出
-           outLogin();
-        }
-        else {
+        } else if (mView.getResources().getString(R.string.loginOut).equals(name)) {//登出
+            outLogin();
+        } else {
             MainToAction.toAction(mView, name);
         }
     }
@@ -501,6 +510,24 @@ public class MainActivityPresenter implements IMainActivityPresenterImp {
     public void outLogin() {
         LoginUserUtil.getInstance().setLoginUser(null);
         mView.outLogin();
+    }
+
+    /**
+     * 显示当前时间
+     */
+    @Override
+    public void showCurTime() {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mView.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.showCurTime(TimeUtils.getNowString());
+                    }
+                });
+            }
+        }, 0, 1000);
     }
 
 

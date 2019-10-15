@@ -67,7 +67,7 @@ public interface IMainActivityPresenterImp {
     void updateOrder(int type);
 
     //支付类型
-    void orderPayType(OrderInfo orderInfo,int type);
+    void orderPayType(OrderInfo orderInfo, int type);
 
     //获取订单id
     String getOrderId();
@@ -93,5 +93,8 @@ public interface IMainActivityPresenterImp {
 
     //登出
     void outLogin();
+
+    //显示当前时间
+    void showCurTime();
 
 }

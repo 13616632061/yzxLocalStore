@@ -18,7 +18,6 @@ import com.yzx.lib.base.BaseActivity;
 import com.yzx.lib.util.ScanGunKeyEventHelper;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
-import com.yzx.yzxlocalstore.entity.GoodsInfo;
 import com.yzx.yzxlocalstore.entity.OrderInfo;
 import com.yzx.yzxlocalstore.entity.TypeBean;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.presenter.MainActivityPresenter;
@@ -28,7 +27,6 @@ import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.ShortcutBarFragmen
 import com.yzx.yzxlocalstore.ui.Fragment.MainGoodsBarFragment.WeightBarFragment.view.WeightBarFragment;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view.MainMenuPopWindow;
 import com.yzx.yzxlocalstore.ui.PopWindow.TakeOutOrderPopuWindow.view.TakeOutOrderPopuWindow;
-import com.yzx.yzxlocalstore.utils.LoginUserUtil;
 import com.yzx.yzxlocalstore.weight.CashierCountView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -66,6 +64,8 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
     FrameLayout barContent;
     @InjectView(R.id.layout_midle)
     RelativeLayout layoutMidle;
+    @InjectView(R.id.tv_cur_time)
+    TextView tvCurTime;
 
     private MainActivityPresenter mPresenter;
     private MainBottomTypeAdapter mBottomTypeAdapter;
@@ -89,6 +89,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
         mPresenter.setLeftSaleGoodsListView();
         mPresenter.selcetPayment();
         mPresenter.showGoodBarPosition(0);
+        mPresenter.showCurTime();
     }
 
     @OnClick({R.id.layout_shortcut_bar, R.id.layout_weight_bar})
@@ -210,6 +211,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
 
     /**
      * 实收金额
+     *
      * @param money
      */
     @Override
@@ -329,7 +331,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
      */
     @Override
     public void showTakeOutOrder() {
-        TakeOutOrderPopuWindow takeOutOrderPopuWindow=TakeOutOrderPopuWindow.getInstance(this);
+        TakeOutOrderPopuWindow takeOutOrderPopuWindow = TakeOutOrderPopuWindow.getInstance(this);
         takeOutOrderPopuWindow.showAtLocation(findViewById(R.id.main_activity), Gravity.RIGHT, 0, 0);
     }
 
@@ -340,6 +342,14 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
     public void outLogin() {
         ARouter.getInstance().build(RouteMap.ROUTE_LOGIN_ACTIVITY).navigation();
         finish();
+    }
+
+    /**
+     * 显示当前时间
+     */
+    @Override
+    public void showCurTime(String time) {
+        tvCurTime.setText(time);
     }
 
 
@@ -370,13 +380,13 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
     public void onEvenBus(Map<Object, Object> map) {
         if (map.containsKey("updateManageType")) {//更新底部管理分类
             mPresenter.getBottomType();
-        }else if (map.containsKey("addSaleGood")){//添加销售商品
-            String code= (String) map.get("addSaleGood");
+        } else if (map.containsKey("addSaleGood")) {//添加销售商品
+            String code = (String) map.get("addSaleGood");
             mPresenter.addSaleGoodsInfo(code);
-        }else if (map.containsKey("takeOutOrderInfos")){//取单
-            OrderInfo orderInfos= (OrderInfo) map.get("takeOutOrderInfos");
+        } else if (map.containsKey("takeOutOrderInfos")) {//取单
+            OrderInfo orderInfos = (OrderInfo) map.get("takeOutOrderInfos");
             mPresenter.takeOutOrder(orderInfos);
-        }else if (map.containsKey("loginOut")){//登出
+        } else if (map.containsKey("loginOut")) {//登出
             mPresenter.outLogin();
         }
     }
@@ -386,6 +396,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView, Sca
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
 
 
 }

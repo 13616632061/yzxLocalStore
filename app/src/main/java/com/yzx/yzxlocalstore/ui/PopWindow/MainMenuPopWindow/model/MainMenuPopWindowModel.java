@@ -1,6 +1,7 @@
 package com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.model;
 
 import com.yzx.yzxlocalstore.entity.TypeBean;
+import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.greendao.GreenDaoHelp;
 import com.yzx.yzxlocalstore.greendao.TypeBeanDao;
 import com.yzx.yzxlocalstore.utils.LoginUserUtil;
@@ -41,5 +42,14 @@ public class MainMenuPopWindowModel implements IMainMenuPopWindowModelImp {
     @Override
     public void addTypeInfo(TypeBean typeBean) {
         GreenDaoHelp.getDaoSession().getTypeBeanDao().insert(typeBean);
+    }
+
+    /**
+     * 更新员工信息
+     * @param user
+     */
+    @Override
+    public void updateStaffInfo(User user) {
+        GreenDaoHelp.getDaoSession().getUserDao().update(user);
     }
 }

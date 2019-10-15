@@ -1,33 +1,29 @@
 package com.yzx.yzxlocalstore.entity;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.greendao.converter.PropertyConverter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Administrator on 2019/9/17.
+ * Created by Administrator on 2019/10/15.
  */
 
-public class GoodsInfoToConverte  implements PropertyConverter<List<GoodsInfo>, String> {
+public class TypeToConverte implements PropertyConverter<List<TypeBean>, String>  {
     @Override
-    public List<GoodsInfo> convertToEntityProperty(String databaseValue) {
+    public List<TypeBean> convertToEntityProperty(String databaseValue) {
         if (databaseValue == null) {
             return null;
         }
         // 先得获得这个，然后再typeToken.getType()，否则会异常
-        TypeToken<List<GoodsInfo>> typeToken = new TypeToken<List<GoodsInfo>>(){};
+        TypeToken<List<TypeBean>> typeToken = new TypeToken<List<TypeBean>>(){};
         return new Gson().fromJson(databaseValue, typeToken.getType());
     }
 
     @Override
-    public String convertToDatabaseValue(List<GoodsInfo> arrays) {
+    public String convertToDatabaseValue(List<TypeBean> arrays) {
         if (arrays == null||arrays.size()==0) {
             return null;
         } else {

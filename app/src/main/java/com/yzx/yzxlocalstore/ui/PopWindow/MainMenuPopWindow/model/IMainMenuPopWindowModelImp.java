@@ -1,6 +1,7 @@
 package com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.model;
 
 import com.yzx.yzxlocalstore.entity.TypeBean;
+import com.yzx.yzxlocalstore.entity.User;
 
 import java.util.List;
 
@@ -20,4 +21,7 @@ public interface IMainMenuPopWindowModelImp {
 
     //添加分类信息
     void addTypeInfo(TypeBean typeBean);
+
+    //更新员工信息
+    void updateStaffInfo(User user);
 }

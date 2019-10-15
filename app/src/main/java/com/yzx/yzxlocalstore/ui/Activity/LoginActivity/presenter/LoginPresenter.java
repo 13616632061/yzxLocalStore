@@ -68,15 +68,24 @@ public class LoginPresenter implements ILoginPresenter {
             return;
         }
 
-        List<User> users = loginModel.checkUserLogin(mView, name, pwd);
+        User user = loginModel.checkUserLogin(mView, name, pwd,mView.getSelectRole());
 
-        if (users.size() > 0) {
+        if (user!=null) {
             mView.LoginSuccess();
-            SPUtils.getInstance().put(Constants.LoginUser.LOGIN_USER_INFO_KEY, new Gson().toJson(users.get(0)));
-            LoginUserUtil.getInstance().setLoginUser(users.get(0));
+            SPUtils.getInstance().put(Constants.LoginUser.LOGIN_USER_INFO_KEY, new Gson().toJson(user));
+            LoginUserUtil.getInstance().setLoginUser(user);
 
         } else {
             mView.LoginFail(2);
         }
+    }
+
+    /**
+     * 选择的登录角色
+     * @param position
+     */
+    @Override
+    public void setSelectRole(int position) {
+        mView.setSelectRole(position);
     }
 }

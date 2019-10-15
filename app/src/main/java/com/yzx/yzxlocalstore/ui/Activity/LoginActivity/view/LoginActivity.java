@@ -1,19 +1,22 @@
 package com.yzx.yzxlocalstore.ui.Activity.LoginActivity.view;
 
 import android.Manifest;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.yzx.lib.base.BaseActivity;
 import com.yzx.yzxlocalstore.R;
-import com.yzx.yzxlocalstore.constant.Constants;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.greendao.GreenDaoHelp;
 import com.yzx.yzxlocalstore.ui.Activity.LoginActivity.presenter.LoginPresenter;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import kr.co.namee.permissiongen.PermissionFail;
@@ -28,6 +31,12 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     EditText etName;
     @InjectView(R.id.et_pwd)
     EditText etPwd;
+    @InjectView(R.id.rb_merchant)
+    RadioButton rbMerchant;
+    @InjectView(R.id.rb_clerk)
+    RadioButton rbClerk;
+    @InjectView(R.id.rg_role)
+    RadioGroup rgRole;
 
     private LoginPresenter mPresenter;
 
@@ -39,8 +48,9 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @Override
     protected void initView() {
         mPresenter = new LoginPresenter(this);
-
+        mPresenter.setSelectRole(0);
         initPermission();
+
 
     }
 
@@ -75,6 +85,41 @@ public class LoginActivity extends BaseActivity implements ILoginView {
                 showToast(getResources().getString(R.string.permissions_fail));
                 break;
         }
+    }
+
+    /**
+     * 选择的登录角色
+     *
+     * @param position
+     */
+    @Override
+    public void setSelectRole(int position) {
+        switch (position) {
+            case 0://商家
+                rgRole.check(R.id.rb_merchant);
+                break;
+            case 1://员工
+                rgRole.check(R.id.rb_clerk);
+                break;
+        }
+    }
+
+    /**
+     * 获取的登录选择的角色
+     * @return
+     */
+    @Override
+    public int getSelectRole() {
+        int loaction = 0;
+        switch (rgRole.getCheckedRadioButtonId()) {
+            case R.id.rb_merchant://商家
+                loaction = 0;
+                break;
+            case R.id.rb_clerk://员工
+                loaction = 1;
+                break;
+        }
+        return loaction;
     }
 
     @OnClick({R.id.btn_login})
@@ -117,4 +162,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     public void requestPermissionsFail() {
         LoginFail(3);
     }
+
+
+
 }

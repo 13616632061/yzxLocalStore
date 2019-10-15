@@ -30,22 +30,17 @@ public class LoginModel implements ILoginModel {
      */
 
     @Override
-    public List<User> initUserInfo() {
-        DaoSession daoSession = GreenDaoHelp.getDaoSession();
-        QueryBuilder<User> userQueryBuilder = daoSession.queryBuilder(User.class);
-        List<User> userList = userQueryBuilder.where(UserDao.Properties.Number.eq(adminName)).list();
-//        LogUtils.e(userList);
-        if (userList.size() <= 0) {
-            User user = new User();
+    public void initUserInfo() {
+        User user = GreenDaoHelp.getDaoSession().getUserDao().queryBuilder().where(UserDao.Properties.Number.eq(adminName)).unique();
+        if (user == null) {
             user.setLevel(0);
-            user.setName("--");
+            user.setName(adminName);
             user.setPhone("--");
             user.setStatus(true);
             user.setNumber(adminName);
             user.setPwd(adminPwd);
-            daoSession.insert(user);
+            GreenDaoHelp.getDaoSession().getUserDao().insert(user);
         }
-        return userList;
     }
 
     /**
@@ -57,12 +52,10 @@ public class LoginModel implements ILoginModel {
      * @return
      */
     @Override
-    public List<User> checkUserLogin(Context context, String name, String pwd) {
-        DaoSession daoSession = GreenDaoHelp.getDaoSession();
-        QueryBuilder<User> userQueryBuilder = daoSession.queryBuilder(User.class);
-        List<User> userList = userQueryBuilder.where(UserDao.Properties.Number.eq(name),
-                UserDao.Properties.Pwd.eq(pwd)).list();
+    public User checkUserLogin(Context context, String name, String pwd, int role) {
 
-        return userList;
+        User user = GreenDaoHelp.getDaoSession().getUserDao().queryBuilder().where(UserDao.Properties.Number.eq(name),
+                UserDao.Properties.Pwd.eq(pwd), UserDao.Properties.Level.eq(role)).unique();
+        return user;
     }
 }

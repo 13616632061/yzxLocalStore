@@ -151,8 +151,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnS
         super.onDestroy();
 
         //测试内存泄漏，正式一定要隐藏
-        RefWatcher refWatcher = LibAplication.getRefWatcher(this);//1
-        refWatcher.watch(this);
+//        RefWatcher refWatcher = LibAplication.getRefWatcher(this);//1
+//        refWatcher.watch(this);
 
 //        synchronized (mActivities) {
 //            mActivities.remove(this);

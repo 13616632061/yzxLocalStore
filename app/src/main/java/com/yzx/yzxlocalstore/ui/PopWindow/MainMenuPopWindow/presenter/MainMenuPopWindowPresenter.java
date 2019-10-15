@@ -11,6 +11,7 @@ import com.yzx.lib.util.EventBusMapUtil;
 import com.yzx.yzxlocalstore.R;
 import com.yzx.yzxlocalstore.constant.RouteMap;
 import com.yzx.yzxlocalstore.entity.TypeBean;
+import com.yzx.yzxlocalstore.entity.User;
 import com.yzx.yzxlocalstore.ui.Activity.MainActivity.MainToAction.MainToAction;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.model.MainMenuPopWindowModel;
 import com.yzx.yzxlocalstore.ui.PopWindow.MainMenuPopWindow.view.MainMenuPopWindow;
@@ -117,6 +118,10 @@ public class MainMenuPopWindowPresenter implements IMainMenuPopWindowPresenterIm
         for (int i = 0; i < newTypeList.size(); i++) {
             mModel.addTypeInfo(newTypeList.get(i));
         }
+        User user = LoginUserUtil.getInstance().getLoginUser();
+        user.setTypeBeanList(newTypeList);
+        mModel.updateStaffInfo(user);
+        LoginUserUtil.getInstance().getLoginUser().setTypeBeanList(newTypeList);
         EventBus.getDefault().post(EventBusMapUtil.getObjectMap("updateManageType", null));
     }
 

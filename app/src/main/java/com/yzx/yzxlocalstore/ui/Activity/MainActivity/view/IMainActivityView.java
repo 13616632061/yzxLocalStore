@@ -78,4 +78,7 @@ public interface IMainActivityView {
 
     //登出
     void outLogin();
+
+    //显示当前时间
+    void showCurTime(String time);
 }

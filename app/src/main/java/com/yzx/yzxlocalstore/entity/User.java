@@ -2,6 +2,7 @@ package com.yzx.yzxlocalstore.entity;
 
 import com.yzx.yzxlocalstore.constant.Constants;
 
+import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -34,11 +35,13 @@ public class User {
     private Boolean isShowBuyingProfit=true;//是否显示利润
     private Boolean isShowBuyingStore=true;//是否显示库存
     private String pwd;//用户密码
-
-    @Generated(hash = 1629530544)
+    @Convert(columnType = String.class, converter = TypeToConverte.class)
+    private List<TypeBean> typeBeanList;
+    @Generated(hash = 329226223)
     public User(Long id, String number, String name, String phone, Integer level,
             Boolean status, Double salesCommission, Boolean isShowBuyingPrice,
-            Boolean isShowBuyingProfit, Boolean isShowBuyingStore, String pwd) {
+            Boolean isShowBuyingProfit, Boolean isShowBuyingStore, String pwd,
+            List<TypeBean> typeBeanList) {
         this.id = id;
         this.number = number;
         this.name = name;
@@ -50,114 +53,82 @@ public class User {
         this.isShowBuyingProfit = isShowBuyingProfit;
         this.isShowBuyingStore = isShowBuyingStore;
         this.pwd = pwd;
+        this.typeBeanList = typeBeanList;
     }
-
     @Generated(hash = 586692638)
     public User() {
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", number='" + number + '\'' +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", level=" + level +
-                ", status=" + status +
-                ", salesCommission=" + salesCommission +
-                ", isShowBuyingPrice=" + isShowBuyingPrice +
-                ", isShowBuyingProfit=" + isShowBuyingProfit +
-                ", isShowBuyingStore=" + isShowBuyingStore +
-                ", pwd='" + pwd + '\'' +
-                '}';
-    }
-
     public Long getId() {
         return this.id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getNumber() {
         return this.number;
     }
-
     public void setNumber(String number) {
         this.number = number;
     }
-
     public String getName() {
         return this.name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getPhone() {
         return this.phone;
     }
-
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     public Integer getLevel() {
         return this.level;
     }
-
     public void setLevel(Integer level) {
         this.level = level;
     }
-
     public Boolean getStatus() {
         return this.status;
     }
-
     public void setStatus(Boolean status) {
         this.status = status;
     }
-
     public Double getSalesCommission() {
         return this.salesCommission;
     }
-
     public void setSalesCommission(Double salesCommission) {
         this.salesCommission = salesCommission;
     }
-
     public Boolean getIsShowBuyingPrice() {
         return this.isShowBuyingPrice;
     }
-
     public void setIsShowBuyingPrice(Boolean isShowBuyingPrice) {
         this.isShowBuyingPrice = isShowBuyingPrice;
     }
-
     public Boolean getIsShowBuyingProfit() {
         return this.isShowBuyingProfit;
     }
-
     public void setIsShowBuyingProfit(Boolean isShowBuyingProfit) {
         this.isShowBuyingProfit = isShowBuyingProfit;
     }
-
     public Boolean getIsShowBuyingStore() {
         return this.isShowBuyingStore;
     }
-
     public void setIsShowBuyingStore(Boolean isShowBuyingStore) {
         this.isShowBuyingStore = isShowBuyingStore;
     }
-
     public String getPwd() {
         return this.pwd;
     }
-
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
+    public List<TypeBean> getTypeBeanList() {
+        return this.typeBeanList;
+    }
+    public void setTypeBeanList(List<TypeBean> typeBeanList) {
+        this.typeBeanList = typeBeanList;
+    }
+  
 }

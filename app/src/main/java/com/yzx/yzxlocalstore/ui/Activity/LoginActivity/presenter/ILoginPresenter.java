@@ -17,4 +17,7 @@ public interface ILoginPresenter {
     //登录
     void Login();
 
+    //选择的登录角色
+    void setSelectRole(int position);
+
 }
